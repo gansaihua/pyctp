@@ -1,0 +1,13 @@
+void OnFrontConnected() override { PYBIND11_OVERRIDE(void, CMduserHandler, OnFrontConnected, );}
+void OnFrontDisconnected(int nReason) override { PYBIND11_OVERRIDE(void, CMduserHandler, OnFrontDisconnected, nReason);}
+void OnHeartBeatWarning(int nTimeLapse) override { PYBIND11_OVERRIDE(void, CMduserHandler, OnHeartBeatWarning, nTimeLapse);}
+void OnRspUserLogin(CThostFtdcRspUserLoginField* pRspUserLogin, CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast) override { PYBIND11_OVERRIDE(void, CMduserHandler, OnRspUserLogin, pRspUserLogin, pRspInfo, nRequestID, bIsLast);}
+void OnRspUserLogout(CThostFtdcUserLogoutField* pUserLogout, CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast) override { PYBIND11_OVERRIDE(void, CMduserHandler, OnRspUserLogout, pUserLogout, pRspInfo, nRequestID, bIsLast);}
+void OnRspQryMulticastInstrument(CThostFtdcMulticastInstrumentField* pMulticastInstrument, CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast) override { PYBIND11_OVERRIDE(void, CMduserHandler, OnRspQryMulticastInstrument, pMulticastInstrument, pRspInfo, nRequestID, bIsLast);}
+void OnRspError(CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast) override { PYBIND11_OVERRIDE(void, CMduserHandler, OnRspError, pRspInfo, nRequestID, bIsLast);}
+void OnRspSubMarketData(CThostFtdcSpecificInstrumentField* pSpecificInstrument, CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast) override { PYBIND11_OVERRIDE(void, CMduserHandler, OnRspSubMarketData, pSpecificInstrument, pRspInfo, nRequestID, bIsLast);}
+void OnRspUnSubMarketData(CThostFtdcSpecificInstrumentField* pSpecificInstrument, CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast) override { PYBIND11_OVERRIDE(void, CMduserHandler, OnRspUnSubMarketData, pSpecificInstrument, pRspInfo, nRequestID, bIsLast);}
+void OnRspSubForQuoteRsp(CThostFtdcSpecificInstrumentField* pSpecificInstrument, CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast) override { PYBIND11_OVERRIDE(void, CMduserHandler, OnRspSubForQuoteRsp, pSpecificInstrument, pRspInfo, nRequestID, bIsLast);}
+void OnRspUnSubForQuoteRsp(CThostFtdcSpecificInstrumentField* pSpecificInstrument, CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast) override { PYBIND11_OVERRIDE(void, CMduserHandler, OnRspUnSubForQuoteRsp, pSpecificInstrument, pRspInfo, nRequestID, bIsLast);}
+void OnRtnDepthMarketData(CThostFtdcDepthMarketDataField* pDepthMarketData) override { PYBIND11_OVERRIDE(void, CMduserHandler, OnRtnDepthMarketData, pDepthMarketData);}
+void OnRtnForQuoteRsp(CThostFtdcForQuoteRspField* pForQuoteRsp) override { PYBIND11_OVERRIDE(void, CMduserHandler, OnRtnForQuoteRsp, pForQuoteRsp);}
