@@ -1,6 +1,7 @@
-#include <pybind11/pybind11.h>
+﻿#include <pybind11/pybind11.h>
+#include <pybind11/stl.h>
 #include "20200106_tradeapi64_se_windows/ThostFtdcUserApiStruct.h"
-#include "utils.h"
+#include "encoding.h"
 
 namespace py = pybind11;
 
@@ -12,7 +13,7 @@ void init_structs(py::module_& m) {
 		.def("__copy__", [](const CThostFtdcDisseminationField& a) {return CThostFtdcDisseminationField(a);})
 		.def_readwrite("SequenceSeries", &CThostFtdcDisseminationField::SequenceSeries)
 		.def_readwrite("SequenceNo", &CThostFtdcDisseminationField::SequenceNo)
-		;
+		.def("keys", [](const CThostFtdcDisseminationField& a) { std::vector<std::string> b = { "SequenceSeries", "SequenceNo" }; return b;});
 
 	py::class_<CThostFtdcReqUserLoginField>(m, "CThostFtdcReqUserLoginField")
 		.def(py::init<>())
@@ -29,7 +30,7 @@ void init_structs(py::module_& m) {
 		.def_property("ClientIPAddress", [](CThostFtdcReqUserLoginField& a) {return encoding_cast(a.ClientIPAddress);}, [](CThostFtdcReqUserLoginField& a, char c[]) {strcpy(a.ClientIPAddress, c);})
 		.def_property("LoginRemark", [](CThostFtdcReqUserLoginField& a) {return encoding_cast(a.LoginRemark);}, [](CThostFtdcReqUserLoginField& a, char c[]) {strcpy(a.LoginRemark, c);})
 		.def_readwrite("ClientIPPort", &CThostFtdcReqUserLoginField::ClientIPPort)
-		;
+		.def("keys", [](const CThostFtdcReqUserLoginField& a) { std::vector<std::string> b = { "TradingDay", "BrokerID", "UserID", "Password", "UserProductInfo", "InterfaceProductInfo", "ProtocolInfo", "MacAddress", "OneTimePassword", "ClientIPAddress", "LoginRemark", "ClientIPPort" }; return b;});
 
 	py::class_<CThostFtdcRspUserLoginField>(m, "CThostFtdcRspUserLoginField")
 		.def(py::init<>())
@@ -47,21 +48,21 @@ void init_structs(py::module_& m) {
 		.def_property("CZCETime", [](CThostFtdcRspUserLoginField& a) {return encoding_cast(a.CZCETime);}, [](CThostFtdcRspUserLoginField& a, char c[]) {strcpy(a.CZCETime, c);})
 		.def_property("FFEXTime", [](CThostFtdcRspUserLoginField& a) {return encoding_cast(a.FFEXTime);}, [](CThostFtdcRspUserLoginField& a, char c[]) {strcpy(a.FFEXTime, c);})
 		.def_property("INETime", [](CThostFtdcRspUserLoginField& a) {return encoding_cast(a.INETime);}, [](CThostFtdcRspUserLoginField& a, char c[]) {strcpy(a.INETime, c);})
-		;
+		.def("keys", [](const CThostFtdcRspUserLoginField& a) { std::vector<std::string> b = { "TradingDay", "LoginTime", "BrokerID", "UserID", "SystemName", "FrontID", "SessionID", "MaxOrderRef", "SHFETime", "DCETime", "CZCETime", "FFEXTime", "INETime" }; return b;});
 
 	py::class_<CThostFtdcUserLogoutField>(m, "CThostFtdcUserLogoutField")
 		.def(py::init<>())
 		.def("__copy__", [](const CThostFtdcUserLogoutField& a) {return CThostFtdcUserLogoutField(a);})
 		.def_property("BrokerID", [](CThostFtdcUserLogoutField& a) {return encoding_cast(a.BrokerID);}, [](CThostFtdcUserLogoutField& a, char c[]) {strcpy(a.BrokerID, c);})
 		.def_property("UserID", [](CThostFtdcUserLogoutField& a) {return encoding_cast(a.UserID);}, [](CThostFtdcUserLogoutField& a, char c[]) {strcpy(a.UserID, c);})
-		;
+		.def("keys", [](const CThostFtdcUserLogoutField& a) { std::vector<std::string> b = { "BrokerID", "UserID" }; return b;});
 
 	py::class_<CThostFtdcForceUserLogoutField>(m, "CThostFtdcForceUserLogoutField")
 		.def(py::init<>())
 		.def("__copy__", [](const CThostFtdcForceUserLogoutField& a) {return CThostFtdcForceUserLogoutField(a);})
 		.def_property("BrokerID", [](CThostFtdcForceUserLogoutField& a) {return encoding_cast(a.BrokerID);}, [](CThostFtdcForceUserLogoutField& a, char c[]) {strcpy(a.BrokerID, c);})
 		.def_property("UserID", [](CThostFtdcForceUserLogoutField& a) {return encoding_cast(a.UserID);}, [](CThostFtdcForceUserLogoutField& a, char c[]) {strcpy(a.UserID, c);})
-		;
+		.def("keys", [](const CThostFtdcForceUserLogoutField& a) { std::vector<std::string> b = { "BrokerID", "UserID" }; return b;});
 
 	py::class_<CThostFtdcReqAuthenticateField>(m, "CThostFtdcReqAuthenticateField")
 		.def(py::init<>())
@@ -71,7 +72,7 @@ void init_structs(py::module_& m) {
 		.def_property("UserProductInfo", [](CThostFtdcReqAuthenticateField& a) {return encoding_cast(a.UserProductInfo);}, [](CThostFtdcReqAuthenticateField& a, char c[]) {strcpy(a.UserProductInfo, c);})
 		.def_property("AuthCode", [](CThostFtdcReqAuthenticateField& a) {return encoding_cast(a.AuthCode);}, [](CThostFtdcReqAuthenticateField& a, char c[]) {strcpy(a.AuthCode, c);})
 		.def_property("AppID", [](CThostFtdcReqAuthenticateField& a) {return encoding_cast(a.AppID);}, [](CThostFtdcReqAuthenticateField& a, char c[]) {strcpy(a.AppID, c);})
-		;
+		.def("keys", [](const CThostFtdcReqAuthenticateField& a) { std::vector<std::string> b = { "BrokerID", "UserID", "UserProductInfo", "AuthCode", "AppID" }; return b;});
 
 	py::class_<CThostFtdcRspAuthenticateField>(m, "CThostFtdcRspAuthenticateField")
 		.def(py::init<>())
@@ -81,7 +82,7 @@ void init_structs(py::module_& m) {
 		.def_property("UserProductInfo", [](CThostFtdcRspAuthenticateField& a) {return encoding_cast(a.UserProductInfo);}, [](CThostFtdcRspAuthenticateField& a, char c[]) {strcpy(a.UserProductInfo, c);})
 		.def_property("AppID", [](CThostFtdcRspAuthenticateField& a) {return encoding_cast(a.AppID);}, [](CThostFtdcRspAuthenticateField& a, char c[]) {strcpy(a.AppID, c);})
 		.def_readwrite("AppType", &CThostFtdcRspAuthenticateField::AppType)
-		;
+		.def("keys", [](const CThostFtdcRspAuthenticateField& a) { std::vector<std::string> b = { "BrokerID", "UserID", "UserProductInfo", "AppID", "AppType" }; return b;});
 
 	py::class_<CThostFtdcAuthenticationInfoField>(m, "CThostFtdcAuthenticationInfoField")
 		.def(py::init<>())
@@ -94,7 +95,7 @@ void init_structs(py::module_& m) {
 		.def_property("AppID", [](CThostFtdcAuthenticationInfoField& a) {return encoding_cast(a.AppID);}, [](CThostFtdcAuthenticationInfoField& a, char c[]) {strcpy(a.AppID, c);})
 		.def_readwrite("AppType", &CThostFtdcAuthenticationInfoField::AppType)
 		.def_property("ClientIPAddress", [](CThostFtdcAuthenticationInfoField& a) {return encoding_cast(a.ClientIPAddress);}, [](CThostFtdcAuthenticationInfoField& a, char c[]) {strcpy(a.ClientIPAddress, c);})
-		;
+		.def("keys", [](const CThostFtdcAuthenticationInfoField& a) { std::vector<std::string> b = { "BrokerID", "UserID", "UserProductInfo", "AuthInfo", "IsResult", "AppID", "AppType", "ClientIPAddress" }; return b;});
 
 	py::class_<CThostFtdcRspUserLogin2Field>(m, "CThostFtdcRspUserLogin2Field")
 		.def(py::init<>())
@@ -113,7 +114,7 @@ void init_structs(py::module_& m) {
 		.def_property("FFEXTime", [](CThostFtdcRspUserLogin2Field& a) {return encoding_cast(a.FFEXTime);}, [](CThostFtdcRspUserLogin2Field& a, char c[]) {strcpy(a.FFEXTime, c);})
 		.def_property("INETime", [](CThostFtdcRspUserLogin2Field& a) {return encoding_cast(a.INETime);}, [](CThostFtdcRspUserLogin2Field& a, char c[]) {strcpy(a.INETime, c);})
 		.def_property("RandomString", [](CThostFtdcRspUserLogin2Field& a) {return encoding_cast(a.RandomString);}, [](CThostFtdcRspUserLogin2Field& a, char c[]) {strcpy(a.RandomString, c);})
-		;
+		.def("keys", [](const CThostFtdcRspUserLogin2Field& a) { std::vector<std::string> b = { "TradingDay", "LoginTime", "BrokerID", "UserID", "SystemName", "FrontID", "SessionID", "MaxOrderRef", "SHFETime", "DCETime", "CZCETime", "FFEXTime", "INETime", "RandomString" }; return b;});
 
 	py::class_<CThostFtdcTransferHeaderField>(m, "CThostFtdcTransferHeaderField")
 		.def(py::init<>())
@@ -131,7 +132,7 @@ void init_structs(py::module_& m) {
 		.def_property("RecordNum", [](CThostFtdcTransferHeaderField& a) {return encoding_cast(a.RecordNum);}, [](CThostFtdcTransferHeaderField& a, char c[]) {strcpy(a.RecordNum, c);})
 		.def_readwrite("SessionID", &CThostFtdcTransferHeaderField::SessionID)
 		.def_readwrite("RequestID", &CThostFtdcTransferHeaderField::RequestID)
-		;
+		.def("keys", [](const CThostFtdcTransferHeaderField& a) { std::vector<std::string> b = { "Version", "TradeCode", "TradeDate", "TradeTime", "TradeSerial", "FutureID", "BankID", "BankBrchID", "OperNo", "DeviceID", "RecordNum", "SessionID", "RequestID" }; return b;});
 
 	py::class_<CThostFtdcTransferBankToFutureReqField>(m, "CThostFtdcTransferBankToFutureReqField")
 		.def(py::init<>())
@@ -142,7 +143,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("TradeAmt", &CThostFtdcTransferBankToFutureReqField::TradeAmt)
 		.def_readwrite("CustFee", &CThostFtdcTransferBankToFutureReqField::CustFee)
 		.def_property("CurrencyCode", [](CThostFtdcTransferBankToFutureReqField& a) {return encoding_cast(a.CurrencyCode);}, [](CThostFtdcTransferBankToFutureReqField& a, char c[]) {strcpy(a.CurrencyCode, c);})
-		;
+		.def("keys", [](const CThostFtdcTransferBankToFutureReqField& a) { std::vector<std::string> b = { "FutureAccount", "FuturePwdFlag", "FutureAccPwd", "TradeAmt", "CustFee", "CurrencyCode" }; return b;});
 
 	py::class_<CThostFtdcTransferBankToFutureRspField>(m, "CThostFtdcTransferBankToFutureRspField")
 		.def(py::init<>())
@@ -153,7 +154,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("TradeAmt", &CThostFtdcTransferBankToFutureRspField::TradeAmt)
 		.def_readwrite("CustFee", &CThostFtdcTransferBankToFutureRspField::CustFee)
 		.def_property("CurrencyCode", [](CThostFtdcTransferBankToFutureRspField& a) {return encoding_cast(a.CurrencyCode);}, [](CThostFtdcTransferBankToFutureRspField& a, char c[]) {strcpy(a.CurrencyCode, c);})
-		;
+		.def("keys", [](const CThostFtdcTransferBankToFutureRspField& a) { std::vector<std::string> b = { "RetCode", "RetInfo", "FutureAccount", "TradeAmt", "CustFee", "CurrencyCode" }; return b;});
 
 	py::class_<CThostFtdcTransferFutureToBankReqField>(m, "CThostFtdcTransferFutureToBankReqField")
 		.def(py::init<>())
@@ -164,7 +165,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("TradeAmt", &CThostFtdcTransferFutureToBankReqField::TradeAmt)
 		.def_readwrite("CustFee", &CThostFtdcTransferFutureToBankReqField::CustFee)
 		.def_property("CurrencyCode", [](CThostFtdcTransferFutureToBankReqField& a) {return encoding_cast(a.CurrencyCode);}, [](CThostFtdcTransferFutureToBankReqField& a, char c[]) {strcpy(a.CurrencyCode, c);})
-		;
+		.def("keys", [](const CThostFtdcTransferFutureToBankReqField& a) { std::vector<std::string> b = { "FutureAccount", "FuturePwdFlag", "FutureAccPwd", "TradeAmt", "CustFee", "CurrencyCode" }; return b;});
 
 	py::class_<CThostFtdcTransferFutureToBankRspField>(m, "CThostFtdcTransferFutureToBankRspField")
 		.def(py::init<>())
@@ -175,7 +176,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("TradeAmt", &CThostFtdcTransferFutureToBankRspField::TradeAmt)
 		.def_readwrite("CustFee", &CThostFtdcTransferFutureToBankRspField::CustFee)
 		.def_property("CurrencyCode", [](CThostFtdcTransferFutureToBankRspField& a) {return encoding_cast(a.CurrencyCode);}, [](CThostFtdcTransferFutureToBankRspField& a, char c[]) {strcpy(a.CurrencyCode, c);})
-		;
+		.def("keys", [](const CThostFtdcTransferFutureToBankRspField& a) { std::vector<std::string> b = { "RetCode", "RetInfo", "FutureAccount", "TradeAmt", "CustFee", "CurrencyCode" }; return b;});
 
 	py::class_<CThostFtdcTransferQryBankReqField>(m, "CThostFtdcTransferQryBankReqField")
 		.def(py::init<>())
@@ -184,7 +185,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("FuturePwdFlag", &CThostFtdcTransferQryBankReqField::FuturePwdFlag)
 		.def_property("FutureAccPwd", [](CThostFtdcTransferQryBankReqField& a) {return encoding_cast(a.FutureAccPwd);}, [](CThostFtdcTransferQryBankReqField& a, char c[]) {strcpy(a.FutureAccPwd, c);})
 		.def_property("CurrencyCode", [](CThostFtdcTransferQryBankReqField& a) {return encoding_cast(a.CurrencyCode);}, [](CThostFtdcTransferQryBankReqField& a, char c[]) {strcpy(a.CurrencyCode, c);})
-		;
+		.def("keys", [](const CThostFtdcTransferQryBankReqField& a) { std::vector<std::string> b = { "FutureAccount", "FuturePwdFlag", "FutureAccPwd", "CurrencyCode" }; return b;});
 
 	py::class_<CThostFtdcTransferQryBankRspField>(m, "CThostFtdcTransferQryBankRspField")
 		.def(py::init<>())
@@ -196,13 +197,13 @@ void init_structs(py::module_& m) {
 		.def_readwrite("UseAmt", &CThostFtdcTransferQryBankRspField::UseAmt)
 		.def_readwrite("FetchAmt", &CThostFtdcTransferQryBankRspField::FetchAmt)
 		.def_property("CurrencyCode", [](CThostFtdcTransferQryBankRspField& a) {return encoding_cast(a.CurrencyCode);}, [](CThostFtdcTransferQryBankRspField& a, char c[]) {strcpy(a.CurrencyCode, c);})
-		;
+		.def("keys", [](const CThostFtdcTransferQryBankRspField& a) { std::vector<std::string> b = { "RetCode", "RetInfo", "FutureAccount", "TradeAmt", "UseAmt", "FetchAmt", "CurrencyCode" }; return b;});
 
 	py::class_<CThostFtdcTransferQryDetailReqField>(m, "CThostFtdcTransferQryDetailReqField")
 		.def(py::init<>())
 		.def("__copy__", [](const CThostFtdcTransferQryDetailReqField& a) {return CThostFtdcTransferQryDetailReqField(a);})
 		.def_property("FutureAccount", [](CThostFtdcTransferQryDetailReqField& a) {return encoding_cast(a.FutureAccount);}, [](CThostFtdcTransferQryDetailReqField& a, char c[]) {strcpy(a.FutureAccount, c);})
-		;
+		.def("keys", [](const CThostFtdcTransferQryDetailReqField& a) { std::vector<std::string> b = { "FutureAccount" }; return b;});
 
 	py::class_<CThostFtdcTransferQryDetailRspField>(m, "CThostFtdcTransferQryDetailRspField")
 		.def(py::init<>())
@@ -221,14 +222,14 @@ void init_structs(py::module_& m) {
 		.def_property("CurrencyCode", [](CThostFtdcTransferQryDetailRspField& a) {return encoding_cast(a.CurrencyCode);}, [](CThostFtdcTransferQryDetailRspField& a, char c[]) {strcpy(a.CurrencyCode, c);})
 		.def_readwrite("TxAmount", &CThostFtdcTransferQryDetailRspField::TxAmount)
 		.def_readwrite("Flag", &CThostFtdcTransferQryDetailRspField::Flag)
-		;
+		.def("keys", [](const CThostFtdcTransferQryDetailRspField& a) { std::vector<std::string> b = { "TradeDate", "TradeTime", "TradeCode", "FutureSerial", "FutureID", "FutureAccount", "BankSerial", "BankID", "BankBrchID", "BankAccount", "CertCode", "CurrencyCode", "TxAmount", "Flag" }; return b;});
 
 	py::class_<CThostFtdcRspInfoField>(m, "CThostFtdcRspInfoField")
 		.def(py::init<>())
 		.def("__copy__", [](const CThostFtdcRspInfoField& a) {return CThostFtdcRspInfoField(a);})
 		.def_readwrite("ErrorID", &CThostFtdcRspInfoField::ErrorID)
 		.def_property("ErrorMsg", [](CThostFtdcRspInfoField& a) {return encoding_cast(a.ErrorMsg);}, [](CThostFtdcRspInfoField& a, char c[]) {strcpy(a.ErrorMsg, c);})
-		;
+		.def("keys", [](const CThostFtdcRspInfoField& a) { std::vector<std::string> b = { "ErrorID", "ErrorMsg" }; return b;});
 
 	py::class_<CThostFtdcExchangeField>(m, "CThostFtdcExchangeField")
 		.def(py::init<>())
@@ -236,7 +237,7 @@ void init_structs(py::module_& m) {
 		.def_property("ExchangeID", [](CThostFtdcExchangeField& a) {return encoding_cast(a.ExchangeID);}, [](CThostFtdcExchangeField& a, char c[]) {strcpy(a.ExchangeID, c);})
 		.def_property("ExchangeName", [](CThostFtdcExchangeField& a) {return encoding_cast(a.ExchangeName);}, [](CThostFtdcExchangeField& a, char c[]) {strcpy(a.ExchangeName, c);})
 		.def_readwrite("ExchangeProperty", &CThostFtdcExchangeField::ExchangeProperty)
-		;
+		.def("keys", [](const CThostFtdcExchangeField& a) { std::vector<std::string> b = { "ExchangeID", "ExchangeName", "ExchangeProperty" }; return b;});
 
 	py::class_<CThostFtdcProductField>(m, "CThostFtdcProductField")
 		.def(py::init<>())
@@ -258,7 +259,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("MortgageFundUseRange", &CThostFtdcProductField::MortgageFundUseRange)
 		.def_property("ExchangeProductID", [](CThostFtdcProductField& a) {return encoding_cast(a.ExchangeProductID);}, [](CThostFtdcProductField& a, char c[]) {strcpy(a.ExchangeProductID, c);})
 		.def_readwrite("UnderlyingMultiple", &CThostFtdcProductField::UnderlyingMultiple)
-		;
+		.def("keys", [](const CThostFtdcProductField& a) { std::vector<std::string> b = { "ProductID", "ProductName", "ExchangeID", "ProductClass", "VolumeMultiple", "PriceTick", "MaxMarketOrderVolume", "MinMarketOrderVolume", "MaxLimitOrderVolume", "MinLimitOrderVolume", "PositionType", "PositionDateType", "CloseDealType", "TradeCurrencyID", "MortgageFundUseRange", "ExchangeProductID", "UnderlyingMultiple" }; return b;});
 
 	py::class_<CThostFtdcInstrumentField>(m, "CThostFtdcInstrumentField")
 		.def(py::init<>())
@@ -294,7 +295,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("OptionsType", &CThostFtdcInstrumentField::OptionsType)
 		.def_readwrite("UnderlyingMultiple", &CThostFtdcInstrumentField::UnderlyingMultiple)
 		.def_readwrite("CombinationType", &CThostFtdcInstrumentField::CombinationType)
-		;
+		.def("keys", [](const CThostFtdcInstrumentField& a) { std::vector<std::string> b = { "InstrumentID", "ExchangeID", "InstrumentName", "ExchangeInstID", "ProductID", "ProductClass", "DeliveryYear", "DeliveryMonth", "MaxMarketOrderVolume", "MinMarketOrderVolume", "MaxLimitOrderVolume", "MinLimitOrderVolume", "VolumeMultiple", "PriceTick", "CreateDate", "OpenDate", "ExpireDate", "StartDelivDate", "EndDelivDate", "InstLifePhase", "IsTrading", "PositionType", "PositionDateType", "LongMarginRatio", "ShortMarginRatio", "MaxMarginSideAlgorithm", "UnderlyingInstrID", "StrikePrice", "OptionsType", "UnderlyingMultiple", "CombinationType" }; return b;});
 
 	py::class_<CThostFtdcBrokerField>(m, "CThostFtdcBrokerField")
 		.def(py::init<>())
@@ -303,7 +304,7 @@ void init_structs(py::module_& m) {
 		.def_property("BrokerAbbr", [](CThostFtdcBrokerField& a) {return encoding_cast(a.BrokerAbbr);}, [](CThostFtdcBrokerField& a, char c[]) {strcpy(a.BrokerAbbr, c);})
 		.def_property("BrokerName", [](CThostFtdcBrokerField& a) {return encoding_cast(a.BrokerName);}, [](CThostFtdcBrokerField& a, char c[]) {strcpy(a.BrokerName, c);})
 		.def_readwrite("IsActive", &CThostFtdcBrokerField::IsActive)
-		;
+		.def("keys", [](const CThostFtdcBrokerField& a) { std::vector<std::string> b = { "BrokerID", "BrokerAbbr", "BrokerName", "IsActive" }; return b;});
 
 	py::class_<CThostFtdcTraderField>(m, "CThostFtdcTraderField")
 		.def(py::init<>())
@@ -314,7 +315,7 @@ void init_structs(py::module_& m) {
 		.def_property("Password", [](CThostFtdcTraderField& a) {return encoding_cast(a.Password);}, [](CThostFtdcTraderField& a, char c[]) {strcpy(a.Password, c);})
 		.def_readwrite("InstallCount", &CThostFtdcTraderField::InstallCount)
 		.def_property("BrokerID", [](CThostFtdcTraderField& a) {return encoding_cast(a.BrokerID);}, [](CThostFtdcTraderField& a, char c[]) {strcpy(a.BrokerID, c);})
-		;
+		.def("keys", [](const CThostFtdcTraderField& a) { std::vector<std::string> b = { "ExchangeID", "TraderID", "ParticipantID", "Password", "InstallCount", "BrokerID" }; return b;});
 
 	py::class_<CThostFtdcInvestorField>(m, "CThostFtdcInvestorField")
 		.def(py::init<>())
@@ -332,7 +333,7 @@ void init_structs(py::module_& m) {
 		.def_property("Mobile", [](CThostFtdcInvestorField& a) {return encoding_cast(a.Mobile);}, [](CThostFtdcInvestorField& a, char c[]) {strcpy(a.Mobile, c);})
 		.def_property("CommModelID", [](CThostFtdcInvestorField& a) {return encoding_cast(a.CommModelID);}, [](CThostFtdcInvestorField& a, char c[]) {strcpy(a.CommModelID, c);})
 		.def_property("MarginModelID", [](CThostFtdcInvestorField& a) {return encoding_cast(a.MarginModelID);}, [](CThostFtdcInvestorField& a, char c[]) {strcpy(a.MarginModelID, c);})
-		;
+		.def("keys", [](const CThostFtdcInvestorField& a) { std::vector<std::string> b = { "InvestorID", "BrokerID", "InvestorGroupID", "InvestorName", "IdentifiedCardType", "IdentifiedCardNo", "IsActive", "Telephone", "Address", "OpenDate", "Mobile", "CommModelID", "MarginModelID" }; return b;});
 
 	py::class_<CThostFtdcTradingCodeField>(m, "CThostFtdcTradingCodeField")
 		.def(py::init<>())
@@ -346,7 +347,7 @@ void init_structs(py::module_& m) {
 		.def_property("BranchID", [](CThostFtdcTradingCodeField& a) {return encoding_cast(a.BranchID);}, [](CThostFtdcTradingCodeField& a, char c[]) {strcpy(a.BranchID, c);})
 		.def_readwrite("BizType", &CThostFtdcTradingCodeField::BizType)
 		.def_property("InvestUnitID", [](CThostFtdcTradingCodeField& a) {return encoding_cast(a.InvestUnitID);}, [](CThostFtdcTradingCodeField& a, char c[]) {strcpy(a.InvestUnitID, c);})
-		;
+		.def("keys", [](const CThostFtdcTradingCodeField& a) { std::vector<std::string> b = { "InvestorID", "BrokerID", "ExchangeID", "ClientID", "IsActive", "ClientIDType", "BranchID", "BizType", "InvestUnitID" }; return b;});
 
 	py::class_<CThostFtdcPartBrokerField>(m, "CThostFtdcPartBrokerField")
 		.def(py::init<>())
@@ -355,7 +356,7 @@ void init_structs(py::module_& m) {
 		.def_property("ExchangeID", [](CThostFtdcPartBrokerField& a) {return encoding_cast(a.ExchangeID);}, [](CThostFtdcPartBrokerField& a, char c[]) {strcpy(a.ExchangeID, c);})
 		.def_property("ParticipantID", [](CThostFtdcPartBrokerField& a) {return encoding_cast(a.ParticipantID);}, [](CThostFtdcPartBrokerField& a, char c[]) {strcpy(a.ParticipantID, c);})
 		.def_readwrite("IsActive", &CThostFtdcPartBrokerField::IsActive)
-		;
+		.def("keys", [](const CThostFtdcPartBrokerField& a) { std::vector<std::string> b = { "BrokerID", "ExchangeID", "ParticipantID", "IsActive" }; return b;});
 
 	py::class_<CThostFtdcSuperUserField>(m, "CThostFtdcSuperUserField")
 		.def(py::init<>())
@@ -364,14 +365,14 @@ void init_structs(py::module_& m) {
 		.def_property("UserName", [](CThostFtdcSuperUserField& a) {return encoding_cast(a.UserName);}, [](CThostFtdcSuperUserField& a, char c[]) {strcpy(a.UserName, c);})
 		.def_property("Password", [](CThostFtdcSuperUserField& a) {return encoding_cast(a.Password);}, [](CThostFtdcSuperUserField& a, char c[]) {strcpy(a.Password, c);})
 		.def_readwrite("IsActive", &CThostFtdcSuperUserField::IsActive)
-		;
+		.def("keys", [](const CThostFtdcSuperUserField& a) { std::vector<std::string> b = { "UserID", "UserName", "Password", "IsActive" }; return b;});
 
 	py::class_<CThostFtdcSuperUserFunctionField>(m, "CThostFtdcSuperUserFunctionField")
 		.def(py::init<>())
 		.def("__copy__", [](const CThostFtdcSuperUserFunctionField& a) {return CThostFtdcSuperUserFunctionField(a);})
 		.def_property("UserID", [](CThostFtdcSuperUserFunctionField& a) {return encoding_cast(a.UserID);}, [](CThostFtdcSuperUserFunctionField& a, char c[]) {strcpy(a.UserID, c);})
 		.def_readwrite("FunctionCode", &CThostFtdcSuperUserFunctionField::FunctionCode)
-		;
+		.def("keys", [](const CThostFtdcSuperUserFunctionField& a) { std::vector<std::string> b = { "UserID", "FunctionCode" }; return b;});
 
 	py::class_<CThostFtdcInvestorGroupField>(m, "CThostFtdcInvestorGroupField")
 		.def(py::init<>())
@@ -379,7 +380,7 @@ void init_structs(py::module_& m) {
 		.def_property("BrokerID", [](CThostFtdcInvestorGroupField& a) {return encoding_cast(a.BrokerID);}, [](CThostFtdcInvestorGroupField& a, char c[]) {strcpy(a.BrokerID, c);})
 		.def_property("InvestorGroupID", [](CThostFtdcInvestorGroupField& a) {return encoding_cast(a.InvestorGroupID);}, [](CThostFtdcInvestorGroupField& a, char c[]) {strcpy(a.InvestorGroupID, c);})
 		.def_property("InvestorGroupName", [](CThostFtdcInvestorGroupField& a) {return encoding_cast(a.InvestorGroupName);}, [](CThostFtdcInvestorGroupField& a, char c[]) {strcpy(a.InvestorGroupName, c);})
-		;
+		.def("keys", [](const CThostFtdcInvestorGroupField& a) { std::vector<std::string> b = { "BrokerID", "InvestorGroupID", "InvestorGroupName" }; return b;});
 
 	py::class_<CThostFtdcTradingAccountField>(m, "CThostFtdcTradingAccountField")
 		.def(py::init<>())
@@ -433,7 +434,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("BizType", &CThostFtdcTradingAccountField::BizType)
 		.def_readwrite("FrozenSwap", &CThostFtdcTradingAccountField::FrozenSwap)
 		.def_readwrite("RemainSwap", &CThostFtdcTradingAccountField::RemainSwap)
-		;
+		.def("keys", [](const CThostFtdcTradingAccountField& a) { std::vector<std::string> b = { "BrokerID", "AccountID", "PreMortgage", "PreCredit", "PreDeposit", "PreBalance", "PreMargin", "InterestBase", "Interest", "Deposit", "Withdraw", "FrozenMargin", "FrozenCash", "FrozenCommission", "CurrMargin", "CashIn", "Commission", "CloseProfit", "PositionProfit", "Balance", "Available", "WithdrawQuota", "Reserve", "TradingDay", "SettlementID", "Credit", "Mortgage", "ExchangeMargin", "DeliveryMargin", "ExchangeDeliveryMargin", "ReserveBalance", "CurrencyID", "PreFundMortgageIn", "PreFundMortgageOut", "FundMortgageIn", "FundMortgageOut", "FundMortgageAvailable", "MortgageableFund", "SpecProductMargin", "SpecProductFrozenMargin", "SpecProductCommission", "SpecProductFrozenCommission", "SpecProductPositionProfit", "SpecProductCloseProfit", "SpecProductPositionProfitByAlg", "SpecProductExchangeMargin", "BizType", "FrozenSwap", "RemainSwap" }; return b;});
 
 	py::class_<CThostFtdcInvestorPositionField>(m, "CThostFtdcInvestorPositionField")
 		.def(py::init<>())
@@ -487,7 +488,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("PositionCostOffset", &CThostFtdcInvestorPositionField::PositionCostOffset)
 		.def_readwrite("TasPosition", &CThostFtdcInvestorPositionField::TasPosition)
 		.def_readwrite("TasPositionCost", &CThostFtdcInvestorPositionField::TasPositionCost)
-		;
+		.def("keys", [](const CThostFtdcInvestorPositionField& a) { std::vector<std::string> b = { "InstrumentID", "BrokerID", "InvestorID", "PosiDirection", "HedgeFlag", "PositionDate", "YdPosition", "Position", "LongFrozen", "ShortFrozen", "LongFrozenAmount", "ShortFrozenAmount", "OpenVolume", "CloseVolume", "OpenAmount", "CloseAmount", "PositionCost", "PreMargin", "UseMargin", "FrozenMargin", "FrozenCash", "FrozenCommission", "CashIn", "Commission", "CloseProfit", "PositionProfit", "PreSettlementPrice", "SettlementPrice", "TradingDay", "SettlementID", "OpenCost", "ExchangeMargin", "CombPosition", "CombLongFrozen", "CombShortFrozen", "CloseProfitByDate", "CloseProfitByTrade", "TodayPosition", "MarginRateByMoney", "MarginRateByVolume", "StrikeFrozen", "StrikeFrozenAmount", "AbandonFrozen", "ExchangeID", "YdStrikeFrozen", "InvestUnitID", "PositionCostOffset", "TasPosition", "TasPositionCost" }; return b;});
 
 	py::class_<CThostFtdcInstrumentMarginRateField>(m, "CThostFtdcInstrumentMarginRateField")
 		.def(py::init<>())
@@ -504,7 +505,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("IsRelative", &CThostFtdcInstrumentMarginRateField::IsRelative)
 		.def_property("ExchangeID", [](CThostFtdcInstrumentMarginRateField& a) {return encoding_cast(a.ExchangeID);}, [](CThostFtdcInstrumentMarginRateField& a, char c[]) {strcpy(a.ExchangeID, c);})
 		.def_property("InvestUnitID", [](CThostFtdcInstrumentMarginRateField& a) {return encoding_cast(a.InvestUnitID);}, [](CThostFtdcInstrumentMarginRateField& a, char c[]) {strcpy(a.InvestUnitID, c);})
-		;
+		.def("keys", [](const CThostFtdcInstrumentMarginRateField& a) { std::vector<std::string> b = { "InstrumentID", "InvestorRange", "BrokerID", "InvestorID", "HedgeFlag", "LongMarginRatioByMoney", "LongMarginRatioByVolume", "ShortMarginRatioByMoney", "ShortMarginRatioByVolume", "IsRelative", "ExchangeID", "InvestUnitID" }; return b;});
 
 	py::class_<CThostFtdcInstrumentCommissionRateField>(m, "CThostFtdcInstrumentCommissionRateField")
 		.def(py::init<>())
@@ -522,7 +523,7 @@ void init_structs(py::module_& m) {
 		.def_property("ExchangeID", [](CThostFtdcInstrumentCommissionRateField& a) {return encoding_cast(a.ExchangeID);}, [](CThostFtdcInstrumentCommissionRateField& a, char c[]) {strcpy(a.ExchangeID, c);})
 		.def_readwrite("BizType", &CThostFtdcInstrumentCommissionRateField::BizType)
 		.def_property("InvestUnitID", [](CThostFtdcInstrumentCommissionRateField& a) {return encoding_cast(a.InvestUnitID);}, [](CThostFtdcInstrumentCommissionRateField& a, char c[]) {strcpy(a.InvestUnitID, c);})
-		;
+		.def("keys", [](const CThostFtdcInstrumentCommissionRateField& a) { std::vector<std::string> b = { "InstrumentID", "InvestorRange", "BrokerID", "InvestorID", "OpenRatioByMoney", "OpenRatioByVolume", "CloseRatioByMoney", "CloseRatioByVolume", "CloseTodayRatioByMoney", "CloseTodayRatioByVolume", "ExchangeID", "BizType", "InvestUnitID" }; return b;});
 
 	py::class_<CThostFtdcDepthMarketDataField>(m, "CThostFtdcDepthMarketDataField")
 		.def(py::init<>())
@@ -571,7 +572,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("AskVolume5", &CThostFtdcDepthMarketDataField::AskVolume5)
 		.def_readwrite("AveragePrice", &CThostFtdcDepthMarketDataField::AveragePrice)
 		.def_property("ActionDay", [](CThostFtdcDepthMarketDataField& a) {return encoding_cast(a.ActionDay);}, [](CThostFtdcDepthMarketDataField& a, char c[]) {strcpy(a.ActionDay, c);})
-		;
+		.def("keys", [](const CThostFtdcDepthMarketDataField& a) { std::vector<std::string> b = { "TradingDay", "InstrumentID", "ExchangeID", "ExchangeInstID", "LastPrice", "PreSettlementPrice", "PreClosePrice", "PreOpenInterest", "OpenPrice", "HighestPrice", "LowestPrice", "Volume", "Turnover", "OpenInterest", "ClosePrice", "SettlementPrice", "UpperLimitPrice", "LowerLimitPrice", "PreDelta", "CurrDelta", "UpdateTime", "UpdateMillisec", "BidPrice1", "BidVolume1", "AskPrice1", "AskVolume1", "BidPrice2", "BidVolume2", "AskPrice2", "AskVolume2", "BidPrice3", "BidVolume3", "AskPrice3", "AskVolume3", "BidPrice4", "BidVolume4", "AskPrice4", "AskVolume4", "BidPrice5", "BidVolume5", "AskPrice5", "AskVolume5", "AveragePrice", "ActionDay" }; return b;});
 
 	py::class_<CThostFtdcInstrumentTradingRightField>(m, "CThostFtdcInstrumentTradingRightField")
 		.def(py::init<>())
@@ -581,7 +582,7 @@ void init_structs(py::module_& m) {
 		.def_property("BrokerID", [](CThostFtdcInstrumentTradingRightField& a) {return encoding_cast(a.BrokerID);}, [](CThostFtdcInstrumentTradingRightField& a, char c[]) {strcpy(a.BrokerID, c);})
 		.def_property("InvestorID", [](CThostFtdcInstrumentTradingRightField& a) {return encoding_cast(a.InvestorID);}, [](CThostFtdcInstrumentTradingRightField& a, char c[]) {strcpy(a.InvestorID, c);})
 		.def_readwrite("TradingRight", &CThostFtdcInstrumentTradingRightField::TradingRight)
-		;
+		.def("keys", [](const CThostFtdcInstrumentTradingRightField& a) { std::vector<std::string> b = { "InstrumentID", "InvestorRange", "BrokerID", "InvestorID", "TradingRight" }; return b;});
 
 	py::class_<CThostFtdcBrokerUserField>(m, "CThostFtdcBrokerUserField")
 		.def(py::init<>())
@@ -593,7 +594,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("IsActive", &CThostFtdcBrokerUserField::IsActive)
 		.def_readwrite("IsUsingOTP", &CThostFtdcBrokerUserField::IsUsingOTP)
 		.def_readwrite("IsAuthForce", &CThostFtdcBrokerUserField::IsAuthForce)
-		;
+		.def("keys", [](const CThostFtdcBrokerUserField& a) { std::vector<std::string> b = { "BrokerID", "UserID", "UserName", "UserType", "IsActive", "IsUsingOTP", "IsAuthForce" }; return b;});
 
 	py::class_<CThostFtdcBrokerUserPasswordField>(m, "CThostFtdcBrokerUserPasswordField")
 		.def(py::init<>())
@@ -605,7 +606,7 @@ void init_structs(py::module_& m) {
 		.def_property("LastLoginTime", [](CThostFtdcBrokerUserPasswordField& a) {return encoding_cast(a.LastLoginTime);}, [](CThostFtdcBrokerUserPasswordField& a, char c[]) {strcpy(a.LastLoginTime, c);})
 		.def_property("ExpireDate", [](CThostFtdcBrokerUserPasswordField& a) {return encoding_cast(a.ExpireDate);}, [](CThostFtdcBrokerUserPasswordField& a, char c[]) {strcpy(a.ExpireDate, c);})
 		.def_property("WeakExpireDate", [](CThostFtdcBrokerUserPasswordField& a) {return encoding_cast(a.WeakExpireDate);}, [](CThostFtdcBrokerUserPasswordField& a, char c[]) {strcpy(a.WeakExpireDate, c);})
-		;
+		.def("keys", [](const CThostFtdcBrokerUserPasswordField& a) { std::vector<std::string> b = { "BrokerID", "UserID", "Password", "LastUpdateTime", "LastLoginTime", "ExpireDate", "WeakExpireDate" }; return b;});
 
 	py::class_<CThostFtdcBrokerUserFunctionField>(m, "CThostFtdcBrokerUserFunctionField")
 		.def(py::init<>())
@@ -613,7 +614,7 @@ void init_structs(py::module_& m) {
 		.def_property("BrokerID", [](CThostFtdcBrokerUserFunctionField& a) {return encoding_cast(a.BrokerID);}, [](CThostFtdcBrokerUserFunctionField& a, char c[]) {strcpy(a.BrokerID, c);})
 		.def_property("UserID", [](CThostFtdcBrokerUserFunctionField& a) {return encoding_cast(a.UserID);}, [](CThostFtdcBrokerUserFunctionField& a, char c[]) {strcpy(a.UserID, c);})
 		.def_readwrite("BrokerFunctionCode", &CThostFtdcBrokerUserFunctionField::BrokerFunctionCode)
-		;
+		.def("keys", [](const CThostFtdcBrokerUserFunctionField& a) { std::vector<std::string> b = { "BrokerID", "UserID", "BrokerFunctionCode" }; return b;});
 
 	py::class_<CThostFtdcTraderOfferField>(m, "CThostFtdcTraderOfferField")
 		.def(py::init<>())
@@ -637,7 +638,7 @@ void init_structs(py::module_& m) {
 		.def_property("BrokerID", [](CThostFtdcTraderOfferField& a) {return encoding_cast(a.BrokerID);}, [](CThostFtdcTraderOfferField& a, char c[]) {strcpy(a.BrokerID, c);})
 		.def_property("MaxTradeID", [](CThostFtdcTraderOfferField& a) {return encoding_cast(a.MaxTradeID);}, [](CThostFtdcTraderOfferField& a, char c[]) {strcpy(a.MaxTradeID, c);})
 		.def_property("MaxOrderMessageReference", [](CThostFtdcTraderOfferField& a) {return encoding_cast(a.MaxOrderMessageReference);}, [](CThostFtdcTraderOfferField& a, char c[]) {strcpy(a.MaxOrderMessageReference, c);})
-		;
+		.def("keys", [](const CThostFtdcTraderOfferField& a) { std::vector<std::string> b = { "ExchangeID", "TraderID", "ParticipantID", "Password", "InstallID", "OrderLocalID", "TraderConnectStatus", "ConnectRequestDate", "ConnectRequestTime", "LastReportDate", "LastReportTime", "ConnectDate", "ConnectTime", "StartDate", "StartTime", "TradingDay", "BrokerID", "MaxTradeID", "MaxOrderMessageReference" }; return b;});
 
 	py::class_<CThostFtdcSettlementInfoField>(m, "CThostFtdcSettlementInfoField")
 		.def(py::init<>())
@@ -650,7 +651,7 @@ void init_structs(py::module_& m) {
 		.def_property("Content", [](CThostFtdcSettlementInfoField& a) {return encoding_cast(a.Content);}, [](CThostFtdcSettlementInfoField& a, char c[]) {strcpy(a.Content, c);})
 		.def_property("AccountID", [](CThostFtdcSettlementInfoField& a) {return encoding_cast(a.AccountID);}, [](CThostFtdcSettlementInfoField& a, char c[]) {strcpy(a.AccountID, c);})
 		.def_property("CurrencyID", [](CThostFtdcSettlementInfoField& a) {return encoding_cast(a.CurrencyID);}, [](CThostFtdcSettlementInfoField& a, char c[]) {strcpy(a.CurrencyID, c);})
-		;
+		.def("keys", [](const CThostFtdcSettlementInfoField& a) { std::vector<std::string> b = { "TradingDay", "SettlementID", "BrokerID", "InvestorID", "SequenceNo", "Content", "AccountID", "CurrencyID" }; return b;});
 
 	py::class_<CThostFtdcInstrumentMarginRateAdjustField>(m, "CThostFtdcInstrumentMarginRateAdjustField")
 		.def(py::init<>())
@@ -665,7 +666,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("ShortMarginRatioByMoney", &CThostFtdcInstrumentMarginRateAdjustField::ShortMarginRatioByMoney)
 		.def_readwrite("ShortMarginRatioByVolume", &CThostFtdcInstrumentMarginRateAdjustField::ShortMarginRatioByVolume)
 		.def_readwrite("IsRelative", &CThostFtdcInstrumentMarginRateAdjustField::IsRelative)
-		;
+		.def("keys", [](const CThostFtdcInstrumentMarginRateAdjustField& a) { std::vector<std::string> b = { "InstrumentID", "InvestorRange", "BrokerID", "InvestorID", "HedgeFlag", "LongMarginRatioByMoney", "LongMarginRatioByVolume", "ShortMarginRatioByMoney", "ShortMarginRatioByVolume", "IsRelative" }; return b;});
 
 	py::class_<CThostFtdcExchangeMarginRateField>(m, "CThostFtdcExchangeMarginRateField")
 		.def(py::init<>())
@@ -678,7 +679,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("ShortMarginRatioByMoney", &CThostFtdcExchangeMarginRateField::ShortMarginRatioByMoney)
 		.def_readwrite("ShortMarginRatioByVolume", &CThostFtdcExchangeMarginRateField::ShortMarginRatioByVolume)
 		.def_property("ExchangeID", [](CThostFtdcExchangeMarginRateField& a) {return encoding_cast(a.ExchangeID);}, [](CThostFtdcExchangeMarginRateField& a, char c[]) {strcpy(a.ExchangeID, c);})
-		;
+		.def("keys", [](const CThostFtdcExchangeMarginRateField& a) { std::vector<std::string> b = { "BrokerID", "InstrumentID", "HedgeFlag", "LongMarginRatioByMoney", "LongMarginRatioByVolume", "ShortMarginRatioByMoney", "ShortMarginRatioByVolume", "ExchangeID" }; return b;});
 
 	py::class_<CThostFtdcExchangeMarginRateAdjustField>(m, "CThostFtdcExchangeMarginRateAdjustField")
 		.def(py::init<>())
@@ -698,7 +699,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("NoLongMarginRatioByVolume", &CThostFtdcExchangeMarginRateAdjustField::NoLongMarginRatioByVolume)
 		.def_readwrite("NoShortMarginRatioByMoney", &CThostFtdcExchangeMarginRateAdjustField::NoShortMarginRatioByMoney)
 		.def_readwrite("NoShortMarginRatioByVolume", &CThostFtdcExchangeMarginRateAdjustField::NoShortMarginRatioByVolume)
-		;
+		.def("keys", [](const CThostFtdcExchangeMarginRateAdjustField& a) { std::vector<std::string> b = { "BrokerID", "InstrumentID", "HedgeFlag", "LongMarginRatioByMoney", "LongMarginRatioByVolume", "ShortMarginRatioByMoney", "ShortMarginRatioByVolume", "ExchLongMarginRatioByMoney", "ExchLongMarginRatioByVolume", "ExchShortMarginRatioByMoney", "ExchShortMarginRatioByVolume", "NoLongMarginRatioByMoney", "NoLongMarginRatioByVolume", "NoShortMarginRatioByMoney", "NoShortMarginRatioByVolume" }; return b;});
 
 	py::class_<CThostFtdcExchangeRateField>(m, "CThostFtdcExchangeRateField")
 		.def(py::init<>())
@@ -708,14 +709,14 @@ void init_structs(py::module_& m) {
 		.def_readwrite("FromCurrencyUnit", &CThostFtdcExchangeRateField::FromCurrencyUnit)
 		.def_property("ToCurrencyID", [](CThostFtdcExchangeRateField& a) {return encoding_cast(a.ToCurrencyID);}, [](CThostFtdcExchangeRateField& a, char c[]) {strcpy(a.ToCurrencyID, c);})
 		.def_readwrite("ExchangeRate", &CThostFtdcExchangeRateField::ExchangeRate)
-		;
+		.def("keys", [](const CThostFtdcExchangeRateField& a) { std::vector<std::string> b = { "BrokerID", "FromCurrencyID", "FromCurrencyUnit", "ToCurrencyID", "ExchangeRate" }; return b;});
 
 	py::class_<CThostFtdcSettlementRefField>(m, "CThostFtdcSettlementRefField")
 		.def(py::init<>())
 		.def("__copy__", [](const CThostFtdcSettlementRefField& a) {return CThostFtdcSettlementRefField(a);})
 		.def_property("TradingDay", [](CThostFtdcSettlementRefField& a) {return encoding_cast(a.TradingDay);}, [](CThostFtdcSettlementRefField& a, char c[]) {strcpy(a.TradingDay, c);})
 		.def_readwrite("SettlementID", &CThostFtdcSettlementRefField::SettlementID)
-		;
+		.def("keys", [](const CThostFtdcSettlementRefField& a) { std::vector<std::string> b = { "TradingDay", "SettlementID" }; return b;});
 
 	py::class_<CThostFtdcCurrentTimeField>(m, "CThostFtdcCurrentTimeField")
 		.def(py::init<>())
@@ -724,7 +725,7 @@ void init_structs(py::module_& m) {
 		.def_property("CurrTime", [](CThostFtdcCurrentTimeField& a) {return encoding_cast(a.CurrTime);}, [](CThostFtdcCurrentTimeField& a, char c[]) {strcpy(a.CurrTime, c);})
 		.def_readwrite("CurrMillisec", &CThostFtdcCurrentTimeField::CurrMillisec)
 		.def_property("ActionDay", [](CThostFtdcCurrentTimeField& a) {return encoding_cast(a.ActionDay);}, [](CThostFtdcCurrentTimeField& a, char c[]) {strcpy(a.ActionDay, c);})
-		;
+		.def("keys", [](const CThostFtdcCurrentTimeField& a) { std::vector<std::string> b = { "CurrDate", "CurrTime", "CurrMillisec", "ActionDay" }; return b;});
 
 	py::class_<CThostFtdcCommPhaseField>(m, "CThostFtdcCommPhaseField")
 		.def(py::init<>())
@@ -732,7 +733,7 @@ void init_structs(py::module_& m) {
 		.def_property("TradingDay", [](CThostFtdcCommPhaseField& a) {return encoding_cast(a.TradingDay);}, [](CThostFtdcCommPhaseField& a, char c[]) {strcpy(a.TradingDay, c);})
 		.def_readwrite("CommPhaseNo", &CThostFtdcCommPhaseField::CommPhaseNo)
 		.def_property("SystemID", [](CThostFtdcCommPhaseField& a) {return encoding_cast(a.SystemID);}, [](CThostFtdcCommPhaseField& a, char c[]) {strcpy(a.SystemID, c);})
-		;
+		.def("keys", [](const CThostFtdcCommPhaseField& a) { std::vector<std::string> b = { "TradingDay", "CommPhaseNo", "SystemID" }; return b;});
 
 	py::class_<CThostFtdcLoginInfoField>(m, "CThostFtdcLoginInfoField")
 		.def(py::init<>())
@@ -760,7 +761,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("IsQryControl", &CThostFtdcLoginInfoField::IsQryControl)
 		.def_property("LoginRemark", [](CThostFtdcLoginInfoField& a) {return encoding_cast(a.LoginRemark);}, [](CThostFtdcLoginInfoField& a, char c[]) {strcpy(a.LoginRemark, c);})
 		.def_property("Password", [](CThostFtdcLoginInfoField& a) {return encoding_cast(a.Password);}, [](CThostFtdcLoginInfoField& a, char c[]) {strcpy(a.Password, c);})
-		;
+		.def("keys", [](const CThostFtdcLoginInfoField& a) { std::vector<std::string> b = { "FrontID", "SessionID", "BrokerID", "UserID", "LoginDate", "LoginTime", "IPAddress", "UserProductInfo", "InterfaceProductInfo", "ProtocolInfo", "SystemName", "PasswordDeprecated", "MaxOrderRef", "SHFETime", "DCETime", "CZCETime", "FFEXTime", "MacAddress", "OneTimePassword", "INETime", "IsQryControl", "LoginRemark", "Password" }; return b;});
 
 	py::class_<CThostFtdcLogoutAllField>(m, "CThostFtdcLogoutAllField")
 		.def(py::init<>())
@@ -768,7 +769,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("FrontID", &CThostFtdcLogoutAllField::FrontID)
 		.def_readwrite("SessionID", &CThostFtdcLogoutAllField::SessionID)
 		.def_property("SystemName", [](CThostFtdcLogoutAllField& a) {return encoding_cast(a.SystemName);}, [](CThostFtdcLogoutAllField& a, char c[]) {strcpy(a.SystemName, c);})
-		;
+		.def("keys", [](const CThostFtdcLogoutAllField& a) { std::vector<std::string> b = { "FrontID", "SessionID", "SystemName" }; return b;});
 
 	py::class_<CThostFtdcFrontStatusField>(m, "CThostFtdcFrontStatusField")
 		.def(py::init<>())
@@ -777,7 +778,7 @@ void init_structs(py::module_& m) {
 		.def_property("LastReportDate", [](CThostFtdcFrontStatusField& a) {return encoding_cast(a.LastReportDate);}, [](CThostFtdcFrontStatusField& a, char c[]) {strcpy(a.LastReportDate, c);})
 		.def_property("LastReportTime", [](CThostFtdcFrontStatusField& a) {return encoding_cast(a.LastReportTime);}, [](CThostFtdcFrontStatusField& a, char c[]) {strcpy(a.LastReportTime, c);})
 		.def_readwrite("IsActive", &CThostFtdcFrontStatusField::IsActive)
-		;
+		.def("keys", [](const CThostFtdcFrontStatusField& a) { std::vector<std::string> b = { "FrontID", "LastReportDate", "LastReportTime", "IsActive" }; return b;});
 
 	py::class_<CThostFtdcUserPasswordUpdateField>(m, "CThostFtdcUserPasswordUpdateField")
 		.def(py::init<>())
@@ -786,7 +787,7 @@ void init_structs(py::module_& m) {
 		.def_property("UserID", [](CThostFtdcUserPasswordUpdateField& a) {return encoding_cast(a.UserID);}, [](CThostFtdcUserPasswordUpdateField& a, char c[]) {strcpy(a.UserID, c);})
 		.def_property("OldPassword", [](CThostFtdcUserPasswordUpdateField& a) {return encoding_cast(a.OldPassword);}, [](CThostFtdcUserPasswordUpdateField& a, char c[]) {strcpy(a.OldPassword, c);})
 		.def_property("NewPassword", [](CThostFtdcUserPasswordUpdateField& a) {return encoding_cast(a.NewPassword);}, [](CThostFtdcUserPasswordUpdateField& a, char c[]) {strcpy(a.NewPassword, c);})
-		;
+		.def("keys", [](const CThostFtdcUserPasswordUpdateField& a) { std::vector<std::string> b = { "BrokerID", "UserID", "OldPassword", "NewPassword" }; return b;});
 
 	py::class_<CThostFtdcInputOrderField>(m, "CThostFtdcInputOrderField")
 		.def(py::init<>())
@@ -821,7 +822,7 @@ void init_structs(py::module_& m) {
 		.def_property("ClientID", [](CThostFtdcInputOrderField& a) {return encoding_cast(a.ClientID);}, [](CThostFtdcInputOrderField& a, char c[]) {strcpy(a.ClientID, c);})
 		.def_property("IPAddress", [](CThostFtdcInputOrderField& a) {return encoding_cast(a.IPAddress);}, [](CThostFtdcInputOrderField& a, char c[]) {strcpy(a.IPAddress, c);})
 		.def_property("MacAddress", [](CThostFtdcInputOrderField& a) {return encoding_cast(a.MacAddress);}, [](CThostFtdcInputOrderField& a, char c[]) {strcpy(a.MacAddress, c);})
-		;
+		.def("keys", [](const CThostFtdcInputOrderField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "InstrumentID", "OrderRef", "UserID", "OrderPriceType", "Direction", "CombOffsetFlag", "CombHedgeFlag", "LimitPrice", "VolumeTotalOriginal", "TimeCondition", "GTDDate", "VolumeCondition", "MinVolume", "ContingentCondition", "StopPrice", "ForceCloseReason", "IsAutoSuspend", "BusinessUnit", "RequestID", "UserForceClose", "IsSwapOrder", "ExchangeID", "InvestUnitID", "AccountID", "CurrencyID", "ClientID", "IPAddress", "MacAddress" }; return b;});
 
 	py::class_<CThostFtdcOrderField>(m, "CThostFtdcOrderField")
 		.def(py::init<>())
@@ -889,7 +890,7 @@ void init_structs(py::module_& m) {
 		.def_property("CurrencyID", [](CThostFtdcOrderField& a) {return encoding_cast(a.CurrencyID);}, [](CThostFtdcOrderField& a, char c[]) {strcpy(a.CurrencyID, c);})
 		.def_property("IPAddress", [](CThostFtdcOrderField& a) {return encoding_cast(a.IPAddress);}, [](CThostFtdcOrderField& a, char c[]) {strcpy(a.IPAddress, c);})
 		.def_property("MacAddress", [](CThostFtdcOrderField& a) {return encoding_cast(a.MacAddress);}, [](CThostFtdcOrderField& a, char c[]) {strcpy(a.MacAddress, c);})
-		;
+		.def("keys", [](const CThostFtdcOrderField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "InstrumentID", "OrderRef", "UserID", "OrderPriceType", "Direction", "CombOffsetFlag", "CombHedgeFlag", "LimitPrice", "VolumeTotalOriginal", "TimeCondition", "GTDDate", "VolumeCondition", "MinVolume", "ContingentCondition", "StopPrice", "ForceCloseReason", "IsAutoSuspend", "BusinessUnit", "RequestID", "OrderLocalID", "ExchangeID", "ParticipantID", "ClientID", "ExchangeInstID", "TraderID", "InstallID", "OrderSubmitStatus", "NotifySequence", "TradingDay", "SettlementID", "OrderSysID", "OrderSource", "OrderStatus", "OrderType", "VolumeTraded", "VolumeTotal", "InsertDate", "InsertTime", "ActiveTime", "SuspendTime", "UpdateTime", "CancelTime", "ActiveTraderID", "ClearingPartID", "SequenceNo", "FrontID", "SessionID", "UserProductInfo", "StatusMsg", "UserForceClose", "ActiveUserID", "BrokerOrderSeq", "RelativeOrderSysID", "ZCETotalTradedVolume", "IsSwapOrder", "BranchID", "InvestUnitID", "AccountID", "CurrencyID", "IPAddress", "MacAddress" }; return b;});
 
 	py::class_<CThostFtdcExchangeOrderField>(m, "CThostFtdcExchangeOrderField")
 		.def(py::init<>())
@@ -939,7 +940,7 @@ void init_structs(py::module_& m) {
 		.def_property("BranchID", [](CThostFtdcExchangeOrderField& a) {return encoding_cast(a.BranchID);}, [](CThostFtdcExchangeOrderField& a, char c[]) {strcpy(a.BranchID, c);})
 		.def_property("IPAddress", [](CThostFtdcExchangeOrderField& a) {return encoding_cast(a.IPAddress);}, [](CThostFtdcExchangeOrderField& a, char c[]) {strcpy(a.IPAddress, c);})
 		.def_property("MacAddress", [](CThostFtdcExchangeOrderField& a) {return encoding_cast(a.MacAddress);}, [](CThostFtdcExchangeOrderField& a, char c[]) {strcpy(a.MacAddress, c);})
-		;
+		.def("keys", [](const CThostFtdcExchangeOrderField& a) { std::vector<std::string> b = { "OrderPriceType", "Direction", "CombOffsetFlag", "CombHedgeFlag", "LimitPrice", "VolumeTotalOriginal", "TimeCondition", "GTDDate", "VolumeCondition", "MinVolume", "ContingentCondition", "StopPrice", "ForceCloseReason", "IsAutoSuspend", "BusinessUnit", "RequestID", "OrderLocalID", "ExchangeID", "ParticipantID", "ClientID", "ExchangeInstID", "TraderID", "InstallID", "OrderSubmitStatus", "NotifySequence", "TradingDay", "SettlementID", "OrderSysID", "OrderSource", "OrderStatus", "OrderType", "VolumeTraded", "VolumeTotal", "InsertDate", "InsertTime", "ActiveTime", "SuspendTime", "UpdateTime", "CancelTime", "ActiveTraderID", "ClearingPartID", "SequenceNo", "BranchID", "IPAddress", "MacAddress" }; return b;});
 
 	py::class_<CThostFtdcExchangeOrderInsertErrorField>(m, "CThostFtdcExchangeOrderInsertErrorField")
 		.def(py::init<>())
@@ -951,7 +952,7 @@ void init_structs(py::module_& m) {
 		.def_property("OrderLocalID", [](CThostFtdcExchangeOrderInsertErrorField& a) {return encoding_cast(a.OrderLocalID);}, [](CThostFtdcExchangeOrderInsertErrorField& a, char c[]) {strcpy(a.OrderLocalID, c);})
 		.def_readwrite("ErrorID", &CThostFtdcExchangeOrderInsertErrorField::ErrorID)
 		.def_property("ErrorMsg", [](CThostFtdcExchangeOrderInsertErrorField& a) {return encoding_cast(a.ErrorMsg);}, [](CThostFtdcExchangeOrderInsertErrorField& a, char c[]) {strcpy(a.ErrorMsg, c);})
-		;
+		.def("keys", [](const CThostFtdcExchangeOrderInsertErrorField& a) { std::vector<std::string> b = { "ExchangeID", "ParticipantID", "TraderID", "InstallID", "OrderLocalID", "ErrorID", "ErrorMsg" }; return b;});
 
 	py::class_<CThostFtdcInputOrderActionField>(m, "CThostFtdcInputOrderActionField")
 		.def(py::init<>())
@@ -973,7 +974,7 @@ void init_structs(py::module_& m) {
 		.def_property("InvestUnitID", [](CThostFtdcInputOrderActionField& a) {return encoding_cast(a.InvestUnitID);}, [](CThostFtdcInputOrderActionField& a, char c[]) {strcpy(a.InvestUnitID, c);})
 		.def_property("IPAddress", [](CThostFtdcInputOrderActionField& a) {return encoding_cast(a.IPAddress);}, [](CThostFtdcInputOrderActionField& a, char c[]) {strcpy(a.IPAddress, c);})
 		.def_property("MacAddress", [](CThostFtdcInputOrderActionField& a) {return encoding_cast(a.MacAddress);}, [](CThostFtdcInputOrderActionField& a, char c[]) {strcpy(a.MacAddress, c);})
-		;
+		.def("keys", [](const CThostFtdcInputOrderActionField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "OrderActionRef", "OrderRef", "RequestID", "FrontID", "SessionID", "ExchangeID", "OrderSysID", "ActionFlag", "LimitPrice", "VolumeChange", "UserID", "InstrumentID", "InvestUnitID", "IPAddress", "MacAddress" }; return b;});
 
 	py::class_<CThostFtdcOrderActionField>(m, "CThostFtdcOrderActionField")
 		.def(py::init<>())
@@ -1007,7 +1008,7 @@ void init_structs(py::module_& m) {
 		.def_property("InvestUnitID", [](CThostFtdcOrderActionField& a) {return encoding_cast(a.InvestUnitID);}, [](CThostFtdcOrderActionField& a, char c[]) {strcpy(a.InvestUnitID, c);})
 		.def_property("IPAddress", [](CThostFtdcOrderActionField& a) {return encoding_cast(a.IPAddress);}, [](CThostFtdcOrderActionField& a, char c[]) {strcpy(a.IPAddress, c);})
 		.def_property("MacAddress", [](CThostFtdcOrderActionField& a) {return encoding_cast(a.MacAddress);}, [](CThostFtdcOrderActionField& a, char c[]) {strcpy(a.MacAddress, c);})
-		;
+		.def("keys", [](const CThostFtdcOrderActionField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "OrderActionRef", "OrderRef", "RequestID", "FrontID", "SessionID", "ExchangeID", "OrderSysID", "ActionFlag", "LimitPrice", "VolumeChange", "ActionDate", "ActionTime", "TraderID", "InstallID", "OrderLocalID", "ActionLocalID", "ParticipantID", "ClientID", "BusinessUnit", "OrderActionStatus", "UserID", "StatusMsg", "InstrumentID", "BranchID", "InvestUnitID", "IPAddress", "MacAddress" }; return b;});
 
 	py::class_<CThostFtdcExchangeOrderActionField>(m, "CThostFtdcExchangeOrderActionField")
 		.def(py::init<>())
@@ -1031,7 +1032,7 @@ void init_structs(py::module_& m) {
 		.def_property("BranchID", [](CThostFtdcExchangeOrderActionField& a) {return encoding_cast(a.BranchID);}, [](CThostFtdcExchangeOrderActionField& a, char c[]) {strcpy(a.BranchID, c);})
 		.def_property("IPAddress", [](CThostFtdcExchangeOrderActionField& a) {return encoding_cast(a.IPAddress);}, [](CThostFtdcExchangeOrderActionField& a, char c[]) {strcpy(a.IPAddress, c);})
 		.def_property("MacAddress", [](CThostFtdcExchangeOrderActionField& a) {return encoding_cast(a.MacAddress);}, [](CThostFtdcExchangeOrderActionField& a, char c[]) {strcpy(a.MacAddress, c);})
-		;
+		.def("keys", [](const CThostFtdcExchangeOrderActionField& a) { std::vector<std::string> b = { "ExchangeID", "OrderSysID", "ActionFlag", "LimitPrice", "VolumeChange", "ActionDate", "ActionTime", "TraderID", "InstallID", "OrderLocalID", "ActionLocalID", "ParticipantID", "ClientID", "BusinessUnit", "OrderActionStatus", "UserID", "BranchID", "IPAddress", "MacAddress" }; return b;});
 
 	py::class_<CThostFtdcExchangeOrderActionErrorField>(m, "CThostFtdcExchangeOrderActionErrorField")
 		.def(py::init<>())
@@ -1044,7 +1045,7 @@ void init_structs(py::module_& m) {
 		.def_property("ActionLocalID", [](CThostFtdcExchangeOrderActionErrorField& a) {return encoding_cast(a.ActionLocalID);}, [](CThostFtdcExchangeOrderActionErrorField& a, char c[]) {strcpy(a.ActionLocalID, c);})
 		.def_readwrite("ErrorID", &CThostFtdcExchangeOrderActionErrorField::ErrorID)
 		.def_property("ErrorMsg", [](CThostFtdcExchangeOrderActionErrorField& a) {return encoding_cast(a.ErrorMsg);}, [](CThostFtdcExchangeOrderActionErrorField& a, char c[]) {strcpy(a.ErrorMsg, c);})
-		;
+		.def("keys", [](const CThostFtdcExchangeOrderActionErrorField& a) { std::vector<std::string> b = { "ExchangeID", "OrderSysID", "TraderID", "InstallID", "OrderLocalID", "ActionLocalID", "ErrorID", "ErrorMsg" }; return b;});
 
 	py::class_<CThostFtdcExchangeTradeField>(m, "CThostFtdcExchangeTradeField")
 		.def(py::init<>())
@@ -1071,7 +1072,7 @@ void init_structs(py::module_& m) {
 		.def_property("BusinessUnit", [](CThostFtdcExchangeTradeField& a) {return encoding_cast(a.BusinessUnit);}, [](CThostFtdcExchangeTradeField& a, char c[]) {strcpy(a.BusinessUnit, c);})
 		.def_readwrite("SequenceNo", &CThostFtdcExchangeTradeField::SequenceNo)
 		.def_readwrite("TradeSource", &CThostFtdcExchangeTradeField::TradeSource)
-		;
+		.def("keys", [](const CThostFtdcExchangeTradeField& a) { std::vector<std::string> b = { "ExchangeID", "TradeID", "Direction", "OrderSysID", "ParticipantID", "ClientID", "TradingRole", "ExchangeInstID", "OffsetFlag", "HedgeFlag", "Price", "Volume", "TradeDate", "TradeTime", "TradeType", "PriceSource", "TraderID", "OrderLocalID", "ClearingPartID", "BusinessUnit", "SequenceNo", "TradeSource" }; return b;});
 
 	py::class_<CThostFtdcTradeField>(m, "CThostFtdcTradeField")
 		.def(py::init<>())
@@ -1107,7 +1108,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("BrokerOrderSeq", &CThostFtdcTradeField::BrokerOrderSeq)
 		.def_readwrite("TradeSource", &CThostFtdcTradeField::TradeSource)
 		.def_property("InvestUnitID", [](CThostFtdcTradeField& a) {return encoding_cast(a.InvestUnitID);}, [](CThostFtdcTradeField& a, char c[]) {strcpy(a.InvestUnitID, c);})
-		;
+		.def("keys", [](const CThostFtdcTradeField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "InstrumentID", "OrderRef", "UserID", "ExchangeID", "TradeID", "Direction", "OrderSysID", "ParticipantID", "ClientID", "TradingRole", "ExchangeInstID", "OffsetFlag", "HedgeFlag", "Price", "Volume", "TradeDate", "TradeTime", "TradeType", "PriceSource", "TraderID", "OrderLocalID", "ClearingPartID", "BusinessUnit", "SequenceNo", "TradingDay", "SettlementID", "BrokerOrderSeq", "TradeSource", "InvestUnitID" }; return b;});
 
 	py::class_<CThostFtdcUserSessionField>(m, "CThostFtdcUserSessionField")
 		.def(py::init<>())
@@ -1124,7 +1125,7 @@ void init_structs(py::module_& m) {
 		.def_property("ProtocolInfo", [](CThostFtdcUserSessionField& a) {return encoding_cast(a.ProtocolInfo);}, [](CThostFtdcUserSessionField& a, char c[]) {strcpy(a.ProtocolInfo, c);})
 		.def_property("MacAddress", [](CThostFtdcUserSessionField& a) {return encoding_cast(a.MacAddress);}, [](CThostFtdcUserSessionField& a, char c[]) {strcpy(a.MacAddress, c);})
 		.def_property("LoginRemark", [](CThostFtdcUserSessionField& a) {return encoding_cast(a.LoginRemark);}, [](CThostFtdcUserSessionField& a, char c[]) {strcpy(a.LoginRemark, c);})
-		;
+		.def("keys", [](const CThostFtdcUserSessionField& a) { std::vector<std::string> b = { "FrontID", "SessionID", "BrokerID", "UserID", "LoginDate", "LoginTime", "IPAddress", "UserProductInfo", "InterfaceProductInfo", "ProtocolInfo", "MacAddress", "LoginRemark" }; return b;});
 
 	py::class_<CThostFtdcQueryMaxOrderVolumeField>(m, "CThostFtdcQueryMaxOrderVolumeField")
 		.def(py::init<>())
@@ -1138,7 +1139,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("MaxVolume", &CThostFtdcQueryMaxOrderVolumeField::MaxVolume)
 		.def_property("ExchangeID", [](CThostFtdcQueryMaxOrderVolumeField& a) {return encoding_cast(a.ExchangeID);}, [](CThostFtdcQueryMaxOrderVolumeField& a, char c[]) {strcpy(a.ExchangeID, c);})
 		.def_property("InvestUnitID", [](CThostFtdcQueryMaxOrderVolumeField& a) {return encoding_cast(a.InvestUnitID);}, [](CThostFtdcQueryMaxOrderVolumeField& a, char c[]) {strcpy(a.InvestUnitID, c);})
-		;
+		.def("keys", [](const CThostFtdcQueryMaxOrderVolumeField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "InstrumentID", "Direction", "OffsetFlag", "HedgeFlag", "MaxVolume", "ExchangeID", "InvestUnitID" }; return b;});
 
 	py::class_<CThostFtdcSettlementInfoConfirmField>(m, "CThostFtdcSettlementInfoConfirmField")
 		.def(py::init<>())
@@ -1150,7 +1151,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("SettlementID", &CThostFtdcSettlementInfoConfirmField::SettlementID)
 		.def_property("AccountID", [](CThostFtdcSettlementInfoConfirmField& a) {return encoding_cast(a.AccountID);}, [](CThostFtdcSettlementInfoConfirmField& a, char c[]) {strcpy(a.AccountID, c);})
 		.def_property("CurrencyID", [](CThostFtdcSettlementInfoConfirmField& a) {return encoding_cast(a.CurrencyID);}, [](CThostFtdcSettlementInfoConfirmField& a, char c[]) {strcpy(a.CurrencyID, c);})
-		;
+		.def("keys", [](const CThostFtdcSettlementInfoConfirmField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "ConfirmDate", "ConfirmTime", "SettlementID", "AccountID", "CurrencyID" }; return b;});
 
 	py::class_<CThostFtdcSyncDepositField>(m, "CThostFtdcSyncDepositField")
 		.def(py::init<>())
@@ -1161,7 +1162,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("Deposit", &CThostFtdcSyncDepositField::Deposit)
 		.def_readwrite("IsForce", &CThostFtdcSyncDepositField::IsForce)
 		.def_property("CurrencyID", [](CThostFtdcSyncDepositField& a) {return encoding_cast(a.CurrencyID);}, [](CThostFtdcSyncDepositField& a, char c[]) {strcpy(a.CurrencyID, c);})
-		;
+		.def("keys", [](const CThostFtdcSyncDepositField& a) { std::vector<std::string> b = { "DepositSeqNo", "BrokerID", "InvestorID", "Deposit", "IsForce", "CurrencyID" }; return b;});
 
 	py::class_<CThostFtdcSyncFundMortgageField>(m, "CThostFtdcSyncFundMortgageField")
 		.def(py::init<>())
@@ -1172,13 +1173,13 @@ void init_structs(py::module_& m) {
 		.def_property("FromCurrencyID", [](CThostFtdcSyncFundMortgageField& a) {return encoding_cast(a.FromCurrencyID);}, [](CThostFtdcSyncFundMortgageField& a, char c[]) {strcpy(a.FromCurrencyID, c);})
 		.def_readwrite("MortgageAmount", &CThostFtdcSyncFundMortgageField::MortgageAmount)
 		.def_property("ToCurrencyID", [](CThostFtdcSyncFundMortgageField& a) {return encoding_cast(a.ToCurrencyID);}, [](CThostFtdcSyncFundMortgageField& a, char c[]) {strcpy(a.ToCurrencyID, c);})
-		;
+		.def("keys", [](const CThostFtdcSyncFundMortgageField& a) { std::vector<std::string> b = { "MortgageSeqNo", "BrokerID", "InvestorID", "FromCurrencyID", "MortgageAmount", "ToCurrencyID" }; return b;});
 
 	py::class_<CThostFtdcBrokerSyncField>(m, "CThostFtdcBrokerSyncField")
 		.def(py::init<>())
 		.def("__copy__", [](const CThostFtdcBrokerSyncField& a) {return CThostFtdcBrokerSyncField(a);})
 		.def_property("BrokerID", [](CThostFtdcBrokerSyncField& a) {return encoding_cast(a.BrokerID);}, [](CThostFtdcBrokerSyncField& a, char c[]) {strcpy(a.BrokerID, c);})
-		;
+		.def("keys", [](const CThostFtdcBrokerSyncField& a) { std::vector<std::string> b = { "BrokerID" }; return b;});
 
 	py::class_<CThostFtdcSyncingInvestorField>(m, "CThostFtdcSyncingInvestorField")
 		.def(py::init<>())
@@ -1196,7 +1197,7 @@ void init_structs(py::module_& m) {
 		.def_property("Mobile", [](CThostFtdcSyncingInvestorField& a) {return encoding_cast(a.Mobile);}, [](CThostFtdcSyncingInvestorField& a, char c[]) {strcpy(a.Mobile, c);})
 		.def_property("CommModelID", [](CThostFtdcSyncingInvestorField& a) {return encoding_cast(a.CommModelID);}, [](CThostFtdcSyncingInvestorField& a, char c[]) {strcpy(a.CommModelID, c);})
 		.def_property("MarginModelID", [](CThostFtdcSyncingInvestorField& a) {return encoding_cast(a.MarginModelID);}, [](CThostFtdcSyncingInvestorField& a, char c[]) {strcpy(a.MarginModelID, c);})
-		;
+		.def("keys", [](const CThostFtdcSyncingInvestorField& a) { std::vector<std::string> b = { "InvestorID", "BrokerID", "InvestorGroupID", "InvestorName", "IdentifiedCardType", "IdentifiedCardNo", "IsActive", "Telephone", "Address", "OpenDate", "Mobile", "CommModelID", "MarginModelID" }; return b;});
 
 	py::class_<CThostFtdcSyncingTradingCodeField>(m, "CThostFtdcSyncingTradingCodeField")
 		.def(py::init<>())
@@ -1207,7 +1208,7 @@ void init_structs(py::module_& m) {
 		.def_property("ClientID", [](CThostFtdcSyncingTradingCodeField& a) {return encoding_cast(a.ClientID);}, [](CThostFtdcSyncingTradingCodeField& a, char c[]) {strcpy(a.ClientID, c);})
 		.def_readwrite("IsActive", &CThostFtdcSyncingTradingCodeField::IsActive)
 		.def_readwrite("ClientIDType", &CThostFtdcSyncingTradingCodeField::ClientIDType)
-		;
+		.def("keys", [](const CThostFtdcSyncingTradingCodeField& a) { std::vector<std::string> b = { "InvestorID", "BrokerID", "ExchangeID", "ClientID", "IsActive", "ClientIDType" }; return b;});
 
 	py::class_<CThostFtdcSyncingInvestorGroupField>(m, "CThostFtdcSyncingInvestorGroupField")
 		.def(py::init<>())
@@ -1215,7 +1216,7 @@ void init_structs(py::module_& m) {
 		.def_property("BrokerID", [](CThostFtdcSyncingInvestorGroupField& a) {return encoding_cast(a.BrokerID);}, [](CThostFtdcSyncingInvestorGroupField& a, char c[]) {strcpy(a.BrokerID, c);})
 		.def_property("InvestorGroupID", [](CThostFtdcSyncingInvestorGroupField& a) {return encoding_cast(a.InvestorGroupID);}, [](CThostFtdcSyncingInvestorGroupField& a, char c[]) {strcpy(a.InvestorGroupID, c);})
 		.def_property("InvestorGroupName", [](CThostFtdcSyncingInvestorGroupField& a) {return encoding_cast(a.InvestorGroupName);}, [](CThostFtdcSyncingInvestorGroupField& a, char c[]) {strcpy(a.InvestorGroupName, c);})
-		;
+		.def("keys", [](const CThostFtdcSyncingInvestorGroupField& a) { std::vector<std::string> b = { "BrokerID", "InvestorGroupID", "InvestorGroupName" }; return b;});
 
 	py::class_<CThostFtdcSyncingTradingAccountField>(m, "CThostFtdcSyncingTradingAccountField")
 		.def(py::init<>())
@@ -1268,7 +1269,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("SpecProductExchangeMargin", &CThostFtdcSyncingTradingAccountField::SpecProductExchangeMargin)
 		.def_readwrite("FrozenSwap", &CThostFtdcSyncingTradingAccountField::FrozenSwap)
 		.def_readwrite("RemainSwap", &CThostFtdcSyncingTradingAccountField::RemainSwap)
-		;
+		.def("keys", [](const CThostFtdcSyncingTradingAccountField& a) { std::vector<std::string> b = { "BrokerID", "AccountID", "PreMortgage", "PreCredit", "PreDeposit", "PreBalance", "PreMargin", "InterestBase", "Interest", "Deposit", "Withdraw", "FrozenMargin", "FrozenCash", "FrozenCommission", "CurrMargin", "CashIn", "Commission", "CloseProfit", "PositionProfit", "Balance", "Available", "WithdrawQuota", "Reserve", "TradingDay", "SettlementID", "Credit", "Mortgage", "ExchangeMargin", "DeliveryMargin", "ExchangeDeliveryMargin", "ReserveBalance", "CurrencyID", "PreFundMortgageIn", "PreFundMortgageOut", "FundMortgageIn", "FundMortgageOut", "FundMortgageAvailable", "MortgageableFund", "SpecProductMargin", "SpecProductFrozenMargin", "SpecProductCommission", "SpecProductFrozenCommission", "SpecProductPositionProfit", "SpecProductCloseProfit", "SpecProductPositionProfitByAlg", "SpecProductExchangeMargin", "FrozenSwap", "RemainSwap" }; return b;});
 
 	py::class_<CThostFtdcSyncingInvestorPositionField>(m, "CThostFtdcSyncingInvestorPositionField")
 		.def(py::init<>())
@@ -1322,7 +1323,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("PositionCostOffset", &CThostFtdcSyncingInvestorPositionField::PositionCostOffset)
 		.def_readwrite("TasPosition", &CThostFtdcSyncingInvestorPositionField::TasPosition)
 		.def_readwrite("TasPositionCost", &CThostFtdcSyncingInvestorPositionField::TasPositionCost)
-		;
+		.def("keys", [](const CThostFtdcSyncingInvestorPositionField& a) { std::vector<std::string> b = { "InstrumentID", "BrokerID", "InvestorID", "PosiDirection", "HedgeFlag", "PositionDate", "YdPosition", "Position", "LongFrozen", "ShortFrozen", "LongFrozenAmount", "ShortFrozenAmount", "OpenVolume", "CloseVolume", "OpenAmount", "CloseAmount", "PositionCost", "PreMargin", "UseMargin", "FrozenMargin", "FrozenCash", "FrozenCommission", "CashIn", "Commission", "CloseProfit", "PositionProfit", "PreSettlementPrice", "SettlementPrice", "TradingDay", "SettlementID", "OpenCost", "ExchangeMargin", "CombPosition", "CombLongFrozen", "CombShortFrozen", "CloseProfitByDate", "CloseProfitByTrade", "TodayPosition", "MarginRateByMoney", "MarginRateByVolume", "StrikeFrozen", "StrikeFrozenAmount", "AbandonFrozen", "ExchangeID", "YdStrikeFrozen", "InvestUnitID", "PositionCostOffset", "TasPosition", "TasPositionCost" }; return b;});
 
 	py::class_<CThostFtdcSyncingInstrumentMarginRateField>(m, "CThostFtdcSyncingInstrumentMarginRateField")
 		.def(py::init<>())
@@ -1337,7 +1338,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("ShortMarginRatioByMoney", &CThostFtdcSyncingInstrumentMarginRateField::ShortMarginRatioByMoney)
 		.def_readwrite("ShortMarginRatioByVolume", &CThostFtdcSyncingInstrumentMarginRateField::ShortMarginRatioByVolume)
 		.def_readwrite("IsRelative", &CThostFtdcSyncingInstrumentMarginRateField::IsRelative)
-		;
+		.def("keys", [](const CThostFtdcSyncingInstrumentMarginRateField& a) { std::vector<std::string> b = { "InstrumentID", "InvestorRange", "BrokerID", "InvestorID", "HedgeFlag", "LongMarginRatioByMoney", "LongMarginRatioByVolume", "ShortMarginRatioByMoney", "ShortMarginRatioByVolume", "IsRelative" }; return b;});
 
 	py::class_<CThostFtdcSyncingInstrumentCommissionRateField>(m, "CThostFtdcSyncingInstrumentCommissionRateField")
 		.def(py::init<>())
@@ -1352,7 +1353,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("CloseRatioByVolume", &CThostFtdcSyncingInstrumentCommissionRateField::CloseRatioByVolume)
 		.def_readwrite("CloseTodayRatioByMoney", &CThostFtdcSyncingInstrumentCommissionRateField::CloseTodayRatioByMoney)
 		.def_readwrite("CloseTodayRatioByVolume", &CThostFtdcSyncingInstrumentCommissionRateField::CloseTodayRatioByVolume)
-		;
+		.def("keys", [](const CThostFtdcSyncingInstrumentCommissionRateField& a) { std::vector<std::string> b = { "InstrumentID", "InvestorRange", "BrokerID", "InvestorID", "OpenRatioByMoney", "OpenRatioByVolume", "CloseRatioByMoney", "CloseRatioByVolume", "CloseTodayRatioByMoney", "CloseTodayRatioByVolume" }; return b;});
 
 	py::class_<CThostFtdcSyncingInstrumentTradingRightField>(m, "CThostFtdcSyncingInstrumentTradingRightField")
 		.def(py::init<>())
@@ -1362,7 +1363,7 @@ void init_structs(py::module_& m) {
 		.def_property("BrokerID", [](CThostFtdcSyncingInstrumentTradingRightField& a) {return encoding_cast(a.BrokerID);}, [](CThostFtdcSyncingInstrumentTradingRightField& a, char c[]) {strcpy(a.BrokerID, c);})
 		.def_property("InvestorID", [](CThostFtdcSyncingInstrumentTradingRightField& a) {return encoding_cast(a.InvestorID);}, [](CThostFtdcSyncingInstrumentTradingRightField& a, char c[]) {strcpy(a.InvestorID, c);})
 		.def_readwrite("TradingRight", &CThostFtdcSyncingInstrumentTradingRightField::TradingRight)
-		;
+		.def("keys", [](const CThostFtdcSyncingInstrumentTradingRightField& a) { std::vector<std::string> b = { "InstrumentID", "InvestorRange", "BrokerID", "InvestorID", "TradingRight" }; return b;});
 
 	py::class_<CThostFtdcQryOrderField>(m, "CThostFtdcQryOrderField")
 		.def(py::init<>())
@@ -1375,7 +1376,7 @@ void init_structs(py::module_& m) {
 		.def_property("InsertTimeStart", [](CThostFtdcQryOrderField& a) {return encoding_cast(a.InsertTimeStart);}, [](CThostFtdcQryOrderField& a, char c[]) {strcpy(a.InsertTimeStart, c);})
 		.def_property("InsertTimeEnd", [](CThostFtdcQryOrderField& a) {return encoding_cast(a.InsertTimeEnd);}, [](CThostFtdcQryOrderField& a, char c[]) {strcpy(a.InsertTimeEnd, c);})
 		.def_property("InvestUnitID", [](CThostFtdcQryOrderField& a) {return encoding_cast(a.InvestUnitID);}, [](CThostFtdcQryOrderField& a, char c[]) {strcpy(a.InvestUnitID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryOrderField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "InstrumentID", "ExchangeID", "OrderSysID", "InsertTimeStart", "InsertTimeEnd", "InvestUnitID" }; return b;});
 
 	py::class_<CThostFtdcQryTradeField>(m, "CThostFtdcQryTradeField")
 		.def(py::init<>())
@@ -1388,7 +1389,7 @@ void init_structs(py::module_& m) {
 		.def_property("TradeTimeStart", [](CThostFtdcQryTradeField& a) {return encoding_cast(a.TradeTimeStart);}, [](CThostFtdcQryTradeField& a, char c[]) {strcpy(a.TradeTimeStart, c);})
 		.def_property("TradeTimeEnd", [](CThostFtdcQryTradeField& a) {return encoding_cast(a.TradeTimeEnd);}, [](CThostFtdcQryTradeField& a, char c[]) {strcpy(a.TradeTimeEnd, c);})
 		.def_property("InvestUnitID", [](CThostFtdcQryTradeField& a) {return encoding_cast(a.InvestUnitID);}, [](CThostFtdcQryTradeField& a, char c[]) {strcpy(a.InvestUnitID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryTradeField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "InstrumentID", "ExchangeID", "TradeID", "TradeTimeStart", "TradeTimeEnd", "InvestUnitID" }; return b;});
 
 	py::class_<CThostFtdcQryInvestorPositionField>(m, "CThostFtdcQryInvestorPositionField")
 		.def(py::init<>())
@@ -1398,7 +1399,7 @@ void init_structs(py::module_& m) {
 		.def_property("InstrumentID", [](CThostFtdcQryInvestorPositionField& a) {return encoding_cast(a.InstrumentID);}, [](CThostFtdcQryInvestorPositionField& a, char c[]) {strcpy(a.InstrumentID, c);})
 		.def_property("ExchangeID", [](CThostFtdcQryInvestorPositionField& a) {return encoding_cast(a.ExchangeID);}, [](CThostFtdcQryInvestorPositionField& a, char c[]) {strcpy(a.ExchangeID, c);})
 		.def_property("InvestUnitID", [](CThostFtdcQryInvestorPositionField& a) {return encoding_cast(a.InvestUnitID);}, [](CThostFtdcQryInvestorPositionField& a, char c[]) {strcpy(a.InvestUnitID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryInvestorPositionField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "InstrumentID", "ExchangeID", "InvestUnitID" }; return b;});
 
 	py::class_<CThostFtdcQryTradingAccountField>(m, "CThostFtdcQryTradingAccountField")
 		.def(py::init<>())
@@ -1408,14 +1409,14 @@ void init_structs(py::module_& m) {
 		.def_property("CurrencyID", [](CThostFtdcQryTradingAccountField& a) {return encoding_cast(a.CurrencyID);}, [](CThostFtdcQryTradingAccountField& a, char c[]) {strcpy(a.CurrencyID, c);})
 		.def_readwrite("BizType", &CThostFtdcQryTradingAccountField::BizType)
 		.def_property("AccountID", [](CThostFtdcQryTradingAccountField& a) {return encoding_cast(a.AccountID);}, [](CThostFtdcQryTradingAccountField& a, char c[]) {strcpy(a.AccountID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryTradingAccountField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "CurrencyID", "BizType", "AccountID" }; return b;});
 
 	py::class_<CThostFtdcQryInvestorField>(m, "CThostFtdcQryInvestorField")
 		.def(py::init<>())
 		.def("__copy__", [](const CThostFtdcQryInvestorField& a) {return CThostFtdcQryInvestorField(a);})
 		.def_property("BrokerID", [](CThostFtdcQryInvestorField& a) {return encoding_cast(a.BrokerID);}, [](CThostFtdcQryInvestorField& a, char c[]) {strcpy(a.BrokerID, c);})
 		.def_property("InvestorID", [](CThostFtdcQryInvestorField& a) {return encoding_cast(a.InvestorID);}, [](CThostFtdcQryInvestorField& a, char c[]) {strcpy(a.InvestorID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryInvestorField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID" }; return b;});
 
 	py::class_<CThostFtdcQryTradingCodeField>(m, "CThostFtdcQryTradingCodeField")
 		.def(py::init<>())
@@ -1426,13 +1427,13 @@ void init_structs(py::module_& m) {
 		.def_property("ClientID", [](CThostFtdcQryTradingCodeField& a) {return encoding_cast(a.ClientID);}, [](CThostFtdcQryTradingCodeField& a, char c[]) {strcpy(a.ClientID, c);})
 		.def_readwrite("ClientIDType", &CThostFtdcQryTradingCodeField::ClientIDType)
 		.def_property("InvestUnitID", [](CThostFtdcQryTradingCodeField& a) {return encoding_cast(a.InvestUnitID);}, [](CThostFtdcQryTradingCodeField& a, char c[]) {strcpy(a.InvestUnitID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryTradingCodeField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "ExchangeID", "ClientID", "ClientIDType", "InvestUnitID" }; return b;});
 
 	py::class_<CThostFtdcQryInvestorGroupField>(m, "CThostFtdcQryInvestorGroupField")
 		.def(py::init<>())
 		.def("__copy__", [](const CThostFtdcQryInvestorGroupField& a) {return CThostFtdcQryInvestorGroupField(a);})
 		.def_property("BrokerID", [](CThostFtdcQryInvestorGroupField& a) {return encoding_cast(a.BrokerID);}, [](CThostFtdcQryInvestorGroupField& a, char c[]) {strcpy(a.BrokerID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryInvestorGroupField& a) { std::vector<std::string> b = { "BrokerID" }; return b;});
 
 	py::class_<CThostFtdcQryInstrumentMarginRateField>(m, "CThostFtdcQryInstrumentMarginRateField")
 		.def(py::init<>())
@@ -1443,7 +1444,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("HedgeFlag", &CThostFtdcQryInstrumentMarginRateField::HedgeFlag)
 		.def_property("ExchangeID", [](CThostFtdcQryInstrumentMarginRateField& a) {return encoding_cast(a.ExchangeID);}, [](CThostFtdcQryInstrumentMarginRateField& a, char c[]) {strcpy(a.ExchangeID, c);})
 		.def_property("InvestUnitID", [](CThostFtdcQryInstrumentMarginRateField& a) {return encoding_cast(a.InvestUnitID);}, [](CThostFtdcQryInstrumentMarginRateField& a, char c[]) {strcpy(a.InvestUnitID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryInstrumentMarginRateField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "InstrumentID", "HedgeFlag", "ExchangeID", "InvestUnitID" }; return b;});
 
 	py::class_<CThostFtdcQryInstrumentCommissionRateField>(m, "CThostFtdcQryInstrumentCommissionRateField")
 		.def(py::init<>())
@@ -1453,7 +1454,7 @@ void init_structs(py::module_& m) {
 		.def_property("InstrumentID", [](CThostFtdcQryInstrumentCommissionRateField& a) {return encoding_cast(a.InstrumentID);}, [](CThostFtdcQryInstrumentCommissionRateField& a, char c[]) {strcpy(a.InstrumentID, c);})
 		.def_property("ExchangeID", [](CThostFtdcQryInstrumentCommissionRateField& a) {return encoding_cast(a.ExchangeID);}, [](CThostFtdcQryInstrumentCommissionRateField& a, char c[]) {strcpy(a.ExchangeID, c);})
 		.def_property("InvestUnitID", [](CThostFtdcQryInstrumentCommissionRateField& a) {return encoding_cast(a.InvestUnitID);}, [](CThostFtdcQryInstrumentCommissionRateField& a, char c[]) {strcpy(a.InvestUnitID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryInstrumentCommissionRateField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "InstrumentID", "ExchangeID", "InvestUnitID" }; return b;});
 
 	py::class_<CThostFtdcQryInstrumentTradingRightField>(m, "CThostFtdcQryInstrumentTradingRightField")
 		.def(py::init<>())
@@ -1461,13 +1462,13 @@ void init_structs(py::module_& m) {
 		.def_property("BrokerID", [](CThostFtdcQryInstrumentTradingRightField& a) {return encoding_cast(a.BrokerID);}, [](CThostFtdcQryInstrumentTradingRightField& a, char c[]) {strcpy(a.BrokerID, c);})
 		.def_property("InvestorID", [](CThostFtdcQryInstrumentTradingRightField& a) {return encoding_cast(a.InvestorID);}, [](CThostFtdcQryInstrumentTradingRightField& a, char c[]) {strcpy(a.InvestorID, c);})
 		.def_property("InstrumentID", [](CThostFtdcQryInstrumentTradingRightField& a) {return encoding_cast(a.InstrumentID);}, [](CThostFtdcQryInstrumentTradingRightField& a, char c[]) {strcpy(a.InstrumentID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryInstrumentTradingRightField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "InstrumentID" }; return b;});
 
 	py::class_<CThostFtdcQryBrokerField>(m, "CThostFtdcQryBrokerField")
 		.def(py::init<>())
 		.def("__copy__", [](const CThostFtdcQryBrokerField& a) {return CThostFtdcQryBrokerField(a);})
 		.def_property("BrokerID", [](CThostFtdcQryBrokerField& a) {return encoding_cast(a.BrokerID);}, [](CThostFtdcQryBrokerField& a, char c[]) {strcpy(a.BrokerID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryBrokerField& a) { std::vector<std::string> b = { "BrokerID" }; return b;});
 
 	py::class_<CThostFtdcQryTraderField>(m, "CThostFtdcQryTraderField")
 		.def(py::init<>())
@@ -1475,13 +1476,13 @@ void init_structs(py::module_& m) {
 		.def_property("ExchangeID", [](CThostFtdcQryTraderField& a) {return encoding_cast(a.ExchangeID);}, [](CThostFtdcQryTraderField& a, char c[]) {strcpy(a.ExchangeID, c);})
 		.def_property("ParticipantID", [](CThostFtdcQryTraderField& a) {return encoding_cast(a.ParticipantID);}, [](CThostFtdcQryTraderField& a, char c[]) {strcpy(a.ParticipantID, c);})
 		.def_property("TraderID", [](CThostFtdcQryTraderField& a) {return encoding_cast(a.TraderID);}, [](CThostFtdcQryTraderField& a, char c[]) {strcpy(a.TraderID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryTraderField& a) { std::vector<std::string> b = { "ExchangeID", "ParticipantID", "TraderID" }; return b;});
 
 	py::class_<CThostFtdcQrySuperUserFunctionField>(m, "CThostFtdcQrySuperUserFunctionField")
 		.def(py::init<>())
 		.def("__copy__", [](const CThostFtdcQrySuperUserFunctionField& a) {return CThostFtdcQrySuperUserFunctionField(a);})
 		.def_property("UserID", [](CThostFtdcQrySuperUserFunctionField& a) {return encoding_cast(a.UserID);}, [](CThostFtdcQrySuperUserFunctionField& a, char c[]) {strcpy(a.UserID, c);})
-		;
+		.def("keys", [](const CThostFtdcQrySuperUserFunctionField& a) { std::vector<std::string> b = { "UserID" }; return b;});
 
 	py::class_<CThostFtdcQryUserSessionField>(m, "CThostFtdcQryUserSessionField")
 		.def(py::init<>())
@@ -1490,7 +1491,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("SessionID", &CThostFtdcQryUserSessionField::SessionID)
 		.def_property("BrokerID", [](CThostFtdcQryUserSessionField& a) {return encoding_cast(a.BrokerID);}, [](CThostFtdcQryUserSessionField& a, char c[]) {strcpy(a.BrokerID, c);})
 		.def_property("UserID", [](CThostFtdcQryUserSessionField& a) {return encoding_cast(a.UserID);}, [](CThostFtdcQryUserSessionField& a, char c[]) {strcpy(a.UserID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryUserSessionField& a) { std::vector<std::string> b = { "FrontID", "SessionID", "BrokerID", "UserID" }; return b;});
 
 	py::class_<CThostFtdcQryPartBrokerField>(m, "CThostFtdcQryPartBrokerField")
 		.def(py::init<>())
@@ -1498,13 +1499,13 @@ void init_structs(py::module_& m) {
 		.def_property("ExchangeID", [](CThostFtdcQryPartBrokerField& a) {return encoding_cast(a.ExchangeID);}, [](CThostFtdcQryPartBrokerField& a, char c[]) {strcpy(a.ExchangeID, c);})
 		.def_property("BrokerID", [](CThostFtdcQryPartBrokerField& a) {return encoding_cast(a.BrokerID);}, [](CThostFtdcQryPartBrokerField& a, char c[]) {strcpy(a.BrokerID, c);})
 		.def_property("ParticipantID", [](CThostFtdcQryPartBrokerField& a) {return encoding_cast(a.ParticipantID);}, [](CThostFtdcQryPartBrokerField& a, char c[]) {strcpy(a.ParticipantID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryPartBrokerField& a) { std::vector<std::string> b = { "ExchangeID", "BrokerID", "ParticipantID" }; return b;});
 
 	py::class_<CThostFtdcQryFrontStatusField>(m, "CThostFtdcQryFrontStatusField")
 		.def(py::init<>())
 		.def("__copy__", [](const CThostFtdcQryFrontStatusField& a) {return CThostFtdcQryFrontStatusField(a);})
 		.def_readwrite("FrontID", &CThostFtdcQryFrontStatusField::FrontID)
-		;
+		.def("keys", [](const CThostFtdcQryFrontStatusField& a) { std::vector<std::string> b = { "FrontID" }; return b;});
 
 	py::class_<CThostFtdcQryExchangeOrderField>(m, "CThostFtdcQryExchangeOrderField")
 		.def(py::init<>())
@@ -1514,7 +1515,7 @@ void init_structs(py::module_& m) {
 		.def_property("ExchangeInstID", [](CThostFtdcQryExchangeOrderField& a) {return encoding_cast(a.ExchangeInstID);}, [](CThostFtdcQryExchangeOrderField& a, char c[]) {strcpy(a.ExchangeInstID, c);})
 		.def_property("ExchangeID", [](CThostFtdcQryExchangeOrderField& a) {return encoding_cast(a.ExchangeID);}, [](CThostFtdcQryExchangeOrderField& a, char c[]) {strcpy(a.ExchangeID, c);})
 		.def_property("TraderID", [](CThostFtdcQryExchangeOrderField& a) {return encoding_cast(a.TraderID);}, [](CThostFtdcQryExchangeOrderField& a, char c[]) {strcpy(a.TraderID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryExchangeOrderField& a) { std::vector<std::string> b = { "ParticipantID", "ClientID", "ExchangeInstID", "ExchangeID", "TraderID" }; return b;});
 
 	py::class_<CThostFtdcQryOrderActionField>(m, "CThostFtdcQryOrderActionField")
 		.def(py::init<>())
@@ -1522,7 +1523,7 @@ void init_structs(py::module_& m) {
 		.def_property("BrokerID", [](CThostFtdcQryOrderActionField& a) {return encoding_cast(a.BrokerID);}, [](CThostFtdcQryOrderActionField& a, char c[]) {strcpy(a.BrokerID, c);})
 		.def_property("InvestorID", [](CThostFtdcQryOrderActionField& a) {return encoding_cast(a.InvestorID);}, [](CThostFtdcQryOrderActionField& a, char c[]) {strcpy(a.InvestorID, c);})
 		.def_property("ExchangeID", [](CThostFtdcQryOrderActionField& a) {return encoding_cast(a.ExchangeID);}, [](CThostFtdcQryOrderActionField& a, char c[]) {strcpy(a.ExchangeID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryOrderActionField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "ExchangeID" }; return b;});
 
 	py::class_<CThostFtdcQryExchangeOrderActionField>(m, "CThostFtdcQryExchangeOrderActionField")
 		.def(py::init<>())
@@ -1531,19 +1532,19 @@ void init_structs(py::module_& m) {
 		.def_property("ClientID", [](CThostFtdcQryExchangeOrderActionField& a) {return encoding_cast(a.ClientID);}, [](CThostFtdcQryExchangeOrderActionField& a, char c[]) {strcpy(a.ClientID, c);})
 		.def_property("ExchangeID", [](CThostFtdcQryExchangeOrderActionField& a) {return encoding_cast(a.ExchangeID);}, [](CThostFtdcQryExchangeOrderActionField& a, char c[]) {strcpy(a.ExchangeID, c);})
 		.def_property("TraderID", [](CThostFtdcQryExchangeOrderActionField& a) {return encoding_cast(a.TraderID);}, [](CThostFtdcQryExchangeOrderActionField& a, char c[]) {strcpy(a.TraderID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryExchangeOrderActionField& a) { std::vector<std::string> b = { "ParticipantID", "ClientID", "ExchangeID", "TraderID" }; return b;});
 
 	py::class_<CThostFtdcQrySuperUserField>(m, "CThostFtdcQrySuperUserField")
 		.def(py::init<>())
 		.def("__copy__", [](const CThostFtdcQrySuperUserField& a) {return CThostFtdcQrySuperUserField(a);})
 		.def_property("UserID", [](CThostFtdcQrySuperUserField& a) {return encoding_cast(a.UserID);}, [](CThostFtdcQrySuperUserField& a, char c[]) {strcpy(a.UserID, c);})
-		;
+		.def("keys", [](const CThostFtdcQrySuperUserField& a) { std::vector<std::string> b = { "UserID" }; return b;});
 
 	py::class_<CThostFtdcQryExchangeField>(m, "CThostFtdcQryExchangeField")
 		.def(py::init<>())
 		.def("__copy__", [](const CThostFtdcQryExchangeField& a) {return CThostFtdcQryExchangeField(a);})
 		.def_property("ExchangeID", [](CThostFtdcQryExchangeField& a) {return encoding_cast(a.ExchangeID);}, [](CThostFtdcQryExchangeField& a, char c[]) {strcpy(a.ExchangeID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryExchangeField& a) { std::vector<std::string> b = { "ExchangeID" }; return b;});
 
 	py::class_<CThostFtdcQryProductField>(m, "CThostFtdcQryProductField")
 		.def(py::init<>())
@@ -1551,7 +1552,7 @@ void init_structs(py::module_& m) {
 		.def_property("ProductID", [](CThostFtdcQryProductField& a) {return encoding_cast(a.ProductID);}, [](CThostFtdcQryProductField& a, char c[]) {strcpy(a.ProductID, c);})
 		.def_readwrite("ProductClass", &CThostFtdcQryProductField::ProductClass)
 		.def_property("ExchangeID", [](CThostFtdcQryProductField& a) {return encoding_cast(a.ExchangeID);}, [](CThostFtdcQryProductField& a, char c[]) {strcpy(a.ExchangeID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryProductField& a) { std::vector<std::string> b = { "ProductID", "ProductClass", "ExchangeID" }; return b;});
 
 	py::class_<CThostFtdcQryInstrumentField>(m, "CThostFtdcQryInstrumentField")
 		.def(py::init<>())
@@ -1560,28 +1561,28 @@ void init_structs(py::module_& m) {
 		.def_property("ExchangeID", [](CThostFtdcQryInstrumentField& a) {return encoding_cast(a.ExchangeID);}, [](CThostFtdcQryInstrumentField& a, char c[]) {strcpy(a.ExchangeID, c);})
 		.def_property("ExchangeInstID", [](CThostFtdcQryInstrumentField& a) {return encoding_cast(a.ExchangeInstID);}, [](CThostFtdcQryInstrumentField& a, char c[]) {strcpy(a.ExchangeInstID, c);})
 		.def_property("ProductID", [](CThostFtdcQryInstrumentField& a) {return encoding_cast(a.ProductID);}, [](CThostFtdcQryInstrumentField& a, char c[]) {strcpy(a.ProductID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryInstrumentField& a) { std::vector<std::string> b = { "InstrumentID", "ExchangeID", "ExchangeInstID", "ProductID" }; return b;});
 
 	py::class_<CThostFtdcQryDepthMarketDataField>(m, "CThostFtdcQryDepthMarketDataField")
 		.def(py::init<>())
 		.def("__copy__", [](const CThostFtdcQryDepthMarketDataField& a) {return CThostFtdcQryDepthMarketDataField(a);})
 		.def_property("InstrumentID", [](CThostFtdcQryDepthMarketDataField& a) {return encoding_cast(a.InstrumentID);}, [](CThostFtdcQryDepthMarketDataField& a, char c[]) {strcpy(a.InstrumentID, c);})
 		.def_property("ExchangeID", [](CThostFtdcQryDepthMarketDataField& a) {return encoding_cast(a.ExchangeID);}, [](CThostFtdcQryDepthMarketDataField& a, char c[]) {strcpy(a.ExchangeID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryDepthMarketDataField& a) { std::vector<std::string> b = { "InstrumentID", "ExchangeID" }; return b;});
 
 	py::class_<CThostFtdcQryBrokerUserField>(m, "CThostFtdcQryBrokerUserField")
 		.def(py::init<>())
 		.def("__copy__", [](const CThostFtdcQryBrokerUserField& a) {return CThostFtdcQryBrokerUserField(a);})
 		.def_property("BrokerID", [](CThostFtdcQryBrokerUserField& a) {return encoding_cast(a.BrokerID);}, [](CThostFtdcQryBrokerUserField& a, char c[]) {strcpy(a.BrokerID, c);})
 		.def_property("UserID", [](CThostFtdcQryBrokerUserField& a) {return encoding_cast(a.UserID);}, [](CThostFtdcQryBrokerUserField& a, char c[]) {strcpy(a.UserID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryBrokerUserField& a) { std::vector<std::string> b = { "BrokerID", "UserID" }; return b;});
 
 	py::class_<CThostFtdcQryBrokerUserFunctionField>(m, "CThostFtdcQryBrokerUserFunctionField")
 		.def(py::init<>())
 		.def("__copy__", [](const CThostFtdcQryBrokerUserFunctionField& a) {return CThostFtdcQryBrokerUserFunctionField(a);})
 		.def_property("BrokerID", [](CThostFtdcQryBrokerUserFunctionField& a) {return encoding_cast(a.BrokerID);}, [](CThostFtdcQryBrokerUserFunctionField& a, char c[]) {strcpy(a.BrokerID, c);})
 		.def_property("UserID", [](CThostFtdcQryBrokerUserFunctionField& a) {return encoding_cast(a.UserID);}, [](CThostFtdcQryBrokerUserFunctionField& a, char c[]) {strcpy(a.UserID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryBrokerUserFunctionField& a) { std::vector<std::string> b = { "BrokerID", "UserID" }; return b;});
 
 	py::class_<CThostFtdcQryTraderOfferField>(m, "CThostFtdcQryTraderOfferField")
 		.def(py::init<>())
@@ -1589,14 +1590,14 @@ void init_structs(py::module_& m) {
 		.def_property("ExchangeID", [](CThostFtdcQryTraderOfferField& a) {return encoding_cast(a.ExchangeID);}, [](CThostFtdcQryTraderOfferField& a, char c[]) {strcpy(a.ExchangeID, c);})
 		.def_property("ParticipantID", [](CThostFtdcQryTraderOfferField& a) {return encoding_cast(a.ParticipantID);}, [](CThostFtdcQryTraderOfferField& a, char c[]) {strcpy(a.ParticipantID, c);})
 		.def_property("TraderID", [](CThostFtdcQryTraderOfferField& a) {return encoding_cast(a.TraderID);}, [](CThostFtdcQryTraderOfferField& a, char c[]) {strcpy(a.TraderID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryTraderOfferField& a) { std::vector<std::string> b = { "ExchangeID", "ParticipantID", "TraderID" }; return b;});
 
 	py::class_<CThostFtdcQrySyncDepositField>(m, "CThostFtdcQrySyncDepositField")
 		.def(py::init<>())
 		.def("__copy__", [](const CThostFtdcQrySyncDepositField& a) {return CThostFtdcQrySyncDepositField(a);})
 		.def_property("BrokerID", [](CThostFtdcQrySyncDepositField& a) {return encoding_cast(a.BrokerID);}, [](CThostFtdcQrySyncDepositField& a, char c[]) {strcpy(a.BrokerID, c);})
 		.def_property("DepositSeqNo", [](CThostFtdcQrySyncDepositField& a) {return encoding_cast(a.DepositSeqNo);}, [](CThostFtdcQrySyncDepositField& a, char c[]) {strcpy(a.DepositSeqNo, c);})
-		;
+		.def("keys", [](const CThostFtdcQrySyncDepositField& a) { std::vector<std::string> b = { "BrokerID", "DepositSeqNo" }; return b;});
 
 	py::class_<CThostFtdcQrySettlementInfoField>(m, "CThostFtdcQrySettlementInfoField")
 		.def(py::init<>())
@@ -1606,7 +1607,7 @@ void init_structs(py::module_& m) {
 		.def_property("TradingDay", [](CThostFtdcQrySettlementInfoField& a) {return encoding_cast(a.TradingDay);}, [](CThostFtdcQrySettlementInfoField& a, char c[]) {strcpy(a.TradingDay, c);})
 		.def_property("AccountID", [](CThostFtdcQrySettlementInfoField& a) {return encoding_cast(a.AccountID);}, [](CThostFtdcQrySettlementInfoField& a, char c[]) {strcpy(a.AccountID, c);})
 		.def_property("CurrencyID", [](CThostFtdcQrySettlementInfoField& a) {return encoding_cast(a.CurrencyID);}, [](CThostFtdcQrySettlementInfoField& a, char c[]) {strcpy(a.CurrencyID, c);})
-		;
+		.def("keys", [](const CThostFtdcQrySettlementInfoField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "TradingDay", "AccountID", "CurrencyID" }; return b;});
 
 	py::class_<CThostFtdcQryExchangeMarginRateField>(m, "CThostFtdcQryExchangeMarginRateField")
 		.def(py::init<>())
@@ -1615,7 +1616,7 @@ void init_structs(py::module_& m) {
 		.def_property("InstrumentID", [](CThostFtdcQryExchangeMarginRateField& a) {return encoding_cast(a.InstrumentID);}, [](CThostFtdcQryExchangeMarginRateField& a, char c[]) {strcpy(a.InstrumentID, c);})
 		.def_readwrite("HedgeFlag", &CThostFtdcQryExchangeMarginRateField::HedgeFlag)
 		.def_property("ExchangeID", [](CThostFtdcQryExchangeMarginRateField& a) {return encoding_cast(a.ExchangeID);}, [](CThostFtdcQryExchangeMarginRateField& a, char c[]) {strcpy(a.ExchangeID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryExchangeMarginRateField& a) { std::vector<std::string> b = { "BrokerID", "InstrumentID", "HedgeFlag", "ExchangeID" }; return b;});
 
 	py::class_<CThostFtdcQryExchangeMarginRateAdjustField>(m, "CThostFtdcQryExchangeMarginRateAdjustField")
 		.def(py::init<>())
@@ -1623,7 +1624,7 @@ void init_structs(py::module_& m) {
 		.def_property("BrokerID", [](CThostFtdcQryExchangeMarginRateAdjustField& a) {return encoding_cast(a.BrokerID);}, [](CThostFtdcQryExchangeMarginRateAdjustField& a, char c[]) {strcpy(a.BrokerID, c);})
 		.def_property("InstrumentID", [](CThostFtdcQryExchangeMarginRateAdjustField& a) {return encoding_cast(a.InstrumentID);}, [](CThostFtdcQryExchangeMarginRateAdjustField& a, char c[]) {strcpy(a.InstrumentID, c);})
 		.def_readwrite("HedgeFlag", &CThostFtdcQryExchangeMarginRateAdjustField::HedgeFlag)
-		;
+		.def("keys", [](const CThostFtdcQryExchangeMarginRateAdjustField& a) { std::vector<std::string> b = { "BrokerID", "InstrumentID", "HedgeFlag" }; return b;});
 
 	py::class_<CThostFtdcQryExchangeRateField>(m, "CThostFtdcQryExchangeRateField")
 		.def(py::init<>())
@@ -1631,14 +1632,14 @@ void init_structs(py::module_& m) {
 		.def_property("BrokerID", [](CThostFtdcQryExchangeRateField& a) {return encoding_cast(a.BrokerID);}, [](CThostFtdcQryExchangeRateField& a, char c[]) {strcpy(a.BrokerID, c);})
 		.def_property("FromCurrencyID", [](CThostFtdcQryExchangeRateField& a) {return encoding_cast(a.FromCurrencyID);}, [](CThostFtdcQryExchangeRateField& a, char c[]) {strcpy(a.FromCurrencyID, c);})
 		.def_property("ToCurrencyID", [](CThostFtdcQryExchangeRateField& a) {return encoding_cast(a.ToCurrencyID);}, [](CThostFtdcQryExchangeRateField& a, char c[]) {strcpy(a.ToCurrencyID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryExchangeRateField& a) { std::vector<std::string> b = { "BrokerID", "FromCurrencyID", "ToCurrencyID" }; return b;});
 
 	py::class_<CThostFtdcQrySyncFundMortgageField>(m, "CThostFtdcQrySyncFundMortgageField")
 		.def(py::init<>())
 		.def("__copy__", [](const CThostFtdcQrySyncFundMortgageField& a) {return CThostFtdcQrySyncFundMortgageField(a);})
 		.def_property("BrokerID", [](CThostFtdcQrySyncFundMortgageField& a) {return encoding_cast(a.BrokerID);}, [](CThostFtdcQrySyncFundMortgageField& a, char c[]) {strcpy(a.BrokerID, c);})
 		.def_property("MortgageSeqNo", [](CThostFtdcQrySyncFundMortgageField& a) {return encoding_cast(a.MortgageSeqNo);}, [](CThostFtdcQrySyncFundMortgageField& a, char c[]) {strcpy(a.MortgageSeqNo, c);})
-		;
+		.def("keys", [](const CThostFtdcQrySyncFundMortgageField& a) { std::vector<std::string> b = { "BrokerID", "MortgageSeqNo" }; return b;});
 
 	py::class_<CThostFtdcQryHisOrderField>(m, "CThostFtdcQryHisOrderField")
 		.def(py::init<>())
@@ -1652,7 +1653,7 @@ void init_structs(py::module_& m) {
 		.def_property("InsertTimeEnd", [](CThostFtdcQryHisOrderField& a) {return encoding_cast(a.InsertTimeEnd);}, [](CThostFtdcQryHisOrderField& a, char c[]) {strcpy(a.InsertTimeEnd, c);})
 		.def_property("TradingDay", [](CThostFtdcQryHisOrderField& a) {return encoding_cast(a.TradingDay);}, [](CThostFtdcQryHisOrderField& a, char c[]) {strcpy(a.TradingDay, c);})
 		.def_readwrite("SettlementID", &CThostFtdcQryHisOrderField::SettlementID)
-		;
+		.def("keys", [](const CThostFtdcQryHisOrderField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "InstrumentID", "ExchangeID", "OrderSysID", "InsertTimeStart", "InsertTimeEnd", "TradingDay", "SettlementID" }; return b;});
 
 	py::class_<CThostFtdcOptionInstrMiniMarginField>(m, "CThostFtdcOptionInstrMiniMarginField")
 		.def(py::init<>())
@@ -1664,7 +1665,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("MinMargin", &CThostFtdcOptionInstrMiniMarginField::MinMargin)
 		.def_readwrite("ValueMethod", &CThostFtdcOptionInstrMiniMarginField::ValueMethod)
 		.def_readwrite("IsRelative", &CThostFtdcOptionInstrMiniMarginField::IsRelative)
-		;
+		.def("keys", [](const CThostFtdcOptionInstrMiniMarginField& a) { std::vector<std::string> b = { "InstrumentID", "InvestorRange", "BrokerID", "InvestorID", "MinMargin", "ValueMethod", "IsRelative" }; return b;});
 
 	py::class_<CThostFtdcOptionInstrMarginAdjustField>(m, "CThostFtdcOptionInstrMarginAdjustField")
 		.def(py::init<>())
@@ -1682,7 +1683,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("IsRelative", &CThostFtdcOptionInstrMarginAdjustField::IsRelative)
 		.def_readwrite("MShortMarginRatioByMoney", &CThostFtdcOptionInstrMarginAdjustField::MShortMarginRatioByMoney)
 		.def_readwrite("MShortMarginRatioByVolume", &CThostFtdcOptionInstrMarginAdjustField::MShortMarginRatioByVolume)
-		;
+		.def("keys", [](const CThostFtdcOptionInstrMarginAdjustField& a) { std::vector<std::string> b = { "InstrumentID", "InvestorRange", "BrokerID", "InvestorID", "SShortMarginRatioByMoney", "SShortMarginRatioByVolume", "HShortMarginRatioByMoney", "HShortMarginRatioByVolume", "AShortMarginRatioByMoney", "AShortMarginRatioByVolume", "IsRelative", "MShortMarginRatioByMoney", "MShortMarginRatioByVolume" }; return b;});
 
 	py::class_<CThostFtdcOptionInstrCommRateField>(m, "CThostFtdcOptionInstrCommRateField")
 		.def(py::init<>())
@@ -1701,7 +1702,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("StrikeRatioByVolume", &CThostFtdcOptionInstrCommRateField::StrikeRatioByVolume)
 		.def_property("ExchangeID", [](CThostFtdcOptionInstrCommRateField& a) {return encoding_cast(a.ExchangeID);}, [](CThostFtdcOptionInstrCommRateField& a, char c[]) {strcpy(a.ExchangeID, c);})
 		.def_property("InvestUnitID", [](CThostFtdcOptionInstrCommRateField& a) {return encoding_cast(a.InvestUnitID);}, [](CThostFtdcOptionInstrCommRateField& a, char c[]) {strcpy(a.InvestUnitID, c);})
-		;
+		.def("keys", [](const CThostFtdcOptionInstrCommRateField& a) { std::vector<std::string> b = { "InstrumentID", "InvestorRange", "BrokerID", "InvestorID", "OpenRatioByMoney", "OpenRatioByVolume", "CloseRatioByMoney", "CloseRatioByVolume", "CloseTodayRatioByMoney", "CloseTodayRatioByVolume", "StrikeRatioByMoney", "StrikeRatioByVolume", "ExchangeID", "InvestUnitID" }; return b;});
 
 	py::class_<CThostFtdcOptionInstrTradeCostField>(m, "CThostFtdcOptionInstrTradeCostField")
 		.def(py::init<>())
@@ -1717,7 +1718,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("ExchMiniMargin", &CThostFtdcOptionInstrTradeCostField::ExchMiniMargin)
 		.def_property("ExchangeID", [](CThostFtdcOptionInstrTradeCostField& a) {return encoding_cast(a.ExchangeID);}, [](CThostFtdcOptionInstrTradeCostField& a, char c[]) {strcpy(a.ExchangeID, c);})
 		.def_property("InvestUnitID", [](CThostFtdcOptionInstrTradeCostField& a) {return encoding_cast(a.InvestUnitID);}, [](CThostFtdcOptionInstrTradeCostField& a, char c[]) {strcpy(a.InvestUnitID, c);})
-		;
+		.def("keys", [](const CThostFtdcOptionInstrTradeCostField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "InstrumentID", "HedgeFlag", "FixedMargin", "MiniMargin", "Royalty", "ExchFixedMargin", "ExchMiniMargin", "ExchangeID", "InvestUnitID" }; return b;});
 
 	py::class_<CThostFtdcQryOptionInstrTradeCostField>(m, "CThostFtdcQryOptionInstrTradeCostField")
 		.def(py::init<>())
@@ -1730,7 +1731,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("UnderlyingPrice", &CThostFtdcQryOptionInstrTradeCostField::UnderlyingPrice)
 		.def_property("ExchangeID", [](CThostFtdcQryOptionInstrTradeCostField& a) {return encoding_cast(a.ExchangeID);}, [](CThostFtdcQryOptionInstrTradeCostField& a, char c[]) {strcpy(a.ExchangeID, c);})
 		.def_property("InvestUnitID", [](CThostFtdcQryOptionInstrTradeCostField& a) {return encoding_cast(a.InvestUnitID);}, [](CThostFtdcQryOptionInstrTradeCostField& a, char c[]) {strcpy(a.InvestUnitID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryOptionInstrTradeCostField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "InstrumentID", "HedgeFlag", "InputPrice", "UnderlyingPrice", "ExchangeID", "InvestUnitID" }; return b;});
 
 	py::class_<CThostFtdcQryOptionInstrCommRateField>(m, "CThostFtdcQryOptionInstrCommRateField")
 		.def(py::init<>())
@@ -1740,7 +1741,7 @@ void init_structs(py::module_& m) {
 		.def_property("InstrumentID", [](CThostFtdcQryOptionInstrCommRateField& a) {return encoding_cast(a.InstrumentID);}, [](CThostFtdcQryOptionInstrCommRateField& a, char c[]) {strcpy(a.InstrumentID, c);})
 		.def_property("ExchangeID", [](CThostFtdcQryOptionInstrCommRateField& a) {return encoding_cast(a.ExchangeID);}, [](CThostFtdcQryOptionInstrCommRateField& a, char c[]) {strcpy(a.ExchangeID, c);})
 		.def_property("InvestUnitID", [](CThostFtdcQryOptionInstrCommRateField& a) {return encoding_cast(a.InvestUnitID);}, [](CThostFtdcQryOptionInstrCommRateField& a, char c[]) {strcpy(a.InvestUnitID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryOptionInstrCommRateField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "InstrumentID", "ExchangeID", "InvestUnitID" }; return b;});
 
 	py::class_<CThostFtdcIndexPriceField>(m, "CThostFtdcIndexPriceField")
 		.def(py::init<>())
@@ -1748,7 +1749,7 @@ void init_structs(py::module_& m) {
 		.def_property("BrokerID", [](CThostFtdcIndexPriceField& a) {return encoding_cast(a.BrokerID);}, [](CThostFtdcIndexPriceField& a, char c[]) {strcpy(a.BrokerID, c);})
 		.def_property("InstrumentID", [](CThostFtdcIndexPriceField& a) {return encoding_cast(a.InstrumentID);}, [](CThostFtdcIndexPriceField& a, char c[]) {strcpy(a.InstrumentID, c);})
 		.def_readwrite("ClosePrice", &CThostFtdcIndexPriceField::ClosePrice)
-		;
+		.def("keys", [](const CThostFtdcIndexPriceField& a) { std::vector<std::string> b = { "BrokerID", "InstrumentID", "ClosePrice" }; return b;});
 
 	py::class_<CThostFtdcInputExecOrderField>(m, "CThostFtdcInputExecOrderField")
 		.def(py::init<>())
@@ -1774,7 +1775,7 @@ void init_structs(py::module_& m) {
 		.def_property("ClientID", [](CThostFtdcInputExecOrderField& a) {return encoding_cast(a.ClientID);}, [](CThostFtdcInputExecOrderField& a, char c[]) {strcpy(a.ClientID, c);})
 		.def_property("IPAddress", [](CThostFtdcInputExecOrderField& a) {return encoding_cast(a.IPAddress);}, [](CThostFtdcInputExecOrderField& a, char c[]) {strcpy(a.IPAddress, c);})
 		.def_property("MacAddress", [](CThostFtdcInputExecOrderField& a) {return encoding_cast(a.MacAddress);}, [](CThostFtdcInputExecOrderField& a, char c[]) {strcpy(a.MacAddress, c);})
-		;
+		.def("keys", [](const CThostFtdcInputExecOrderField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "InstrumentID", "ExecOrderRef", "UserID", "Volume", "RequestID", "BusinessUnit", "OffsetFlag", "HedgeFlag", "ActionType", "PosiDirection", "ReservePositionFlag", "CloseFlag", "ExchangeID", "InvestUnitID", "AccountID", "CurrencyID", "ClientID", "IPAddress", "MacAddress" }; return b;});
 
 	py::class_<CThostFtdcInputExecOrderActionField>(m, "CThostFtdcInputExecOrderActionField")
 		.def(py::init<>())
@@ -1794,7 +1795,7 @@ void init_structs(py::module_& m) {
 		.def_property("InvestUnitID", [](CThostFtdcInputExecOrderActionField& a) {return encoding_cast(a.InvestUnitID);}, [](CThostFtdcInputExecOrderActionField& a, char c[]) {strcpy(a.InvestUnitID, c);})
 		.def_property("IPAddress", [](CThostFtdcInputExecOrderActionField& a) {return encoding_cast(a.IPAddress);}, [](CThostFtdcInputExecOrderActionField& a, char c[]) {strcpy(a.IPAddress, c);})
 		.def_property("MacAddress", [](CThostFtdcInputExecOrderActionField& a) {return encoding_cast(a.MacAddress);}, [](CThostFtdcInputExecOrderActionField& a, char c[]) {strcpy(a.MacAddress, c);})
-		;
+		.def("keys", [](const CThostFtdcInputExecOrderActionField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "ExecOrderActionRef", "ExecOrderRef", "RequestID", "FrontID", "SessionID", "ExchangeID", "ExecOrderSysID", "ActionFlag", "UserID", "InstrumentID", "InvestUnitID", "IPAddress", "MacAddress" }; return b;});
 
 	py::class_<CThostFtdcExecOrderField>(m, "CThostFtdcExecOrderField")
 		.def(py::init<>())
@@ -1843,7 +1844,7 @@ void init_structs(py::module_& m) {
 		.def_property("CurrencyID", [](CThostFtdcExecOrderField& a) {return encoding_cast(a.CurrencyID);}, [](CThostFtdcExecOrderField& a, char c[]) {strcpy(a.CurrencyID, c);})
 		.def_property("IPAddress", [](CThostFtdcExecOrderField& a) {return encoding_cast(a.IPAddress);}, [](CThostFtdcExecOrderField& a, char c[]) {strcpy(a.IPAddress, c);})
 		.def_property("MacAddress", [](CThostFtdcExecOrderField& a) {return encoding_cast(a.MacAddress);}, [](CThostFtdcExecOrderField& a, char c[]) {strcpy(a.MacAddress, c);})
-		;
+		.def("keys", [](const CThostFtdcExecOrderField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "InstrumentID", "ExecOrderRef", "UserID", "Volume", "RequestID", "BusinessUnit", "OffsetFlag", "HedgeFlag", "ActionType", "PosiDirection", "ReservePositionFlag", "CloseFlag", "ExecOrderLocalID", "ExchangeID", "ParticipantID", "ClientID", "ExchangeInstID", "TraderID", "InstallID", "OrderSubmitStatus", "NotifySequence", "TradingDay", "SettlementID", "ExecOrderSysID", "InsertDate", "InsertTime", "CancelTime", "ExecResult", "ClearingPartID", "SequenceNo", "FrontID", "SessionID", "UserProductInfo", "StatusMsg", "ActiveUserID", "BrokerExecOrderSeq", "BranchID", "InvestUnitID", "AccountID", "CurrencyID", "IPAddress", "MacAddress" }; return b;});
 
 	py::class_<CThostFtdcExecOrderActionField>(m, "CThostFtdcExecOrderActionField")
 		.def(py::init<>())
@@ -1876,7 +1877,7 @@ void init_structs(py::module_& m) {
 		.def_property("InvestUnitID", [](CThostFtdcExecOrderActionField& a) {return encoding_cast(a.InvestUnitID);}, [](CThostFtdcExecOrderActionField& a, char c[]) {strcpy(a.InvestUnitID, c);})
 		.def_property("IPAddress", [](CThostFtdcExecOrderActionField& a) {return encoding_cast(a.IPAddress);}, [](CThostFtdcExecOrderActionField& a, char c[]) {strcpy(a.IPAddress, c);})
 		.def_property("MacAddress", [](CThostFtdcExecOrderActionField& a) {return encoding_cast(a.MacAddress);}, [](CThostFtdcExecOrderActionField& a, char c[]) {strcpy(a.MacAddress, c);})
-		;
+		.def("keys", [](const CThostFtdcExecOrderActionField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "ExecOrderActionRef", "ExecOrderRef", "RequestID", "FrontID", "SessionID", "ExchangeID", "ExecOrderSysID", "ActionFlag", "ActionDate", "ActionTime", "TraderID", "InstallID", "ExecOrderLocalID", "ActionLocalID", "ParticipantID", "ClientID", "BusinessUnit", "OrderActionStatus", "UserID", "ActionType", "StatusMsg", "InstrumentID", "BranchID", "InvestUnitID", "IPAddress", "MacAddress" }; return b;});
 
 	py::class_<CThostFtdcQryExecOrderField>(m, "CThostFtdcQryExecOrderField")
 		.def(py::init<>())
@@ -1888,7 +1889,7 @@ void init_structs(py::module_& m) {
 		.def_property("ExecOrderSysID", [](CThostFtdcQryExecOrderField& a) {return encoding_cast(a.ExecOrderSysID);}, [](CThostFtdcQryExecOrderField& a, char c[]) {strcpy(a.ExecOrderSysID, c);})
 		.def_property("InsertTimeStart", [](CThostFtdcQryExecOrderField& a) {return encoding_cast(a.InsertTimeStart);}, [](CThostFtdcQryExecOrderField& a, char c[]) {strcpy(a.InsertTimeStart, c);})
 		.def_property("InsertTimeEnd", [](CThostFtdcQryExecOrderField& a) {return encoding_cast(a.InsertTimeEnd);}, [](CThostFtdcQryExecOrderField& a, char c[]) {strcpy(a.InsertTimeEnd, c);})
-		;
+		.def("keys", [](const CThostFtdcQryExecOrderField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "InstrumentID", "ExchangeID", "ExecOrderSysID", "InsertTimeStart", "InsertTimeEnd" }; return b;});
 
 	py::class_<CThostFtdcExchangeExecOrderField>(m, "CThostFtdcExchangeExecOrderField")
 		.def(py::init<>())
@@ -1923,7 +1924,7 @@ void init_structs(py::module_& m) {
 		.def_property("BranchID", [](CThostFtdcExchangeExecOrderField& a) {return encoding_cast(a.BranchID);}, [](CThostFtdcExchangeExecOrderField& a, char c[]) {strcpy(a.BranchID, c);})
 		.def_property("IPAddress", [](CThostFtdcExchangeExecOrderField& a) {return encoding_cast(a.IPAddress);}, [](CThostFtdcExchangeExecOrderField& a, char c[]) {strcpy(a.IPAddress, c);})
 		.def_property("MacAddress", [](CThostFtdcExchangeExecOrderField& a) {return encoding_cast(a.MacAddress);}, [](CThostFtdcExchangeExecOrderField& a, char c[]) {strcpy(a.MacAddress, c);})
-		;
+		.def("keys", [](const CThostFtdcExchangeExecOrderField& a) { std::vector<std::string> b = { "Volume", "RequestID", "BusinessUnit", "OffsetFlag", "HedgeFlag", "ActionType", "PosiDirection", "ReservePositionFlag", "CloseFlag", "ExecOrderLocalID", "ExchangeID", "ParticipantID", "ClientID", "ExchangeInstID", "TraderID", "InstallID", "OrderSubmitStatus", "NotifySequence", "TradingDay", "SettlementID", "ExecOrderSysID", "InsertDate", "InsertTime", "CancelTime", "ExecResult", "ClearingPartID", "SequenceNo", "BranchID", "IPAddress", "MacAddress" }; return b;});
 
 	py::class_<CThostFtdcQryExchangeExecOrderField>(m, "CThostFtdcQryExchangeExecOrderField")
 		.def(py::init<>())
@@ -1933,7 +1934,7 @@ void init_structs(py::module_& m) {
 		.def_property("ExchangeInstID", [](CThostFtdcQryExchangeExecOrderField& a) {return encoding_cast(a.ExchangeInstID);}, [](CThostFtdcQryExchangeExecOrderField& a, char c[]) {strcpy(a.ExchangeInstID, c);})
 		.def_property("ExchangeID", [](CThostFtdcQryExchangeExecOrderField& a) {return encoding_cast(a.ExchangeID);}, [](CThostFtdcQryExchangeExecOrderField& a, char c[]) {strcpy(a.ExchangeID, c);})
 		.def_property("TraderID", [](CThostFtdcQryExchangeExecOrderField& a) {return encoding_cast(a.TraderID);}, [](CThostFtdcQryExchangeExecOrderField& a, char c[]) {strcpy(a.TraderID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryExchangeExecOrderField& a) { std::vector<std::string> b = { "ParticipantID", "ClientID", "ExchangeInstID", "ExchangeID", "TraderID" }; return b;});
 
 	py::class_<CThostFtdcQryExecOrderActionField>(m, "CThostFtdcQryExecOrderActionField")
 		.def(py::init<>())
@@ -1941,7 +1942,7 @@ void init_structs(py::module_& m) {
 		.def_property("BrokerID", [](CThostFtdcQryExecOrderActionField& a) {return encoding_cast(a.BrokerID);}, [](CThostFtdcQryExecOrderActionField& a, char c[]) {strcpy(a.BrokerID, c);})
 		.def_property("InvestorID", [](CThostFtdcQryExecOrderActionField& a) {return encoding_cast(a.InvestorID);}, [](CThostFtdcQryExecOrderActionField& a, char c[]) {strcpy(a.InvestorID, c);})
 		.def_property("ExchangeID", [](CThostFtdcQryExecOrderActionField& a) {return encoding_cast(a.ExchangeID);}, [](CThostFtdcQryExecOrderActionField& a, char c[]) {strcpy(a.ExchangeID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryExecOrderActionField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "ExchangeID" }; return b;});
 
 	py::class_<CThostFtdcExchangeExecOrderActionField>(m, "CThostFtdcExchangeExecOrderActionField")
 		.def(py::init<>())
@@ -1966,7 +1967,7 @@ void init_structs(py::module_& m) {
 		.def_property("MacAddress", [](CThostFtdcExchangeExecOrderActionField& a) {return encoding_cast(a.MacAddress);}, [](CThostFtdcExchangeExecOrderActionField& a, char c[]) {strcpy(a.MacAddress, c);})
 		.def_property("ExchangeInstID", [](CThostFtdcExchangeExecOrderActionField& a) {return encoding_cast(a.ExchangeInstID);}, [](CThostFtdcExchangeExecOrderActionField& a, char c[]) {strcpy(a.ExchangeInstID, c);})
 		.def_readwrite("Volume", &CThostFtdcExchangeExecOrderActionField::Volume)
-		;
+		.def("keys", [](const CThostFtdcExchangeExecOrderActionField& a) { std::vector<std::string> b = { "ExchangeID", "ExecOrderSysID", "ActionFlag", "ActionDate", "ActionTime", "TraderID", "InstallID", "ExecOrderLocalID", "ActionLocalID", "ParticipantID", "ClientID", "BusinessUnit", "OrderActionStatus", "UserID", "ActionType", "BranchID", "IPAddress", "MacAddress", "ExchangeInstID", "Volume" }; return b;});
 
 	py::class_<CThostFtdcQryExchangeExecOrderActionField>(m, "CThostFtdcQryExchangeExecOrderActionField")
 		.def(py::init<>())
@@ -1975,7 +1976,7 @@ void init_structs(py::module_& m) {
 		.def_property("ClientID", [](CThostFtdcQryExchangeExecOrderActionField& a) {return encoding_cast(a.ClientID);}, [](CThostFtdcQryExchangeExecOrderActionField& a, char c[]) {strcpy(a.ClientID, c);})
 		.def_property("ExchangeID", [](CThostFtdcQryExchangeExecOrderActionField& a) {return encoding_cast(a.ExchangeID);}, [](CThostFtdcQryExchangeExecOrderActionField& a, char c[]) {strcpy(a.ExchangeID, c);})
 		.def_property("TraderID", [](CThostFtdcQryExchangeExecOrderActionField& a) {return encoding_cast(a.TraderID);}, [](CThostFtdcQryExchangeExecOrderActionField& a, char c[]) {strcpy(a.TraderID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryExchangeExecOrderActionField& a) { std::vector<std::string> b = { "ParticipantID", "ClientID", "ExchangeID", "TraderID" }; return b;});
 
 	py::class_<CThostFtdcErrExecOrderField>(m, "CThostFtdcErrExecOrderField")
 		.def(py::init<>())
@@ -2003,14 +2004,14 @@ void init_structs(py::module_& m) {
 		.def_property("MacAddress", [](CThostFtdcErrExecOrderField& a) {return encoding_cast(a.MacAddress);}, [](CThostFtdcErrExecOrderField& a, char c[]) {strcpy(a.MacAddress, c);})
 		.def_readwrite("ErrorID", &CThostFtdcErrExecOrderField::ErrorID)
 		.def_property("ErrorMsg", [](CThostFtdcErrExecOrderField& a) {return encoding_cast(a.ErrorMsg);}, [](CThostFtdcErrExecOrderField& a, char c[]) {strcpy(a.ErrorMsg, c);})
-		;
+		.def("keys", [](const CThostFtdcErrExecOrderField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "InstrumentID", "ExecOrderRef", "UserID", "Volume", "RequestID", "BusinessUnit", "OffsetFlag", "HedgeFlag", "ActionType", "PosiDirection", "ReservePositionFlag", "CloseFlag", "ExchangeID", "InvestUnitID", "AccountID", "CurrencyID", "ClientID", "IPAddress", "MacAddress", "ErrorID", "ErrorMsg" }; return b;});
 
 	py::class_<CThostFtdcQryErrExecOrderField>(m, "CThostFtdcQryErrExecOrderField")
 		.def(py::init<>())
 		.def("__copy__", [](const CThostFtdcQryErrExecOrderField& a) {return CThostFtdcQryErrExecOrderField(a);})
 		.def_property("BrokerID", [](CThostFtdcQryErrExecOrderField& a) {return encoding_cast(a.BrokerID);}, [](CThostFtdcQryErrExecOrderField& a, char c[]) {strcpy(a.BrokerID, c);})
 		.def_property("InvestorID", [](CThostFtdcQryErrExecOrderField& a) {return encoding_cast(a.InvestorID);}, [](CThostFtdcQryErrExecOrderField& a, char c[]) {strcpy(a.InvestorID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryErrExecOrderField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID" }; return b;});
 
 	py::class_<CThostFtdcErrExecOrderActionField>(m, "CThostFtdcErrExecOrderActionField")
 		.def(py::init<>())
@@ -2032,14 +2033,14 @@ void init_structs(py::module_& m) {
 		.def_property("MacAddress", [](CThostFtdcErrExecOrderActionField& a) {return encoding_cast(a.MacAddress);}, [](CThostFtdcErrExecOrderActionField& a, char c[]) {strcpy(a.MacAddress, c);})
 		.def_readwrite("ErrorID", &CThostFtdcErrExecOrderActionField::ErrorID)
 		.def_property("ErrorMsg", [](CThostFtdcErrExecOrderActionField& a) {return encoding_cast(a.ErrorMsg);}, [](CThostFtdcErrExecOrderActionField& a, char c[]) {strcpy(a.ErrorMsg, c);})
-		;
+		.def("keys", [](const CThostFtdcErrExecOrderActionField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "ExecOrderActionRef", "ExecOrderRef", "RequestID", "FrontID", "SessionID", "ExchangeID", "ExecOrderSysID", "ActionFlag", "UserID", "InstrumentID", "InvestUnitID", "IPAddress", "MacAddress", "ErrorID", "ErrorMsg" }; return b;});
 
 	py::class_<CThostFtdcQryErrExecOrderActionField>(m, "CThostFtdcQryErrExecOrderActionField")
 		.def(py::init<>())
 		.def("__copy__", [](const CThostFtdcQryErrExecOrderActionField& a) {return CThostFtdcQryErrExecOrderActionField(a);})
 		.def_property("BrokerID", [](CThostFtdcQryErrExecOrderActionField& a) {return encoding_cast(a.BrokerID);}, [](CThostFtdcQryErrExecOrderActionField& a, char c[]) {strcpy(a.BrokerID, c);})
 		.def_property("InvestorID", [](CThostFtdcQryErrExecOrderActionField& a) {return encoding_cast(a.InvestorID);}, [](CThostFtdcQryErrExecOrderActionField& a, char c[]) {strcpy(a.InvestorID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryErrExecOrderActionField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID" }; return b;});
 
 	py::class_<CThostFtdcOptionInstrTradingRightField>(m, "CThostFtdcOptionInstrTradingRightField")
 		.def(py::init<>())
@@ -2050,7 +2051,7 @@ void init_structs(py::module_& m) {
 		.def_property("InvestorID", [](CThostFtdcOptionInstrTradingRightField& a) {return encoding_cast(a.InvestorID);}, [](CThostFtdcOptionInstrTradingRightField& a, char c[]) {strcpy(a.InvestorID, c);})
 		.def_readwrite("Direction", &CThostFtdcOptionInstrTradingRightField::Direction)
 		.def_readwrite("TradingRight", &CThostFtdcOptionInstrTradingRightField::TradingRight)
-		;
+		.def("keys", [](const CThostFtdcOptionInstrTradingRightField& a) { std::vector<std::string> b = { "InstrumentID", "InvestorRange", "BrokerID", "InvestorID", "Direction", "TradingRight" }; return b;});
 
 	py::class_<CThostFtdcQryOptionInstrTradingRightField>(m, "CThostFtdcQryOptionInstrTradingRightField")
 		.def(py::init<>())
@@ -2059,7 +2060,7 @@ void init_structs(py::module_& m) {
 		.def_property("InvestorID", [](CThostFtdcQryOptionInstrTradingRightField& a) {return encoding_cast(a.InvestorID);}, [](CThostFtdcQryOptionInstrTradingRightField& a, char c[]) {strcpy(a.InvestorID, c);})
 		.def_property("InstrumentID", [](CThostFtdcQryOptionInstrTradingRightField& a) {return encoding_cast(a.InstrumentID);}, [](CThostFtdcQryOptionInstrTradingRightField& a, char c[]) {strcpy(a.InstrumentID, c);})
 		.def_readwrite("Direction", &CThostFtdcQryOptionInstrTradingRightField::Direction)
-		;
+		.def("keys", [](const CThostFtdcQryOptionInstrTradingRightField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "InstrumentID", "Direction" }; return b;});
 
 	py::class_<CThostFtdcInputForQuoteField>(m, "CThostFtdcInputForQuoteField")
 		.def(py::init<>())
@@ -2073,7 +2074,7 @@ void init_structs(py::module_& m) {
 		.def_property("InvestUnitID", [](CThostFtdcInputForQuoteField& a) {return encoding_cast(a.InvestUnitID);}, [](CThostFtdcInputForQuoteField& a, char c[]) {strcpy(a.InvestUnitID, c);})
 		.def_property("IPAddress", [](CThostFtdcInputForQuoteField& a) {return encoding_cast(a.IPAddress);}, [](CThostFtdcInputForQuoteField& a, char c[]) {strcpy(a.IPAddress, c);})
 		.def_property("MacAddress", [](CThostFtdcInputForQuoteField& a) {return encoding_cast(a.MacAddress);}, [](CThostFtdcInputForQuoteField& a, char c[]) {strcpy(a.MacAddress, c);})
-		;
+		.def("keys", [](const CThostFtdcInputForQuoteField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "InstrumentID", "ForQuoteRef", "UserID", "ExchangeID", "InvestUnitID", "IPAddress", "MacAddress" }; return b;});
 
 	py::class_<CThostFtdcForQuoteField>(m, "CThostFtdcForQuoteField")
 		.def(py::init<>())
@@ -2101,7 +2102,7 @@ void init_structs(py::module_& m) {
 		.def_property("InvestUnitID", [](CThostFtdcForQuoteField& a) {return encoding_cast(a.InvestUnitID);}, [](CThostFtdcForQuoteField& a, char c[]) {strcpy(a.InvestUnitID, c);})
 		.def_property("IPAddress", [](CThostFtdcForQuoteField& a) {return encoding_cast(a.IPAddress);}, [](CThostFtdcForQuoteField& a, char c[]) {strcpy(a.IPAddress, c);})
 		.def_property("MacAddress", [](CThostFtdcForQuoteField& a) {return encoding_cast(a.MacAddress);}, [](CThostFtdcForQuoteField& a, char c[]) {strcpy(a.MacAddress, c);})
-		;
+		.def("keys", [](const CThostFtdcForQuoteField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "InstrumentID", "ForQuoteRef", "UserID", "ForQuoteLocalID", "ExchangeID", "ParticipantID", "ClientID", "ExchangeInstID", "TraderID", "InstallID", "InsertDate", "InsertTime", "ForQuoteStatus", "FrontID", "SessionID", "StatusMsg", "ActiveUserID", "BrokerForQutoSeq", "InvestUnitID", "IPAddress", "MacAddress" }; return b;});
 
 	py::class_<CThostFtdcQryForQuoteField>(m, "CThostFtdcQryForQuoteField")
 		.def(py::init<>())
@@ -2113,7 +2114,7 @@ void init_structs(py::module_& m) {
 		.def_property("InsertTimeStart", [](CThostFtdcQryForQuoteField& a) {return encoding_cast(a.InsertTimeStart);}, [](CThostFtdcQryForQuoteField& a, char c[]) {strcpy(a.InsertTimeStart, c);})
 		.def_property("InsertTimeEnd", [](CThostFtdcQryForQuoteField& a) {return encoding_cast(a.InsertTimeEnd);}, [](CThostFtdcQryForQuoteField& a, char c[]) {strcpy(a.InsertTimeEnd, c);})
 		.def_property("InvestUnitID", [](CThostFtdcQryForQuoteField& a) {return encoding_cast(a.InvestUnitID);}, [](CThostFtdcQryForQuoteField& a, char c[]) {strcpy(a.InvestUnitID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryForQuoteField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "InstrumentID", "ExchangeID", "InsertTimeStart", "InsertTimeEnd", "InvestUnitID" }; return b;});
 
 	py::class_<CThostFtdcExchangeForQuoteField>(m, "CThostFtdcExchangeForQuoteField")
 		.def(py::init<>())
@@ -2130,7 +2131,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("ForQuoteStatus", &CThostFtdcExchangeForQuoteField::ForQuoteStatus)
 		.def_property("IPAddress", [](CThostFtdcExchangeForQuoteField& a) {return encoding_cast(a.IPAddress);}, [](CThostFtdcExchangeForQuoteField& a, char c[]) {strcpy(a.IPAddress, c);})
 		.def_property("MacAddress", [](CThostFtdcExchangeForQuoteField& a) {return encoding_cast(a.MacAddress);}, [](CThostFtdcExchangeForQuoteField& a, char c[]) {strcpy(a.MacAddress, c);})
-		;
+		.def("keys", [](const CThostFtdcExchangeForQuoteField& a) { std::vector<std::string> b = { "ForQuoteLocalID", "ExchangeID", "ParticipantID", "ClientID", "ExchangeInstID", "TraderID", "InstallID", "InsertDate", "InsertTime", "ForQuoteStatus", "IPAddress", "MacAddress" }; return b;});
 
 	py::class_<CThostFtdcQryExchangeForQuoteField>(m, "CThostFtdcQryExchangeForQuoteField")
 		.def(py::init<>())
@@ -2140,7 +2141,7 @@ void init_structs(py::module_& m) {
 		.def_property("ExchangeInstID", [](CThostFtdcQryExchangeForQuoteField& a) {return encoding_cast(a.ExchangeInstID);}, [](CThostFtdcQryExchangeForQuoteField& a, char c[]) {strcpy(a.ExchangeInstID, c);})
 		.def_property("ExchangeID", [](CThostFtdcQryExchangeForQuoteField& a) {return encoding_cast(a.ExchangeID);}, [](CThostFtdcQryExchangeForQuoteField& a, char c[]) {strcpy(a.ExchangeID, c);})
 		.def_property("TraderID", [](CThostFtdcQryExchangeForQuoteField& a) {return encoding_cast(a.TraderID);}, [](CThostFtdcQryExchangeForQuoteField& a, char c[]) {strcpy(a.TraderID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryExchangeForQuoteField& a) { std::vector<std::string> b = { "ParticipantID", "ClientID", "ExchangeInstID", "ExchangeID", "TraderID" }; return b;});
 
 	py::class_<CThostFtdcInputQuoteField>(m, "CThostFtdcInputQuoteField")
 		.def(py::init<>())
@@ -2168,7 +2169,7 @@ void init_structs(py::module_& m) {
 		.def_property("ClientID", [](CThostFtdcInputQuoteField& a) {return encoding_cast(a.ClientID);}, [](CThostFtdcInputQuoteField& a, char c[]) {strcpy(a.ClientID, c);})
 		.def_property("IPAddress", [](CThostFtdcInputQuoteField& a) {return encoding_cast(a.IPAddress);}, [](CThostFtdcInputQuoteField& a, char c[]) {strcpy(a.IPAddress, c);})
 		.def_property("MacAddress", [](CThostFtdcInputQuoteField& a) {return encoding_cast(a.MacAddress);}, [](CThostFtdcInputQuoteField& a, char c[]) {strcpy(a.MacAddress, c);})
-		;
+		.def("keys", [](const CThostFtdcInputQuoteField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "InstrumentID", "QuoteRef", "UserID", "AskPrice", "BidPrice", "AskVolume", "BidVolume", "RequestID", "BusinessUnit", "AskOffsetFlag", "BidOffsetFlag", "AskHedgeFlag", "BidHedgeFlag", "AskOrderRef", "BidOrderRef", "ForQuoteSysID", "ExchangeID", "InvestUnitID", "ClientID", "IPAddress", "MacAddress" }; return b;});
 
 	py::class_<CThostFtdcInputQuoteActionField>(m, "CThostFtdcInputQuoteActionField")
 		.def(py::init<>())
@@ -2189,7 +2190,7 @@ void init_structs(py::module_& m) {
 		.def_property("ClientID", [](CThostFtdcInputQuoteActionField& a) {return encoding_cast(a.ClientID);}, [](CThostFtdcInputQuoteActionField& a, char c[]) {strcpy(a.ClientID, c);})
 		.def_property("IPAddress", [](CThostFtdcInputQuoteActionField& a) {return encoding_cast(a.IPAddress);}, [](CThostFtdcInputQuoteActionField& a, char c[]) {strcpy(a.IPAddress, c);})
 		.def_property("MacAddress", [](CThostFtdcInputQuoteActionField& a) {return encoding_cast(a.MacAddress);}, [](CThostFtdcInputQuoteActionField& a, char c[]) {strcpy(a.MacAddress, c);})
-		;
+		.def("keys", [](const CThostFtdcInputQuoteActionField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "QuoteActionRef", "QuoteRef", "RequestID", "FrontID", "SessionID", "ExchangeID", "QuoteSysID", "ActionFlag", "UserID", "InstrumentID", "InvestUnitID", "ClientID", "IPAddress", "MacAddress" }; return b;});
 
 	py::class_<CThostFtdcQuoteField>(m, "CThostFtdcQuoteField")
 		.def(py::init<>())
@@ -2244,7 +2245,7 @@ void init_structs(py::module_& m) {
 		.def_property("CurrencyID", [](CThostFtdcQuoteField& a) {return encoding_cast(a.CurrencyID);}, [](CThostFtdcQuoteField& a, char c[]) {strcpy(a.CurrencyID, c);})
 		.def_property("IPAddress", [](CThostFtdcQuoteField& a) {return encoding_cast(a.IPAddress);}, [](CThostFtdcQuoteField& a, char c[]) {strcpy(a.IPAddress, c);})
 		.def_property("MacAddress", [](CThostFtdcQuoteField& a) {return encoding_cast(a.MacAddress);}, [](CThostFtdcQuoteField& a, char c[]) {strcpy(a.MacAddress, c);})
-		;
+		.def("keys", [](const CThostFtdcQuoteField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "InstrumentID", "QuoteRef", "UserID", "AskPrice", "BidPrice", "AskVolume", "BidVolume", "RequestID", "BusinessUnit", "AskOffsetFlag", "BidOffsetFlag", "AskHedgeFlag", "BidHedgeFlag", "QuoteLocalID", "ExchangeID", "ParticipantID", "ClientID", "ExchangeInstID", "TraderID", "InstallID", "NotifySequence", "OrderSubmitStatus", "TradingDay", "SettlementID", "QuoteSysID", "InsertDate", "InsertTime", "CancelTime", "QuoteStatus", "ClearingPartID", "SequenceNo", "AskOrderSysID", "BidOrderSysID", "FrontID", "SessionID", "UserProductInfo", "StatusMsg", "ActiveUserID", "BrokerQuoteSeq", "AskOrderRef", "BidOrderRef", "ForQuoteSysID", "BranchID", "InvestUnitID", "AccountID", "CurrencyID", "IPAddress", "MacAddress" }; return b;});
 
 	py::class_<CThostFtdcQuoteActionField>(m, "CThostFtdcQuoteActionField")
 		.def(py::init<>())
@@ -2276,7 +2277,7 @@ void init_structs(py::module_& m) {
 		.def_property("InvestUnitID", [](CThostFtdcQuoteActionField& a) {return encoding_cast(a.InvestUnitID);}, [](CThostFtdcQuoteActionField& a, char c[]) {strcpy(a.InvestUnitID, c);})
 		.def_property("IPAddress", [](CThostFtdcQuoteActionField& a) {return encoding_cast(a.IPAddress);}, [](CThostFtdcQuoteActionField& a, char c[]) {strcpy(a.IPAddress, c);})
 		.def_property("MacAddress", [](CThostFtdcQuoteActionField& a) {return encoding_cast(a.MacAddress);}, [](CThostFtdcQuoteActionField& a, char c[]) {strcpy(a.MacAddress, c);})
-		;
+		.def("keys", [](const CThostFtdcQuoteActionField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "QuoteActionRef", "QuoteRef", "RequestID", "FrontID", "SessionID", "ExchangeID", "QuoteSysID", "ActionFlag", "ActionDate", "ActionTime", "TraderID", "InstallID", "QuoteLocalID", "ActionLocalID", "ParticipantID", "ClientID", "BusinessUnit", "OrderActionStatus", "UserID", "StatusMsg", "InstrumentID", "BranchID", "InvestUnitID", "IPAddress", "MacAddress" }; return b;});
 
 	py::class_<CThostFtdcQryQuoteField>(m, "CThostFtdcQryQuoteField")
 		.def(py::init<>())
@@ -2289,7 +2290,7 @@ void init_structs(py::module_& m) {
 		.def_property("InsertTimeStart", [](CThostFtdcQryQuoteField& a) {return encoding_cast(a.InsertTimeStart);}, [](CThostFtdcQryQuoteField& a, char c[]) {strcpy(a.InsertTimeStart, c);})
 		.def_property("InsertTimeEnd", [](CThostFtdcQryQuoteField& a) {return encoding_cast(a.InsertTimeEnd);}, [](CThostFtdcQryQuoteField& a, char c[]) {strcpy(a.InsertTimeEnd, c);})
 		.def_property("InvestUnitID", [](CThostFtdcQryQuoteField& a) {return encoding_cast(a.InvestUnitID);}, [](CThostFtdcQryQuoteField& a, char c[]) {strcpy(a.InvestUnitID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryQuoteField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "InstrumentID", "ExchangeID", "QuoteSysID", "InsertTimeStart", "InsertTimeEnd", "InvestUnitID" }; return b;});
 
 	py::class_<CThostFtdcExchangeQuoteField>(m, "CThostFtdcExchangeQuoteField")
 		.def(py::init<>())
@@ -2328,7 +2329,7 @@ void init_structs(py::module_& m) {
 		.def_property("BranchID", [](CThostFtdcExchangeQuoteField& a) {return encoding_cast(a.BranchID);}, [](CThostFtdcExchangeQuoteField& a, char c[]) {strcpy(a.BranchID, c);})
 		.def_property("IPAddress", [](CThostFtdcExchangeQuoteField& a) {return encoding_cast(a.IPAddress);}, [](CThostFtdcExchangeQuoteField& a, char c[]) {strcpy(a.IPAddress, c);})
 		.def_property("MacAddress", [](CThostFtdcExchangeQuoteField& a) {return encoding_cast(a.MacAddress);}, [](CThostFtdcExchangeQuoteField& a, char c[]) {strcpy(a.MacAddress, c);})
-		;
+		.def("keys", [](const CThostFtdcExchangeQuoteField& a) { std::vector<std::string> b = { "AskPrice", "BidPrice", "AskVolume", "BidVolume", "RequestID", "BusinessUnit", "AskOffsetFlag", "BidOffsetFlag", "AskHedgeFlag", "BidHedgeFlag", "QuoteLocalID", "ExchangeID", "ParticipantID", "ClientID", "ExchangeInstID", "TraderID", "InstallID", "NotifySequence", "OrderSubmitStatus", "TradingDay", "SettlementID", "QuoteSysID", "InsertDate", "InsertTime", "CancelTime", "QuoteStatus", "ClearingPartID", "SequenceNo", "AskOrderSysID", "BidOrderSysID", "ForQuoteSysID", "BranchID", "IPAddress", "MacAddress" }; return b;});
 
 	py::class_<CThostFtdcQryExchangeQuoteField>(m, "CThostFtdcQryExchangeQuoteField")
 		.def(py::init<>())
@@ -2338,7 +2339,7 @@ void init_structs(py::module_& m) {
 		.def_property("ExchangeInstID", [](CThostFtdcQryExchangeQuoteField& a) {return encoding_cast(a.ExchangeInstID);}, [](CThostFtdcQryExchangeQuoteField& a, char c[]) {strcpy(a.ExchangeInstID, c);})
 		.def_property("ExchangeID", [](CThostFtdcQryExchangeQuoteField& a) {return encoding_cast(a.ExchangeID);}, [](CThostFtdcQryExchangeQuoteField& a, char c[]) {strcpy(a.ExchangeID, c);})
 		.def_property("TraderID", [](CThostFtdcQryExchangeQuoteField& a) {return encoding_cast(a.TraderID);}, [](CThostFtdcQryExchangeQuoteField& a, char c[]) {strcpy(a.TraderID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryExchangeQuoteField& a) { std::vector<std::string> b = { "ParticipantID", "ClientID", "ExchangeInstID", "ExchangeID", "TraderID" }; return b;});
 
 	py::class_<CThostFtdcQryQuoteActionField>(m, "CThostFtdcQryQuoteActionField")
 		.def(py::init<>())
@@ -2346,7 +2347,7 @@ void init_structs(py::module_& m) {
 		.def_property("BrokerID", [](CThostFtdcQryQuoteActionField& a) {return encoding_cast(a.BrokerID);}, [](CThostFtdcQryQuoteActionField& a, char c[]) {strcpy(a.BrokerID, c);})
 		.def_property("InvestorID", [](CThostFtdcQryQuoteActionField& a) {return encoding_cast(a.InvestorID);}, [](CThostFtdcQryQuoteActionField& a, char c[]) {strcpy(a.InvestorID, c);})
 		.def_property("ExchangeID", [](CThostFtdcQryQuoteActionField& a) {return encoding_cast(a.ExchangeID);}, [](CThostFtdcQryQuoteActionField& a, char c[]) {strcpy(a.ExchangeID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryQuoteActionField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "ExchangeID" }; return b;});
 
 	py::class_<CThostFtdcExchangeQuoteActionField>(m, "CThostFtdcExchangeQuoteActionField")
 		.def(py::init<>())
@@ -2367,7 +2368,7 @@ void init_structs(py::module_& m) {
 		.def_property("UserID", [](CThostFtdcExchangeQuoteActionField& a) {return encoding_cast(a.UserID);}, [](CThostFtdcExchangeQuoteActionField& a, char c[]) {strcpy(a.UserID, c);})
 		.def_property("IPAddress", [](CThostFtdcExchangeQuoteActionField& a) {return encoding_cast(a.IPAddress);}, [](CThostFtdcExchangeQuoteActionField& a, char c[]) {strcpy(a.IPAddress, c);})
 		.def_property("MacAddress", [](CThostFtdcExchangeQuoteActionField& a) {return encoding_cast(a.MacAddress);}, [](CThostFtdcExchangeQuoteActionField& a, char c[]) {strcpy(a.MacAddress, c);})
-		;
+		.def("keys", [](const CThostFtdcExchangeQuoteActionField& a) { std::vector<std::string> b = { "ExchangeID", "QuoteSysID", "ActionFlag", "ActionDate", "ActionTime", "TraderID", "InstallID", "QuoteLocalID", "ActionLocalID", "ParticipantID", "ClientID", "BusinessUnit", "OrderActionStatus", "UserID", "IPAddress", "MacAddress" }; return b;});
 
 	py::class_<CThostFtdcQryExchangeQuoteActionField>(m, "CThostFtdcQryExchangeQuoteActionField")
 		.def(py::init<>())
@@ -2376,7 +2377,7 @@ void init_structs(py::module_& m) {
 		.def_property("ClientID", [](CThostFtdcQryExchangeQuoteActionField& a) {return encoding_cast(a.ClientID);}, [](CThostFtdcQryExchangeQuoteActionField& a, char c[]) {strcpy(a.ClientID, c);})
 		.def_property("ExchangeID", [](CThostFtdcQryExchangeQuoteActionField& a) {return encoding_cast(a.ExchangeID);}, [](CThostFtdcQryExchangeQuoteActionField& a, char c[]) {strcpy(a.ExchangeID, c);})
 		.def_property("TraderID", [](CThostFtdcQryExchangeQuoteActionField& a) {return encoding_cast(a.TraderID);}, [](CThostFtdcQryExchangeQuoteActionField& a, char c[]) {strcpy(a.TraderID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryExchangeQuoteActionField& a) { std::vector<std::string> b = { "ParticipantID", "ClientID", "ExchangeID", "TraderID" }; return b;});
 
 	py::class_<CThostFtdcOptionInstrDeltaField>(m, "CThostFtdcOptionInstrDeltaField")
 		.def(py::init<>())
@@ -2386,7 +2387,7 @@ void init_structs(py::module_& m) {
 		.def_property("BrokerID", [](CThostFtdcOptionInstrDeltaField& a) {return encoding_cast(a.BrokerID);}, [](CThostFtdcOptionInstrDeltaField& a, char c[]) {strcpy(a.BrokerID, c);})
 		.def_property("InvestorID", [](CThostFtdcOptionInstrDeltaField& a) {return encoding_cast(a.InvestorID);}, [](CThostFtdcOptionInstrDeltaField& a, char c[]) {strcpy(a.InvestorID, c);})
 		.def_readwrite("Delta", &CThostFtdcOptionInstrDeltaField::Delta)
-		;
+		.def("keys", [](const CThostFtdcOptionInstrDeltaField& a) { std::vector<std::string> b = { "InstrumentID", "InvestorRange", "BrokerID", "InvestorID", "Delta" }; return b;});
 
 	py::class_<CThostFtdcForQuoteRspField>(m, "CThostFtdcForQuoteRspField")
 		.def(py::init<>())
@@ -2397,7 +2398,7 @@ void init_structs(py::module_& m) {
 		.def_property("ForQuoteTime", [](CThostFtdcForQuoteRspField& a) {return encoding_cast(a.ForQuoteTime);}, [](CThostFtdcForQuoteRspField& a, char c[]) {strcpy(a.ForQuoteTime, c);})
 		.def_property("ActionDay", [](CThostFtdcForQuoteRspField& a) {return encoding_cast(a.ActionDay);}, [](CThostFtdcForQuoteRspField& a, char c[]) {strcpy(a.ActionDay, c);})
 		.def_property("ExchangeID", [](CThostFtdcForQuoteRspField& a) {return encoding_cast(a.ExchangeID);}, [](CThostFtdcForQuoteRspField& a, char c[]) {strcpy(a.ExchangeID, c);})
-		;
+		.def("keys", [](const CThostFtdcForQuoteRspField& a) { std::vector<std::string> b = { "TradingDay", "InstrumentID", "ForQuoteSysID", "ForQuoteTime", "ActionDay", "ExchangeID" }; return b;});
 
 	py::class_<CThostFtdcStrikeOffsetField>(m, "CThostFtdcStrikeOffsetField")
 		.def(py::init<>())
@@ -2408,7 +2409,7 @@ void init_structs(py::module_& m) {
 		.def_property("InvestorID", [](CThostFtdcStrikeOffsetField& a) {return encoding_cast(a.InvestorID);}, [](CThostFtdcStrikeOffsetField& a, char c[]) {strcpy(a.InvestorID, c);})
 		.def_readwrite("Offset", &CThostFtdcStrikeOffsetField::Offset)
 		.def_readwrite("OffsetType", &CThostFtdcStrikeOffsetField::OffsetType)
-		;
+		.def("keys", [](const CThostFtdcStrikeOffsetField& a) { std::vector<std::string> b = { "InstrumentID", "InvestorRange", "BrokerID", "InvestorID", "Offset", "OffsetType" }; return b;});
 
 	py::class_<CThostFtdcQryStrikeOffsetField>(m, "CThostFtdcQryStrikeOffsetField")
 		.def(py::init<>())
@@ -2416,7 +2417,7 @@ void init_structs(py::module_& m) {
 		.def_property("BrokerID", [](CThostFtdcQryStrikeOffsetField& a) {return encoding_cast(a.BrokerID);}, [](CThostFtdcQryStrikeOffsetField& a, char c[]) {strcpy(a.BrokerID, c);})
 		.def_property("InvestorID", [](CThostFtdcQryStrikeOffsetField& a) {return encoding_cast(a.InvestorID);}, [](CThostFtdcQryStrikeOffsetField& a, char c[]) {strcpy(a.InvestorID, c);})
 		.def_property("InstrumentID", [](CThostFtdcQryStrikeOffsetField& a) {return encoding_cast(a.InstrumentID);}, [](CThostFtdcQryStrikeOffsetField& a, char c[]) {strcpy(a.InstrumentID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryStrikeOffsetField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "InstrumentID" }; return b;});
 
 	py::class_<CThostFtdcInputBatchOrderActionField>(m, "CThostFtdcInputBatchOrderActionField")
 		.def(py::init<>())
@@ -2432,7 +2433,7 @@ void init_structs(py::module_& m) {
 		.def_property("InvestUnitID", [](CThostFtdcInputBatchOrderActionField& a) {return encoding_cast(a.InvestUnitID);}, [](CThostFtdcInputBatchOrderActionField& a, char c[]) {strcpy(a.InvestUnitID, c);})
 		.def_property("IPAddress", [](CThostFtdcInputBatchOrderActionField& a) {return encoding_cast(a.IPAddress);}, [](CThostFtdcInputBatchOrderActionField& a, char c[]) {strcpy(a.IPAddress, c);})
 		.def_property("MacAddress", [](CThostFtdcInputBatchOrderActionField& a) {return encoding_cast(a.MacAddress);}, [](CThostFtdcInputBatchOrderActionField& a, char c[]) {strcpy(a.MacAddress, c);})
-		;
+		.def("keys", [](const CThostFtdcInputBatchOrderActionField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "OrderActionRef", "RequestID", "FrontID", "SessionID", "ExchangeID", "UserID", "InvestUnitID", "IPAddress", "MacAddress" }; return b;});
 
 	py::class_<CThostFtdcBatchOrderActionField>(m, "CThostFtdcBatchOrderActionField")
 		.def(py::init<>())
@@ -2458,7 +2459,7 @@ void init_structs(py::module_& m) {
 		.def_property("InvestUnitID", [](CThostFtdcBatchOrderActionField& a) {return encoding_cast(a.InvestUnitID);}, [](CThostFtdcBatchOrderActionField& a, char c[]) {strcpy(a.InvestUnitID, c);})
 		.def_property("IPAddress", [](CThostFtdcBatchOrderActionField& a) {return encoding_cast(a.IPAddress);}, [](CThostFtdcBatchOrderActionField& a, char c[]) {strcpy(a.IPAddress, c);})
 		.def_property("MacAddress", [](CThostFtdcBatchOrderActionField& a) {return encoding_cast(a.MacAddress);}, [](CThostFtdcBatchOrderActionField& a, char c[]) {strcpy(a.MacAddress, c);})
-		;
+		.def("keys", [](const CThostFtdcBatchOrderActionField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "OrderActionRef", "RequestID", "FrontID", "SessionID", "ExchangeID", "ActionDate", "ActionTime", "TraderID", "InstallID", "ActionLocalID", "ParticipantID", "ClientID", "BusinessUnit", "OrderActionStatus", "UserID", "StatusMsg", "InvestUnitID", "IPAddress", "MacAddress" }; return b;});
 
 	py::class_<CThostFtdcExchangeBatchOrderActionField>(m, "CThostFtdcExchangeBatchOrderActionField")
 		.def(py::init<>())
@@ -2476,7 +2477,7 @@ void init_structs(py::module_& m) {
 		.def_property("UserID", [](CThostFtdcExchangeBatchOrderActionField& a) {return encoding_cast(a.UserID);}, [](CThostFtdcExchangeBatchOrderActionField& a, char c[]) {strcpy(a.UserID, c);})
 		.def_property("IPAddress", [](CThostFtdcExchangeBatchOrderActionField& a) {return encoding_cast(a.IPAddress);}, [](CThostFtdcExchangeBatchOrderActionField& a, char c[]) {strcpy(a.IPAddress, c);})
 		.def_property("MacAddress", [](CThostFtdcExchangeBatchOrderActionField& a) {return encoding_cast(a.MacAddress);}, [](CThostFtdcExchangeBatchOrderActionField& a, char c[]) {strcpy(a.MacAddress, c);})
-		;
+		.def("keys", [](const CThostFtdcExchangeBatchOrderActionField& a) { std::vector<std::string> b = { "ExchangeID", "ActionDate", "ActionTime", "TraderID", "InstallID", "ActionLocalID", "ParticipantID", "ClientID", "BusinessUnit", "OrderActionStatus", "UserID", "IPAddress", "MacAddress" }; return b;});
 
 	py::class_<CThostFtdcQryBatchOrderActionField>(m, "CThostFtdcQryBatchOrderActionField")
 		.def(py::init<>())
@@ -2484,7 +2485,7 @@ void init_structs(py::module_& m) {
 		.def_property("BrokerID", [](CThostFtdcQryBatchOrderActionField& a) {return encoding_cast(a.BrokerID);}, [](CThostFtdcQryBatchOrderActionField& a, char c[]) {strcpy(a.BrokerID, c);})
 		.def_property("InvestorID", [](CThostFtdcQryBatchOrderActionField& a) {return encoding_cast(a.InvestorID);}, [](CThostFtdcQryBatchOrderActionField& a, char c[]) {strcpy(a.InvestorID, c);})
 		.def_property("ExchangeID", [](CThostFtdcQryBatchOrderActionField& a) {return encoding_cast(a.ExchangeID);}, [](CThostFtdcQryBatchOrderActionField& a, char c[]) {strcpy(a.ExchangeID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryBatchOrderActionField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "ExchangeID" }; return b;});
 
 	py::class_<CThostFtdcCombInstrumentGuardField>(m, "CThostFtdcCombInstrumentGuardField")
 		.def(py::init<>())
@@ -2493,7 +2494,7 @@ void init_structs(py::module_& m) {
 		.def_property("InstrumentID", [](CThostFtdcCombInstrumentGuardField& a) {return encoding_cast(a.InstrumentID);}, [](CThostFtdcCombInstrumentGuardField& a, char c[]) {strcpy(a.InstrumentID, c);})
 		.def_readwrite("GuarantRatio", &CThostFtdcCombInstrumentGuardField::GuarantRatio)
 		.def_property("ExchangeID", [](CThostFtdcCombInstrumentGuardField& a) {return encoding_cast(a.ExchangeID);}, [](CThostFtdcCombInstrumentGuardField& a, char c[]) {strcpy(a.ExchangeID, c);})
-		;
+		.def("keys", [](const CThostFtdcCombInstrumentGuardField& a) { std::vector<std::string> b = { "BrokerID", "InstrumentID", "GuarantRatio", "ExchangeID" }; return b;});
 
 	py::class_<CThostFtdcQryCombInstrumentGuardField>(m, "CThostFtdcQryCombInstrumentGuardField")
 		.def(py::init<>())
@@ -2501,7 +2502,7 @@ void init_structs(py::module_& m) {
 		.def_property("BrokerID", [](CThostFtdcQryCombInstrumentGuardField& a) {return encoding_cast(a.BrokerID);}, [](CThostFtdcQryCombInstrumentGuardField& a, char c[]) {strcpy(a.BrokerID, c);})
 		.def_property("InstrumentID", [](CThostFtdcQryCombInstrumentGuardField& a) {return encoding_cast(a.InstrumentID);}, [](CThostFtdcQryCombInstrumentGuardField& a, char c[]) {strcpy(a.InstrumentID, c);})
 		.def_property("ExchangeID", [](CThostFtdcQryCombInstrumentGuardField& a) {return encoding_cast(a.ExchangeID);}, [](CThostFtdcQryCombInstrumentGuardField& a, char c[]) {strcpy(a.ExchangeID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryCombInstrumentGuardField& a) { std::vector<std::string> b = { "BrokerID", "InstrumentID", "ExchangeID" }; return b;});
 
 	py::class_<CThostFtdcInputCombActionField>(m, "CThostFtdcInputCombActionField")
 		.def(py::init<>())
@@ -2521,7 +2522,7 @@ void init_structs(py::module_& m) {
 		.def_property("InvestUnitID", [](CThostFtdcInputCombActionField& a) {return encoding_cast(a.InvestUnitID);}, [](CThostFtdcInputCombActionField& a, char c[]) {strcpy(a.InvestUnitID, c);})
 		.def_readwrite("FrontID", &CThostFtdcInputCombActionField::FrontID)
 		.def_readwrite("SessionID", &CThostFtdcInputCombActionField::SessionID)
-		;
+		.def("keys", [](const CThostFtdcInputCombActionField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "InstrumentID", "CombActionRef", "UserID", "Direction", "Volume", "CombDirection", "HedgeFlag", "ExchangeID", "IPAddress", "MacAddress", "InvestUnitID", "FrontID", "SessionID" }; return b;});
 
 	py::class_<CThostFtdcCombActionField>(m, "CThostFtdcCombActionField")
 		.def(py::init<>())
@@ -2556,7 +2557,7 @@ void init_structs(py::module_& m) {
 		.def_property("ComTradeID", [](CThostFtdcCombActionField& a) {return encoding_cast(a.ComTradeID);}, [](CThostFtdcCombActionField& a, char c[]) {strcpy(a.ComTradeID, c);})
 		.def_property("BranchID", [](CThostFtdcCombActionField& a) {return encoding_cast(a.BranchID);}, [](CThostFtdcCombActionField& a, char c[]) {strcpy(a.BranchID, c);})
 		.def_property("InvestUnitID", [](CThostFtdcCombActionField& a) {return encoding_cast(a.InvestUnitID);}, [](CThostFtdcCombActionField& a, char c[]) {strcpy(a.InvestUnitID, c);})
-		;
+		.def("keys", [](const CThostFtdcCombActionField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "InstrumentID", "CombActionRef", "UserID", "Direction", "Volume", "CombDirection", "HedgeFlag", "ActionLocalID", "ExchangeID", "ParticipantID", "ClientID", "ExchangeInstID", "TraderID", "InstallID", "ActionStatus", "NotifySequence", "TradingDay", "SettlementID", "SequenceNo", "FrontID", "SessionID", "UserProductInfo", "StatusMsg", "IPAddress", "MacAddress", "ComTradeID", "BranchID", "InvestUnitID" }; return b;});
 
 	py::class_<CThostFtdcQryCombActionField>(m, "CThostFtdcQryCombActionField")
 		.def(py::init<>())
@@ -2566,7 +2567,7 @@ void init_structs(py::module_& m) {
 		.def_property("InstrumentID", [](CThostFtdcQryCombActionField& a) {return encoding_cast(a.InstrumentID);}, [](CThostFtdcQryCombActionField& a, char c[]) {strcpy(a.InstrumentID, c);})
 		.def_property("ExchangeID", [](CThostFtdcQryCombActionField& a) {return encoding_cast(a.ExchangeID);}, [](CThostFtdcQryCombActionField& a, char c[]) {strcpy(a.ExchangeID, c);})
 		.def_property("InvestUnitID", [](CThostFtdcQryCombActionField& a) {return encoding_cast(a.InvestUnitID);}, [](CThostFtdcQryCombActionField& a, char c[]) {strcpy(a.InvestUnitID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryCombActionField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "InstrumentID", "ExchangeID", "InvestUnitID" }; return b;});
 
 	py::class_<CThostFtdcExchangeCombActionField>(m, "CThostFtdcExchangeCombActionField")
 		.def(py::init<>())
@@ -2591,7 +2592,7 @@ void init_structs(py::module_& m) {
 		.def_property("MacAddress", [](CThostFtdcExchangeCombActionField& a) {return encoding_cast(a.MacAddress);}, [](CThostFtdcExchangeCombActionField& a, char c[]) {strcpy(a.MacAddress, c);})
 		.def_property("ComTradeID", [](CThostFtdcExchangeCombActionField& a) {return encoding_cast(a.ComTradeID);}, [](CThostFtdcExchangeCombActionField& a, char c[]) {strcpy(a.ComTradeID, c);})
 		.def_property("BranchID", [](CThostFtdcExchangeCombActionField& a) {return encoding_cast(a.BranchID);}, [](CThostFtdcExchangeCombActionField& a, char c[]) {strcpy(a.BranchID, c);})
-		;
+		.def("keys", [](const CThostFtdcExchangeCombActionField& a) { std::vector<std::string> b = { "Direction", "Volume", "CombDirection", "HedgeFlag", "ActionLocalID", "ExchangeID", "ParticipantID", "ClientID", "ExchangeInstID", "TraderID", "InstallID", "ActionStatus", "NotifySequence", "TradingDay", "SettlementID", "SequenceNo", "IPAddress", "MacAddress", "ComTradeID", "BranchID" }; return b;});
 
 	py::class_<CThostFtdcQryExchangeCombActionField>(m, "CThostFtdcQryExchangeCombActionField")
 		.def(py::init<>())
@@ -2601,7 +2602,7 @@ void init_structs(py::module_& m) {
 		.def_property("ExchangeInstID", [](CThostFtdcQryExchangeCombActionField& a) {return encoding_cast(a.ExchangeInstID);}, [](CThostFtdcQryExchangeCombActionField& a, char c[]) {strcpy(a.ExchangeInstID, c);})
 		.def_property("ExchangeID", [](CThostFtdcQryExchangeCombActionField& a) {return encoding_cast(a.ExchangeID);}, [](CThostFtdcQryExchangeCombActionField& a, char c[]) {strcpy(a.ExchangeID, c);})
 		.def_property("TraderID", [](CThostFtdcQryExchangeCombActionField& a) {return encoding_cast(a.TraderID);}, [](CThostFtdcQryExchangeCombActionField& a, char c[]) {strcpy(a.TraderID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryExchangeCombActionField& a) { std::vector<std::string> b = { "ParticipantID", "ClientID", "ExchangeInstID", "ExchangeID", "TraderID" }; return b;});
 
 	py::class_<CThostFtdcProductExchRateField>(m, "CThostFtdcProductExchRateField")
 		.def(py::init<>())
@@ -2610,14 +2611,14 @@ void init_structs(py::module_& m) {
 		.def_property("QuoteCurrencyID", [](CThostFtdcProductExchRateField& a) {return encoding_cast(a.QuoteCurrencyID);}, [](CThostFtdcProductExchRateField& a, char c[]) {strcpy(a.QuoteCurrencyID, c);})
 		.def_readwrite("ExchangeRate", &CThostFtdcProductExchRateField::ExchangeRate)
 		.def_property("ExchangeID", [](CThostFtdcProductExchRateField& a) {return encoding_cast(a.ExchangeID);}, [](CThostFtdcProductExchRateField& a, char c[]) {strcpy(a.ExchangeID, c);})
-		;
+		.def("keys", [](const CThostFtdcProductExchRateField& a) { std::vector<std::string> b = { "ProductID", "QuoteCurrencyID", "ExchangeRate", "ExchangeID" }; return b;});
 
 	py::class_<CThostFtdcQryProductExchRateField>(m, "CThostFtdcQryProductExchRateField")
 		.def(py::init<>())
 		.def("__copy__", [](const CThostFtdcQryProductExchRateField& a) {return CThostFtdcQryProductExchRateField(a);})
 		.def_property("ProductID", [](CThostFtdcQryProductExchRateField& a) {return encoding_cast(a.ProductID);}, [](CThostFtdcQryProductExchRateField& a, char c[]) {strcpy(a.ProductID, c);})
 		.def_property("ExchangeID", [](CThostFtdcQryProductExchRateField& a) {return encoding_cast(a.ExchangeID);}, [](CThostFtdcQryProductExchRateField& a, char c[]) {strcpy(a.ExchangeID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryProductExchRateField& a) { std::vector<std::string> b = { "ProductID", "ExchangeID" }; return b;});
 
 	py::class_<CThostFtdcQryForQuoteParamField>(m, "CThostFtdcQryForQuoteParamField")
 		.def(py::init<>())
@@ -2625,7 +2626,7 @@ void init_structs(py::module_& m) {
 		.def_property("BrokerID", [](CThostFtdcQryForQuoteParamField& a) {return encoding_cast(a.BrokerID);}, [](CThostFtdcQryForQuoteParamField& a, char c[]) {strcpy(a.BrokerID, c);})
 		.def_property("InstrumentID", [](CThostFtdcQryForQuoteParamField& a) {return encoding_cast(a.InstrumentID);}, [](CThostFtdcQryForQuoteParamField& a, char c[]) {strcpy(a.InstrumentID, c);})
 		.def_property("ExchangeID", [](CThostFtdcQryForQuoteParamField& a) {return encoding_cast(a.ExchangeID);}, [](CThostFtdcQryForQuoteParamField& a, char c[]) {strcpy(a.ExchangeID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryForQuoteParamField& a) { std::vector<std::string> b = { "BrokerID", "InstrumentID", "ExchangeID" }; return b;});
 
 	py::class_<CThostFtdcForQuoteParamField>(m, "CThostFtdcForQuoteParamField")
 		.def(py::init<>())
@@ -2635,7 +2636,7 @@ void init_structs(py::module_& m) {
 		.def_property("ExchangeID", [](CThostFtdcForQuoteParamField& a) {return encoding_cast(a.ExchangeID);}, [](CThostFtdcForQuoteParamField& a, char c[]) {strcpy(a.ExchangeID, c);})
 		.def_readwrite("LastPrice", &CThostFtdcForQuoteParamField::LastPrice)
 		.def_readwrite("PriceInterval", &CThostFtdcForQuoteParamField::PriceInterval)
-		;
+		.def("keys", [](const CThostFtdcForQuoteParamField& a) { std::vector<std::string> b = { "BrokerID", "InstrumentID", "ExchangeID", "LastPrice", "PriceInterval" }; return b;});
 
 	py::class_<CThostFtdcMMOptionInstrCommRateField>(m, "CThostFtdcMMOptionInstrCommRateField")
 		.def(py::init<>())
@@ -2652,7 +2653,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("CloseTodayRatioByVolume", &CThostFtdcMMOptionInstrCommRateField::CloseTodayRatioByVolume)
 		.def_readwrite("StrikeRatioByMoney", &CThostFtdcMMOptionInstrCommRateField::StrikeRatioByMoney)
 		.def_readwrite("StrikeRatioByVolume", &CThostFtdcMMOptionInstrCommRateField::StrikeRatioByVolume)
-		;
+		.def("keys", [](const CThostFtdcMMOptionInstrCommRateField& a) { std::vector<std::string> b = { "InstrumentID", "InvestorRange", "BrokerID", "InvestorID", "OpenRatioByMoney", "OpenRatioByVolume", "CloseRatioByMoney", "CloseRatioByVolume", "CloseTodayRatioByMoney", "CloseTodayRatioByVolume", "StrikeRatioByMoney", "StrikeRatioByVolume" }; return b;});
 
 	py::class_<CThostFtdcQryMMOptionInstrCommRateField>(m, "CThostFtdcQryMMOptionInstrCommRateField")
 		.def(py::init<>())
@@ -2660,7 +2661,7 @@ void init_structs(py::module_& m) {
 		.def_property("BrokerID", [](CThostFtdcQryMMOptionInstrCommRateField& a) {return encoding_cast(a.BrokerID);}, [](CThostFtdcQryMMOptionInstrCommRateField& a, char c[]) {strcpy(a.BrokerID, c);})
 		.def_property("InvestorID", [](CThostFtdcQryMMOptionInstrCommRateField& a) {return encoding_cast(a.InvestorID);}, [](CThostFtdcQryMMOptionInstrCommRateField& a, char c[]) {strcpy(a.InvestorID, c);})
 		.def_property("InstrumentID", [](CThostFtdcQryMMOptionInstrCommRateField& a) {return encoding_cast(a.InstrumentID);}, [](CThostFtdcQryMMOptionInstrCommRateField& a, char c[]) {strcpy(a.InstrumentID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryMMOptionInstrCommRateField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "InstrumentID" }; return b;});
 
 	py::class_<CThostFtdcMMInstrumentCommissionRateField>(m, "CThostFtdcMMInstrumentCommissionRateField")
 		.def(py::init<>())
@@ -2675,7 +2676,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("CloseRatioByVolume", &CThostFtdcMMInstrumentCommissionRateField::CloseRatioByVolume)
 		.def_readwrite("CloseTodayRatioByMoney", &CThostFtdcMMInstrumentCommissionRateField::CloseTodayRatioByMoney)
 		.def_readwrite("CloseTodayRatioByVolume", &CThostFtdcMMInstrumentCommissionRateField::CloseTodayRatioByVolume)
-		;
+		.def("keys", [](const CThostFtdcMMInstrumentCommissionRateField& a) { std::vector<std::string> b = { "InstrumentID", "InvestorRange", "BrokerID", "InvestorID", "OpenRatioByMoney", "OpenRatioByVolume", "CloseRatioByMoney", "CloseRatioByVolume", "CloseTodayRatioByMoney", "CloseTodayRatioByVolume" }; return b;});
 
 	py::class_<CThostFtdcQryMMInstrumentCommissionRateField>(m, "CThostFtdcQryMMInstrumentCommissionRateField")
 		.def(py::init<>())
@@ -2683,7 +2684,7 @@ void init_structs(py::module_& m) {
 		.def_property("BrokerID", [](CThostFtdcQryMMInstrumentCommissionRateField& a) {return encoding_cast(a.BrokerID);}, [](CThostFtdcQryMMInstrumentCommissionRateField& a, char c[]) {strcpy(a.BrokerID, c);})
 		.def_property("InvestorID", [](CThostFtdcQryMMInstrumentCommissionRateField& a) {return encoding_cast(a.InvestorID);}, [](CThostFtdcQryMMInstrumentCommissionRateField& a, char c[]) {strcpy(a.InvestorID, c);})
 		.def_property("InstrumentID", [](CThostFtdcQryMMInstrumentCommissionRateField& a) {return encoding_cast(a.InstrumentID);}, [](CThostFtdcQryMMInstrumentCommissionRateField& a, char c[]) {strcpy(a.InstrumentID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryMMInstrumentCommissionRateField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "InstrumentID" }; return b;});
 
 	py::class_<CThostFtdcInstrumentOrderCommRateField>(m, "CThostFtdcInstrumentOrderCommRateField")
 		.def(py::init<>())
@@ -2697,7 +2698,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("OrderActionCommByVolume", &CThostFtdcInstrumentOrderCommRateField::OrderActionCommByVolume)
 		.def_property("ExchangeID", [](CThostFtdcInstrumentOrderCommRateField& a) {return encoding_cast(a.ExchangeID);}, [](CThostFtdcInstrumentOrderCommRateField& a, char c[]) {strcpy(a.ExchangeID, c);})
 		.def_property("InvestUnitID", [](CThostFtdcInstrumentOrderCommRateField& a) {return encoding_cast(a.InvestUnitID);}, [](CThostFtdcInstrumentOrderCommRateField& a, char c[]) {strcpy(a.InvestUnitID, c);})
-		;
+		.def("keys", [](const CThostFtdcInstrumentOrderCommRateField& a) { std::vector<std::string> b = { "InstrumentID", "InvestorRange", "BrokerID", "InvestorID", "HedgeFlag", "OrderCommByVolume", "OrderActionCommByVolume", "ExchangeID", "InvestUnitID" }; return b;});
 
 	py::class_<CThostFtdcQryInstrumentOrderCommRateField>(m, "CThostFtdcQryInstrumentOrderCommRateField")
 		.def(py::init<>())
@@ -2705,7 +2706,7 @@ void init_structs(py::module_& m) {
 		.def_property("BrokerID", [](CThostFtdcQryInstrumentOrderCommRateField& a) {return encoding_cast(a.BrokerID);}, [](CThostFtdcQryInstrumentOrderCommRateField& a, char c[]) {strcpy(a.BrokerID, c);})
 		.def_property("InvestorID", [](CThostFtdcQryInstrumentOrderCommRateField& a) {return encoding_cast(a.InvestorID);}, [](CThostFtdcQryInstrumentOrderCommRateField& a, char c[]) {strcpy(a.InvestorID, c);})
 		.def_property("InstrumentID", [](CThostFtdcQryInstrumentOrderCommRateField& a) {return encoding_cast(a.InstrumentID);}, [](CThostFtdcQryInstrumentOrderCommRateField& a, char c[]) {strcpy(a.InstrumentID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryInstrumentOrderCommRateField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "InstrumentID" }; return b;});
 
 	py::class_<CThostFtdcTradeParamField>(m, "CThostFtdcTradeParamField")
 		.def(py::init<>())
@@ -2714,7 +2715,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("TradeParamID", &CThostFtdcTradeParamField::TradeParamID)
 		.def_property("TradeParamValue", [](CThostFtdcTradeParamField& a) {return encoding_cast(a.TradeParamValue);}, [](CThostFtdcTradeParamField& a, char c[]) {strcpy(a.TradeParamValue, c);})
 		.def_property("Memo", [](CThostFtdcTradeParamField& a) {return encoding_cast(a.Memo);}, [](CThostFtdcTradeParamField& a, char c[]) {strcpy(a.Memo, c);})
-		;
+		.def("keys", [](const CThostFtdcTradeParamField& a) { std::vector<std::string> b = { "BrokerID", "TradeParamID", "TradeParamValue", "Memo" }; return b;});
 
 	py::class_<CThostFtdcInstrumentMarginRateULField>(m, "CThostFtdcInstrumentMarginRateULField")
 		.def(py::init<>())
@@ -2728,7 +2729,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("LongMarginRatioByVolume", &CThostFtdcInstrumentMarginRateULField::LongMarginRatioByVolume)
 		.def_readwrite("ShortMarginRatioByMoney", &CThostFtdcInstrumentMarginRateULField::ShortMarginRatioByMoney)
 		.def_readwrite("ShortMarginRatioByVolume", &CThostFtdcInstrumentMarginRateULField::ShortMarginRatioByVolume)
-		;
+		.def("keys", [](const CThostFtdcInstrumentMarginRateULField& a) { std::vector<std::string> b = { "InstrumentID", "InvestorRange", "BrokerID", "InvestorID", "HedgeFlag", "LongMarginRatioByMoney", "LongMarginRatioByVolume", "ShortMarginRatioByMoney", "ShortMarginRatioByVolume" }; return b;});
 
 	py::class_<CThostFtdcFutureLimitPosiParamField>(m, "CThostFtdcFutureLimitPosiParamField")
 		.def(py::init<>())
@@ -2740,20 +2741,20 @@ void init_structs(py::module_& m) {
 		.def_readwrite("SpecOpenVolume", &CThostFtdcFutureLimitPosiParamField::SpecOpenVolume)
 		.def_readwrite("ArbiOpenVolume", &CThostFtdcFutureLimitPosiParamField::ArbiOpenVolume)
 		.def_readwrite("OpenVolume", &CThostFtdcFutureLimitPosiParamField::OpenVolume)
-		;
+		.def("keys", [](const CThostFtdcFutureLimitPosiParamField& a) { std::vector<std::string> b = { "InvestorRange", "BrokerID", "InvestorID", "ProductID", "SpecOpenVolume", "ArbiOpenVolume", "OpenVolume" }; return b;});
 
 	py::class_<CThostFtdcLoginForbiddenIPField>(m, "CThostFtdcLoginForbiddenIPField")
 		.def(py::init<>())
 		.def("__copy__", [](const CThostFtdcLoginForbiddenIPField& a) {return CThostFtdcLoginForbiddenIPField(a);})
 		.def_property("IPAddress", [](CThostFtdcLoginForbiddenIPField& a) {return encoding_cast(a.IPAddress);}, [](CThostFtdcLoginForbiddenIPField& a, char c[]) {strcpy(a.IPAddress, c);})
-		;
+		.def("keys", [](const CThostFtdcLoginForbiddenIPField& a) { std::vector<std::string> b = { "IPAddress" }; return b;});
 
 	py::class_<CThostFtdcIPListField>(m, "CThostFtdcIPListField")
 		.def(py::init<>())
 		.def("__copy__", [](const CThostFtdcIPListField& a) {return CThostFtdcIPListField(a);})
 		.def_property("IPAddress", [](CThostFtdcIPListField& a) {return encoding_cast(a.IPAddress);}, [](CThostFtdcIPListField& a, char c[]) {strcpy(a.IPAddress, c);})
 		.def_readwrite("IsWhite", &CThostFtdcIPListField::IsWhite)
-		;
+		.def("keys", [](const CThostFtdcIPListField& a) { std::vector<std::string> b = { "IPAddress", "IsWhite" }; return b;});
 
 	py::class_<CThostFtdcInputOptionSelfCloseField>(m, "CThostFtdcInputOptionSelfCloseField")
 		.def(py::init<>())
@@ -2775,7 +2776,7 @@ void init_structs(py::module_& m) {
 		.def_property("ClientID", [](CThostFtdcInputOptionSelfCloseField& a) {return encoding_cast(a.ClientID);}, [](CThostFtdcInputOptionSelfCloseField& a, char c[]) {strcpy(a.ClientID, c);})
 		.def_property("IPAddress", [](CThostFtdcInputOptionSelfCloseField& a) {return encoding_cast(a.IPAddress);}, [](CThostFtdcInputOptionSelfCloseField& a, char c[]) {strcpy(a.IPAddress, c);})
 		.def_property("MacAddress", [](CThostFtdcInputOptionSelfCloseField& a) {return encoding_cast(a.MacAddress);}, [](CThostFtdcInputOptionSelfCloseField& a, char c[]) {strcpy(a.MacAddress, c);})
-		;
+		.def("keys", [](const CThostFtdcInputOptionSelfCloseField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "InstrumentID", "OptionSelfCloseRef", "UserID", "Volume", "RequestID", "BusinessUnit", "HedgeFlag", "OptSelfCloseFlag", "ExchangeID", "InvestUnitID", "AccountID", "CurrencyID", "ClientID", "IPAddress", "MacAddress" }; return b;});
 
 	py::class_<CThostFtdcInputOptionSelfCloseActionField>(m, "CThostFtdcInputOptionSelfCloseActionField")
 		.def(py::init<>())
@@ -2795,7 +2796,7 @@ void init_structs(py::module_& m) {
 		.def_property("InvestUnitID", [](CThostFtdcInputOptionSelfCloseActionField& a) {return encoding_cast(a.InvestUnitID);}, [](CThostFtdcInputOptionSelfCloseActionField& a, char c[]) {strcpy(a.InvestUnitID, c);})
 		.def_property("IPAddress", [](CThostFtdcInputOptionSelfCloseActionField& a) {return encoding_cast(a.IPAddress);}, [](CThostFtdcInputOptionSelfCloseActionField& a, char c[]) {strcpy(a.IPAddress, c);})
 		.def_property("MacAddress", [](CThostFtdcInputOptionSelfCloseActionField& a) {return encoding_cast(a.MacAddress);}, [](CThostFtdcInputOptionSelfCloseActionField& a, char c[]) {strcpy(a.MacAddress, c);})
-		;
+		.def("keys", [](const CThostFtdcInputOptionSelfCloseActionField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "OptionSelfCloseActionRef", "OptionSelfCloseRef", "RequestID", "FrontID", "SessionID", "ExchangeID", "OptionSelfCloseSysID", "ActionFlag", "UserID", "InstrumentID", "InvestUnitID", "IPAddress", "MacAddress" }; return b;});
 
 	py::class_<CThostFtdcOptionSelfCloseField>(m, "CThostFtdcOptionSelfCloseField")
 		.def(py::init<>())
@@ -2840,7 +2841,7 @@ void init_structs(py::module_& m) {
 		.def_property("CurrencyID", [](CThostFtdcOptionSelfCloseField& a) {return encoding_cast(a.CurrencyID);}, [](CThostFtdcOptionSelfCloseField& a, char c[]) {strcpy(a.CurrencyID, c);})
 		.def_property("IPAddress", [](CThostFtdcOptionSelfCloseField& a) {return encoding_cast(a.IPAddress);}, [](CThostFtdcOptionSelfCloseField& a, char c[]) {strcpy(a.IPAddress, c);})
 		.def_property("MacAddress", [](CThostFtdcOptionSelfCloseField& a) {return encoding_cast(a.MacAddress);}, [](CThostFtdcOptionSelfCloseField& a, char c[]) {strcpy(a.MacAddress, c);})
-		;
+		.def("keys", [](const CThostFtdcOptionSelfCloseField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "InstrumentID", "OptionSelfCloseRef", "UserID", "Volume", "RequestID", "BusinessUnit", "HedgeFlag", "OptSelfCloseFlag", "OptionSelfCloseLocalID", "ExchangeID", "ParticipantID", "ClientID", "ExchangeInstID", "TraderID", "InstallID", "OrderSubmitStatus", "NotifySequence", "TradingDay", "SettlementID", "OptionSelfCloseSysID", "InsertDate", "InsertTime", "CancelTime", "ExecResult", "ClearingPartID", "SequenceNo", "FrontID", "SessionID", "UserProductInfo", "StatusMsg", "ActiveUserID", "BrokerOptionSelfCloseSeq", "BranchID", "InvestUnitID", "AccountID", "CurrencyID", "IPAddress", "MacAddress" }; return b;});
 
 	py::class_<CThostFtdcOptionSelfCloseActionField>(m, "CThostFtdcOptionSelfCloseActionField")
 		.def(py::init<>())
@@ -2872,7 +2873,7 @@ void init_structs(py::module_& m) {
 		.def_property("InvestUnitID", [](CThostFtdcOptionSelfCloseActionField& a) {return encoding_cast(a.InvestUnitID);}, [](CThostFtdcOptionSelfCloseActionField& a, char c[]) {strcpy(a.InvestUnitID, c);})
 		.def_property("IPAddress", [](CThostFtdcOptionSelfCloseActionField& a) {return encoding_cast(a.IPAddress);}, [](CThostFtdcOptionSelfCloseActionField& a, char c[]) {strcpy(a.IPAddress, c);})
 		.def_property("MacAddress", [](CThostFtdcOptionSelfCloseActionField& a) {return encoding_cast(a.MacAddress);}, [](CThostFtdcOptionSelfCloseActionField& a, char c[]) {strcpy(a.MacAddress, c);})
-		;
+		.def("keys", [](const CThostFtdcOptionSelfCloseActionField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "OptionSelfCloseActionRef", "OptionSelfCloseRef", "RequestID", "FrontID", "SessionID", "ExchangeID", "OptionSelfCloseSysID", "ActionFlag", "ActionDate", "ActionTime", "TraderID", "InstallID", "OptionSelfCloseLocalID", "ActionLocalID", "ParticipantID", "ClientID", "BusinessUnit", "OrderActionStatus", "UserID", "StatusMsg", "InstrumentID", "BranchID", "InvestUnitID", "IPAddress", "MacAddress" }; return b;});
 
 	py::class_<CThostFtdcQryOptionSelfCloseField>(m, "CThostFtdcQryOptionSelfCloseField")
 		.def(py::init<>())
@@ -2884,7 +2885,7 @@ void init_structs(py::module_& m) {
 		.def_property("OptionSelfCloseSysID", [](CThostFtdcQryOptionSelfCloseField& a) {return encoding_cast(a.OptionSelfCloseSysID);}, [](CThostFtdcQryOptionSelfCloseField& a, char c[]) {strcpy(a.OptionSelfCloseSysID, c);})
 		.def_property("InsertTimeStart", [](CThostFtdcQryOptionSelfCloseField& a) {return encoding_cast(a.InsertTimeStart);}, [](CThostFtdcQryOptionSelfCloseField& a, char c[]) {strcpy(a.InsertTimeStart, c);})
 		.def_property("InsertTimeEnd", [](CThostFtdcQryOptionSelfCloseField& a) {return encoding_cast(a.InsertTimeEnd);}, [](CThostFtdcQryOptionSelfCloseField& a, char c[]) {strcpy(a.InsertTimeEnd, c);})
-		;
+		.def("keys", [](const CThostFtdcQryOptionSelfCloseField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "InstrumentID", "ExchangeID", "OptionSelfCloseSysID", "InsertTimeStart", "InsertTimeEnd" }; return b;});
 
 	py::class_<CThostFtdcExchangeOptionSelfCloseField>(m, "CThostFtdcExchangeOptionSelfCloseField")
 		.def(py::init<>())
@@ -2915,7 +2916,7 @@ void init_structs(py::module_& m) {
 		.def_property("BranchID", [](CThostFtdcExchangeOptionSelfCloseField& a) {return encoding_cast(a.BranchID);}, [](CThostFtdcExchangeOptionSelfCloseField& a, char c[]) {strcpy(a.BranchID, c);})
 		.def_property("IPAddress", [](CThostFtdcExchangeOptionSelfCloseField& a) {return encoding_cast(a.IPAddress);}, [](CThostFtdcExchangeOptionSelfCloseField& a, char c[]) {strcpy(a.IPAddress, c);})
 		.def_property("MacAddress", [](CThostFtdcExchangeOptionSelfCloseField& a) {return encoding_cast(a.MacAddress);}, [](CThostFtdcExchangeOptionSelfCloseField& a, char c[]) {strcpy(a.MacAddress, c);})
-		;
+		.def("keys", [](const CThostFtdcExchangeOptionSelfCloseField& a) { std::vector<std::string> b = { "Volume", "RequestID", "BusinessUnit", "HedgeFlag", "OptSelfCloseFlag", "OptionSelfCloseLocalID", "ExchangeID", "ParticipantID", "ClientID", "ExchangeInstID", "TraderID", "InstallID", "OrderSubmitStatus", "NotifySequence", "TradingDay", "SettlementID", "OptionSelfCloseSysID", "InsertDate", "InsertTime", "CancelTime", "ExecResult", "ClearingPartID", "SequenceNo", "BranchID", "IPAddress", "MacAddress" }; return b;});
 
 	py::class_<CThostFtdcQryOptionSelfCloseActionField>(m, "CThostFtdcQryOptionSelfCloseActionField")
 		.def(py::init<>())
@@ -2923,7 +2924,7 @@ void init_structs(py::module_& m) {
 		.def_property("BrokerID", [](CThostFtdcQryOptionSelfCloseActionField& a) {return encoding_cast(a.BrokerID);}, [](CThostFtdcQryOptionSelfCloseActionField& a, char c[]) {strcpy(a.BrokerID, c);})
 		.def_property("InvestorID", [](CThostFtdcQryOptionSelfCloseActionField& a) {return encoding_cast(a.InvestorID);}, [](CThostFtdcQryOptionSelfCloseActionField& a, char c[]) {strcpy(a.InvestorID, c);})
 		.def_property("ExchangeID", [](CThostFtdcQryOptionSelfCloseActionField& a) {return encoding_cast(a.ExchangeID);}, [](CThostFtdcQryOptionSelfCloseActionField& a, char c[]) {strcpy(a.ExchangeID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryOptionSelfCloseActionField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "ExchangeID" }; return b;});
 
 	py::class_<CThostFtdcExchangeOptionSelfCloseActionField>(m, "CThostFtdcExchangeOptionSelfCloseActionField")
 		.def(py::init<>())
@@ -2947,7 +2948,7 @@ void init_structs(py::module_& m) {
 		.def_property("MacAddress", [](CThostFtdcExchangeOptionSelfCloseActionField& a) {return encoding_cast(a.MacAddress);}, [](CThostFtdcExchangeOptionSelfCloseActionField& a, char c[]) {strcpy(a.MacAddress, c);})
 		.def_property("ExchangeInstID", [](CThostFtdcExchangeOptionSelfCloseActionField& a) {return encoding_cast(a.ExchangeInstID);}, [](CThostFtdcExchangeOptionSelfCloseActionField& a, char c[]) {strcpy(a.ExchangeInstID, c);})
 		.def_readwrite("OptSelfCloseFlag", &CThostFtdcExchangeOptionSelfCloseActionField::OptSelfCloseFlag)
-		;
+		.def("keys", [](const CThostFtdcExchangeOptionSelfCloseActionField& a) { std::vector<std::string> b = { "ExchangeID", "OptionSelfCloseSysID", "ActionFlag", "ActionDate", "ActionTime", "TraderID", "InstallID", "OptionSelfCloseLocalID", "ActionLocalID", "ParticipantID", "ClientID", "BusinessUnit", "OrderActionStatus", "UserID", "BranchID", "IPAddress", "MacAddress", "ExchangeInstID", "OptSelfCloseFlag" }; return b;});
 
 	py::class_<CThostFtdcSyncDelaySwapField>(m, "CThostFtdcSyncDelaySwapField")
 		.def(py::init<>())
@@ -2963,14 +2964,14 @@ void init_structs(py::module_& m) {
 		.def_readwrite("ToAmount", &CThostFtdcSyncDelaySwapField::ToAmount)
 		.def_readwrite("IsManualSwap", &CThostFtdcSyncDelaySwapField::IsManualSwap)
 		.def_readwrite("IsAllRemainSetZero", &CThostFtdcSyncDelaySwapField::IsAllRemainSetZero)
-		;
+		.def("keys", [](const CThostFtdcSyncDelaySwapField& a) { std::vector<std::string> b = { "DelaySwapSeqNo", "BrokerID", "InvestorID", "FromCurrencyID", "FromAmount", "FromFrozenSwap", "FromRemainSwap", "ToCurrencyID", "ToAmount", "IsManualSwap", "IsAllRemainSetZero" }; return b;});
 
 	py::class_<CThostFtdcQrySyncDelaySwapField>(m, "CThostFtdcQrySyncDelaySwapField")
 		.def(py::init<>())
 		.def("__copy__", [](const CThostFtdcQrySyncDelaySwapField& a) {return CThostFtdcQrySyncDelaySwapField(a);})
 		.def_property("BrokerID", [](CThostFtdcQrySyncDelaySwapField& a) {return encoding_cast(a.BrokerID);}, [](CThostFtdcQrySyncDelaySwapField& a, char c[]) {strcpy(a.BrokerID, c);})
 		.def_property("DelaySwapSeqNo", [](CThostFtdcQrySyncDelaySwapField& a) {return encoding_cast(a.DelaySwapSeqNo);}, [](CThostFtdcQrySyncDelaySwapField& a, char c[]) {strcpy(a.DelaySwapSeqNo, c);})
-		;
+		.def("keys", [](const CThostFtdcQrySyncDelaySwapField& a) { std::vector<std::string> b = { "BrokerID", "DelaySwapSeqNo" }; return b;});
 
 	py::class_<CThostFtdcInvestUnitField>(m, "CThostFtdcInvestUnitField")
 		.def(py::init<>())
@@ -2984,7 +2985,7 @@ void init_structs(py::module_& m) {
 		.def_property("MarginModelID", [](CThostFtdcInvestUnitField& a) {return encoding_cast(a.MarginModelID);}, [](CThostFtdcInvestUnitField& a, char c[]) {strcpy(a.MarginModelID, c);})
 		.def_property("AccountID", [](CThostFtdcInvestUnitField& a) {return encoding_cast(a.AccountID);}, [](CThostFtdcInvestUnitField& a, char c[]) {strcpy(a.AccountID, c);})
 		.def_property("CurrencyID", [](CThostFtdcInvestUnitField& a) {return encoding_cast(a.CurrencyID);}, [](CThostFtdcInvestUnitField& a, char c[]) {strcpy(a.CurrencyID, c);})
-		;
+		.def("keys", [](const CThostFtdcInvestUnitField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "InvestUnitID", "InvestorUnitName", "InvestorGroupID", "CommModelID", "MarginModelID", "AccountID", "CurrencyID" }; return b;});
 
 	py::class_<CThostFtdcQryInvestUnitField>(m, "CThostFtdcQryInvestUnitField")
 		.def(py::init<>())
@@ -2992,7 +2993,7 @@ void init_structs(py::module_& m) {
 		.def_property("BrokerID", [](CThostFtdcQryInvestUnitField& a) {return encoding_cast(a.BrokerID);}, [](CThostFtdcQryInvestUnitField& a, char c[]) {strcpy(a.BrokerID, c);})
 		.def_property("InvestorID", [](CThostFtdcQryInvestUnitField& a) {return encoding_cast(a.InvestorID);}, [](CThostFtdcQryInvestUnitField& a, char c[]) {strcpy(a.InvestorID, c);})
 		.def_property("InvestUnitID", [](CThostFtdcQryInvestUnitField& a) {return encoding_cast(a.InvestUnitID);}, [](CThostFtdcQryInvestUnitField& a, char c[]) {strcpy(a.InvestUnitID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryInvestUnitField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "InvestUnitID" }; return b;});
 
 	py::class_<CThostFtdcSecAgentCheckModeField>(m, "CThostFtdcSecAgentCheckModeField")
 		.def(py::init<>())
@@ -3002,7 +3003,7 @@ void init_structs(py::module_& m) {
 		.def_property("CurrencyID", [](CThostFtdcSecAgentCheckModeField& a) {return encoding_cast(a.CurrencyID);}, [](CThostFtdcSecAgentCheckModeField& a, char c[]) {strcpy(a.CurrencyID, c);})
 		.def_property("BrokerSecAgentID", [](CThostFtdcSecAgentCheckModeField& a) {return encoding_cast(a.BrokerSecAgentID);}, [](CThostFtdcSecAgentCheckModeField& a, char c[]) {strcpy(a.BrokerSecAgentID, c);})
 		.def_readwrite("CheckSelfAccount", &CThostFtdcSecAgentCheckModeField::CheckSelfAccount)
-		;
+		.def("keys", [](const CThostFtdcSecAgentCheckModeField& a) { std::vector<std::string> b = { "InvestorID", "BrokerID", "CurrencyID", "BrokerSecAgentID", "CheckSelfAccount" }; return b;});
 
 	py::class_<CThostFtdcSecAgentTradeInfoField>(m, "CThostFtdcSecAgentTradeInfoField")
 		.def(py::init<>())
@@ -3011,7 +3012,7 @@ void init_structs(py::module_& m) {
 		.def_property("BrokerSecAgentID", [](CThostFtdcSecAgentTradeInfoField& a) {return encoding_cast(a.BrokerSecAgentID);}, [](CThostFtdcSecAgentTradeInfoField& a, char c[]) {strcpy(a.BrokerSecAgentID, c);})
 		.def_property("InvestorID", [](CThostFtdcSecAgentTradeInfoField& a) {return encoding_cast(a.InvestorID);}, [](CThostFtdcSecAgentTradeInfoField& a, char c[]) {strcpy(a.InvestorID, c);})
 		.def_property("LongCustomerName", [](CThostFtdcSecAgentTradeInfoField& a) {return encoding_cast(a.LongCustomerName);}, [](CThostFtdcSecAgentTradeInfoField& a, char c[]) {strcpy(a.LongCustomerName, c);})
-		;
+		.def("keys", [](const CThostFtdcSecAgentTradeInfoField& a) { std::vector<std::string> b = { "BrokerID", "BrokerSecAgentID", "InvestorID", "LongCustomerName" }; return b;});
 
 	py::class_<CThostFtdcMarketDataField>(m, "CThostFtdcMarketDataField")
 		.def(py::init<>())
@@ -3039,7 +3040,7 @@ void init_structs(py::module_& m) {
 		.def_property("UpdateTime", [](CThostFtdcMarketDataField& a) {return encoding_cast(a.UpdateTime);}, [](CThostFtdcMarketDataField& a, char c[]) {strcpy(a.UpdateTime, c);})
 		.def_readwrite("UpdateMillisec", &CThostFtdcMarketDataField::UpdateMillisec)
 		.def_property("ActionDay", [](CThostFtdcMarketDataField& a) {return encoding_cast(a.ActionDay);}, [](CThostFtdcMarketDataField& a, char c[]) {strcpy(a.ActionDay, c);})
-		;
+		.def("keys", [](const CThostFtdcMarketDataField& a) { std::vector<std::string> b = { "TradingDay", "InstrumentID", "ExchangeID", "ExchangeInstID", "LastPrice", "PreSettlementPrice", "PreClosePrice", "PreOpenInterest", "OpenPrice", "HighestPrice", "LowestPrice", "Volume", "Turnover", "OpenInterest", "ClosePrice", "SettlementPrice", "UpperLimitPrice", "LowerLimitPrice", "PreDelta", "CurrDelta", "UpdateTime", "UpdateMillisec", "ActionDay" }; return b;});
 
 	py::class_<CThostFtdcMarketDataBaseField>(m, "CThostFtdcMarketDataBaseField")
 		.def(py::init<>())
@@ -3049,7 +3050,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("PreClosePrice", &CThostFtdcMarketDataBaseField::PreClosePrice)
 		.def_readwrite("PreOpenInterest", &CThostFtdcMarketDataBaseField::PreOpenInterest)
 		.def_readwrite("PreDelta", &CThostFtdcMarketDataBaseField::PreDelta)
-		;
+		.def("keys", [](const CThostFtdcMarketDataBaseField& a) { std::vector<std::string> b = { "TradingDay", "PreSettlementPrice", "PreClosePrice", "PreOpenInterest", "PreDelta" }; return b;});
 
 	py::class_<CThostFtdcMarketDataStaticField>(m, "CThostFtdcMarketDataStaticField")
 		.def(py::init<>())
@@ -3062,7 +3063,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("LowerLimitPrice", &CThostFtdcMarketDataStaticField::LowerLimitPrice)
 		.def_readwrite("SettlementPrice", &CThostFtdcMarketDataStaticField::SettlementPrice)
 		.def_readwrite("CurrDelta", &CThostFtdcMarketDataStaticField::CurrDelta)
-		;
+		.def("keys", [](const CThostFtdcMarketDataStaticField& a) { std::vector<std::string> b = { "OpenPrice", "HighestPrice", "LowestPrice", "ClosePrice", "UpperLimitPrice", "LowerLimitPrice", "SettlementPrice", "CurrDelta" }; return b;});
 
 	py::class_<CThostFtdcMarketDataLastMatchField>(m, "CThostFtdcMarketDataLastMatchField")
 		.def(py::init<>())
@@ -3071,7 +3072,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("Volume", &CThostFtdcMarketDataLastMatchField::Volume)
 		.def_readwrite("Turnover", &CThostFtdcMarketDataLastMatchField::Turnover)
 		.def_readwrite("OpenInterest", &CThostFtdcMarketDataLastMatchField::OpenInterest)
-		;
+		.def("keys", [](const CThostFtdcMarketDataLastMatchField& a) { std::vector<std::string> b = { "LastPrice", "Volume", "Turnover", "OpenInterest" }; return b;});
 
 	py::class_<CThostFtdcMarketDataBestPriceField>(m, "CThostFtdcMarketDataBestPriceField")
 		.def(py::init<>())
@@ -3080,7 +3081,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("BidVolume1", &CThostFtdcMarketDataBestPriceField::BidVolume1)
 		.def_readwrite("AskPrice1", &CThostFtdcMarketDataBestPriceField::AskPrice1)
 		.def_readwrite("AskVolume1", &CThostFtdcMarketDataBestPriceField::AskVolume1)
-		;
+		.def("keys", [](const CThostFtdcMarketDataBestPriceField& a) { std::vector<std::string> b = { "BidPrice1", "BidVolume1", "AskPrice1", "AskVolume1" }; return b;});
 
 	py::class_<CThostFtdcMarketDataBid23Field>(m, "CThostFtdcMarketDataBid23Field")
 		.def(py::init<>())
@@ -3089,7 +3090,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("BidVolume2", &CThostFtdcMarketDataBid23Field::BidVolume2)
 		.def_readwrite("BidPrice3", &CThostFtdcMarketDataBid23Field::BidPrice3)
 		.def_readwrite("BidVolume3", &CThostFtdcMarketDataBid23Field::BidVolume3)
-		;
+		.def("keys", [](const CThostFtdcMarketDataBid23Field& a) { std::vector<std::string> b = { "BidPrice2", "BidVolume2", "BidPrice3", "BidVolume3" }; return b;});
 
 	py::class_<CThostFtdcMarketDataAsk23Field>(m, "CThostFtdcMarketDataAsk23Field")
 		.def(py::init<>())
@@ -3098,7 +3099,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("AskVolume2", &CThostFtdcMarketDataAsk23Field::AskVolume2)
 		.def_readwrite("AskPrice3", &CThostFtdcMarketDataAsk23Field::AskPrice3)
 		.def_readwrite("AskVolume3", &CThostFtdcMarketDataAsk23Field::AskVolume3)
-		;
+		.def("keys", [](const CThostFtdcMarketDataAsk23Field& a) { std::vector<std::string> b = { "AskPrice2", "AskVolume2", "AskPrice3", "AskVolume3" }; return b;});
 
 	py::class_<CThostFtdcMarketDataBid45Field>(m, "CThostFtdcMarketDataBid45Field")
 		.def(py::init<>())
@@ -3107,7 +3108,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("BidVolume4", &CThostFtdcMarketDataBid45Field::BidVolume4)
 		.def_readwrite("BidPrice5", &CThostFtdcMarketDataBid45Field::BidPrice5)
 		.def_readwrite("BidVolume5", &CThostFtdcMarketDataBid45Field::BidVolume5)
-		;
+		.def("keys", [](const CThostFtdcMarketDataBid45Field& a) { std::vector<std::string> b = { "BidPrice4", "BidVolume4", "BidPrice5", "BidVolume5" }; return b;});
 
 	py::class_<CThostFtdcMarketDataAsk45Field>(m, "CThostFtdcMarketDataAsk45Field")
 		.def(py::init<>())
@@ -3116,7 +3117,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("AskVolume4", &CThostFtdcMarketDataAsk45Field::AskVolume4)
 		.def_readwrite("AskPrice5", &CThostFtdcMarketDataAsk45Field::AskPrice5)
 		.def_readwrite("AskVolume5", &CThostFtdcMarketDataAsk45Field::AskVolume5)
-		;
+		.def("keys", [](const CThostFtdcMarketDataAsk45Field& a) { std::vector<std::string> b = { "AskPrice4", "AskVolume4", "AskPrice5", "AskVolume5" }; return b;});
 
 	py::class_<CThostFtdcMarketDataUpdateTimeField>(m, "CThostFtdcMarketDataUpdateTimeField")
 		.def(py::init<>())
@@ -3125,19 +3126,19 @@ void init_structs(py::module_& m) {
 		.def_property("UpdateTime", [](CThostFtdcMarketDataUpdateTimeField& a) {return encoding_cast(a.UpdateTime);}, [](CThostFtdcMarketDataUpdateTimeField& a, char c[]) {strcpy(a.UpdateTime, c);})
 		.def_readwrite("UpdateMillisec", &CThostFtdcMarketDataUpdateTimeField::UpdateMillisec)
 		.def_property("ActionDay", [](CThostFtdcMarketDataUpdateTimeField& a) {return encoding_cast(a.ActionDay);}, [](CThostFtdcMarketDataUpdateTimeField& a, char c[]) {strcpy(a.ActionDay, c);})
-		;
+		.def("keys", [](const CThostFtdcMarketDataUpdateTimeField& a) { std::vector<std::string> b = { "InstrumentID", "UpdateTime", "UpdateMillisec", "ActionDay" }; return b;});
 
 	py::class_<CThostFtdcMarketDataExchangeField>(m, "CThostFtdcMarketDataExchangeField")
 		.def(py::init<>())
 		.def("__copy__", [](const CThostFtdcMarketDataExchangeField& a) {return CThostFtdcMarketDataExchangeField(a);})
 		.def_property("ExchangeID", [](CThostFtdcMarketDataExchangeField& a) {return encoding_cast(a.ExchangeID);}, [](CThostFtdcMarketDataExchangeField& a, char c[]) {strcpy(a.ExchangeID, c);})
-		;
+		.def("keys", [](const CThostFtdcMarketDataExchangeField& a) { std::vector<std::string> b = { "ExchangeID" }; return b;});
 
 	py::class_<CThostFtdcSpecificInstrumentField>(m, "CThostFtdcSpecificInstrumentField")
 		.def(py::init<>())
 		.def("__copy__", [](const CThostFtdcSpecificInstrumentField& a) {return CThostFtdcSpecificInstrumentField(a);})
 		.def_property("InstrumentID", [](CThostFtdcSpecificInstrumentField& a) {return encoding_cast(a.InstrumentID);}, [](CThostFtdcSpecificInstrumentField& a, char c[]) {strcpy(a.InstrumentID, c);})
-		;
+		.def("keys", [](const CThostFtdcSpecificInstrumentField& a) { std::vector<std::string> b = { "InstrumentID" }; return b;});
 
 	py::class_<CThostFtdcInstrumentStatusField>(m, "CThostFtdcInstrumentStatusField")
 		.def(py::init<>())
@@ -3150,14 +3151,14 @@ void init_structs(py::module_& m) {
 		.def_readwrite("TradingSegmentSN", &CThostFtdcInstrumentStatusField::TradingSegmentSN)
 		.def_property("EnterTime", [](CThostFtdcInstrumentStatusField& a) {return encoding_cast(a.EnterTime);}, [](CThostFtdcInstrumentStatusField& a, char c[]) {strcpy(a.EnterTime, c);})
 		.def_readwrite("EnterReason", &CThostFtdcInstrumentStatusField::EnterReason)
-		;
+		.def("keys", [](const CThostFtdcInstrumentStatusField& a) { std::vector<std::string> b = { "ExchangeID", "ExchangeInstID", "SettlementGroupID", "InstrumentID", "InstrumentStatus", "TradingSegmentSN", "EnterTime", "EnterReason" }; return b;});
 
 	py::class_<CThostFtdcQryInstrumentStatusField>(m, "CThostFtdcQryInstrumentStatusField")
 		.def(py::init<>())
 		.def("__copy__", [](const CThostFtdcQryInstrumentStatusField& a) {return CThostFtdcQryInstrumentStatusField(a);})
 		.def_property("ExchangeID", [](CThostFtdcQryInstrumentStatusField& a) {return encoding_cast(a.ExchangeID);}, [](CThostFtdcQryInstrumentStatusField& a, char c[]) {strcpy(a.ExchangeID, c);})
 		.def_property("ExchangeInstID", [](CThostFtdcQryInstrumentStatusField& a) {return encoding_cast(a.ExchangeInstID);}, [](CThostFtdcQryInstrumentStatusField& a, char c[]) {strcpy(a.ExchangeInstID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryInstrumentStatusField& a) { std::vector<std::string> b = { "ExchangeID", "ExchangeInstID" }; return b;});
 
 	py::class_<CThostFtdcInvestorAccountField>(m, "CThostFtdcInvestorAccountField")
 		.def(py::init<>())
@@ -3166,7 +3167,7 @@ void init_structs(py::module_& m) {
 		.def_property("InvestorID", [](CThostFtdcInvestorAccountField& a) {return encoding_cast(a.InvestorID);}, [](CThostFtdcInvestorAccountField& a, char c[]) {strcpy(a.InvestorID, c);})
 		.def_property("AccountID", [](CThostFtdcInvestorAccountField& a) {return encoding_cast(a.AccountID);}, [](CThostFtdcInvestorAccountField& a, char c[]) {strcpy(a.AccountID, c);})
 		.def_property("CurrencyID", [](CThostFtdcInvestorAccountField& a) {return encoding_cast(a.CurrencyID);}, [](CThostFtdcInvestorAccountField& a, char c[]) {strcpy(a.CurrencyID, c);})
-		;
+		.def("keys", [](const CThostFtdcInvestorAccountField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "AccountID", "CurrencyID" }; return b;});
 
 	py::class_<CThostFtdcPositionProfitAlgorithmField>(m, "CThostFtdcPositionProfitAlgorithmField")
 		.def(py::init<>())
@@ -3176,7 +3177,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("Algorithm", &CThostFtdcPositionProfitAlgorithmField::Algorithm)
 		.def_property("Memo", [](CThostFtdcPositionProfitAlgorithmField& a) {return encoding_cast(a.Memo);}, [](CThostFtdcPositionProfitAlgorithmField& a, char c[]) {strcpy(a.Memo, c);})
 		.def_property("CurrencyID", [](CThostFtdcPositionProfitAlgorithmField& a) {return encoding_cast(a.CurrencyID);}, [](CThostFtdcPositionProfitAlgorithmField& a, char c[]) {strcpy(a.CurrencyID, c);})
-		;
+		.def("keys", [](const CThostFtdcPositionProfitAlgorithmField& a) { std::vector<std::string> b = { "BrokerID", "AccountID", "Algorithm", "Memo", "CurrencyID" }; return b;});
 
 	py::class_<CThostFtdcDiscountField>(m, "CThostFtdcDiscountField")
 		.def(py::init<>())
@@ -3185,14 +3186,14 @@ void init_structs(py::module_& m) {
 		.def_readwrite("InvestorRange", &CThostFtdcDiscountField::InvestorRange)
 		.def_property("InvestorID", [](CThostFtdcDiscountField& a) {return encoding_cast(a.InvestorID);}, [](CThostFtdcDiscountField& a, char c[]) {strcpy(a.InvestorID, c);})
 		.def_readwrite("Discount", &CThostFtdcDiscountField::Discount)
-		;
+		.def("keys", [](const CThostFtdcDiscountField& a) { std::vector<std::string> b = { "BrokerID", "InvestorRange", "InvestorID", "Discount" }; return b;});
 
 	py::class_<CThostFtdcQryTransferBankField>(m, "CThostFtdcQryTransferBankField")
 		.def(py::init<>())
 		.def("__copy__", [](const CThostFtdcQryTransferBankField& a) {return CThostFtdcQryTransferBankField(a);})
 		.def_property("BankID", [](CThostFtdcQryTransferBankField& a) {return encoding_cast(a.BankID);}, [](CThostFtdcQryTransferBankField& a, char c[]) {strcpy(a.BankID, c);})
 		.def_property("BankBrchID", [](CThostFtdcQryTransferBankField& a) {return encoding_cast(a.BankBrchID);}, [](CThostFtdcQryTransferBankField& a, char c[]) {strcpy(a.BankBrchID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryTransferBankField& a) { std::vector<std::string> b = { "BankID", "BankBrchID" }; return b;});
 
 	py::class_<CThostFtdcTransferBankField>(m, "CThostFtdcTransferBankField")
 		.def(py::init<>())
@@ -3201,7 +3202,7 @@ void init_structs(py::module_& m) {
 		.def_property("BankBrchID", [](CThostFtdcTransferBankField& a) {return encoding_cast(a.BankBrchID);}, [](CThostFtdcTransferBankField& a, char c[]) {strcpy(a.BankBrchID, c);})
 		.def_property("BankName", [](CThostFtdcTransferBankField& a) {return encoding_cast(a.BankName);}, [](CThostFtdcTransferBankField& a, char c[]) {strcpy(a.BankName, c);})
 		.def_readwrite("IsActive", &CThostFtdcTransferBankField::IsActive)
-		;
+		.def("keys", [](const CThostFtdcTransferBankField& a) { std::vector<std::string> b = { "BankID", "BankBrchID", "BankName", "IsActive" }; return b;});
 
 	py::class_<CThostFtdcQryInvestorPositionDetailField>(m, "CThostFtdcQryInvestorPositionDetailField")
 		.def(py::init<>())
@@ -3211,7 +3212,7 @@ void init_structs(py::module_& m) {
 		.def_property("InstrumentID", [](CThostFtdcQryInvestorPositionDetailField& a) {return encoding_cast(a.InstrumentID);}, [](CThostFtdcQryInvestorPositionDetailField& a, char c[]) {strcpy(a.InstrumentID, c);})
 		.def_property("ExchangeID", [](CThostFtdcQryInvestorPositionDetailField& a) {return encoding_cast(a.ExchangeID);}, [](CThostFtdcQryInvestorPositionDetailField& a, char c[]) {strcpy(a.ExchangeID, c);})
 		.def_property("InvestUnitID", [](CThostFtdcQryInvestorPositionDetailField& a) {return encoding_cast(a.InvestUnitID);}, [](CThostFtdcQryInvestorPositionDetailField& a, char c[]) {strcpy(a.InvestUnitID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryInvestorPositionDetailField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "InstrumentID", "ExchangeID", "InvestUnitID" }; return b;});
 
 	py::class_<CThostFtdcInvestorPositionDetailField>(m, "CThostFtdcInvestorPositionDetailField")
 		.def(py::init<>())
@@ -3245,7 +3246,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("TimeFirstVolume", &CThostFtdcInvestorPositionDetailField::TimeFirstVolume)
 		.def_property("InvestUnitID", [](CThostFtdcInvestorPositionDetailField& a) {return encoding_cast(a.InvestUnitID);}, [](CThostFtdcInvestorPositionDetailField& a, char c[]) {strcpy(a.InvestUnitID, c);})
 		.def_readwrite("SpecPosiType", &CThostFtdcInvestorPositionDetailField::SpecPosiType)
-		;
+		.def("keys", [](const CThostFtdcInvestorPositionDetailField& a) { std::vector<std::string> b = { "InstrumentID", "BrokerID", "InvestorID", "HedgeFlag", "Direction", "OpenDate", "TradeID", "Volume", "OpenPrice", "TradingDay", "SettlementID", "TradeType", "CombInstrumentID", "ExchangeID", "CloseProfitByDate", "CloseProfitByTrade", "PositionProfitByDate", "PositionProfitByTrade", "Margin", "ExchMargin", "MarginRateByMoney", "MarginRateByVolume", "LastSettlementPrice", "SettlementPrice", "CloseVolume", "CloseAmount", "TimeFirstVolume", "InvestUnitID", "SpecPosiType" }; return b;});
 
 	py::class_<CThostFtdcTradingAccountPasswordField>(m, "CThostFtdcTradingAccountPasswordField")
 		.def(py::init<>())
@@ -3254,7 +3255,7 @@ void init_structs(py::module_& m) {
 		.def_property("AccountID", [](CThostFtdcTradingAccountPasswordField& a) {return encoding_cast(a.AccountID);}, [](CThostFtdcTradingAccountPasswordField& a, char c[]) {strcpy(a.AccountID, c);})
 		.def_property("Password", [](CThostFtdcTradingAccountPasswordField& a) {return encoding_cast(a.Password);}, [](CThostFtdcTradingAccountPasswordField& a, char c[]) {strcpy(a.Password, c);})
 		.def_property("CurrencyID", [](CThostFtdcTradingAccountPasswordField& a) {return encoding_cast(a.CurrencyID);}, [](CThostFtdcTradingAccountPasswordField& a, char c[]) {strcpy(a.CurrencyID, c);})
-		;
+		.def("keys", [](const CThostFtdcTradingAccountPasswordField& a) { std::vector<std::string> b = { "BrokerID", "AccountID", "Password", "CurrencyID" }; return b;});
 
 	py::class_<CThostFtdcMDTraderOfferField>(m, "CThostFtdcMDTraderOfferField")
 		.def(py::init<>())
@@ -3278,7 +3279,7 @@ void init_structs(py::module_& m) {
 		.def_property("BrokerID", [](CThostFtdcMDTraderOfferField& a) {return encoding_cast(a.BrokerID);}, [](CThostFtdcMDTraderOfferField& a, char c[]) {strcpy(a.BrokerID, c);})
 		.def_property("MaxTradeID", [](CThostFtdcMDTraderOfferField& a) {return encoding_cast(a.MaxTradeID);}, [](CThostFtdcMDTraderOfferField& a, char c[]) {strcpy(a.MaxTradeID, c);})
 		.def_property("MaxOrderMessageReference", [](CThostFtdcMDTraderOfferField& a) {return encoding_cast(a.MaxOrderMessageReference);}, [](CThostFtdcMDTraderOfferField& a, char c[]) {strcpy(a.MaxOrderMessageReference, c);})
-		;
+		.def("keys", [](const CThostFtdcMDTraderOfferField& a) { std::vector<std::string> b = { "ExchangeID", "TraderID", "ParticipantID", "Password", "InstallID", "OrderLocalID", "TraderConnectStatus", "ConnectRequestDate", "ConnectRequestTime", "LastReportDate", "LastReportTime", "ConnectDate", "ConnectTime", "StartDate", "StartTime", "TradingDay", "BrokerID", "MaxTradeID", "MaxOrderMessageReference" }; return b;});
 
 	py::class_<CThostFtdcQryMDTraderOfferField>(m, "CThostFtdcQryMDTraderOfferField")
 		.def(py::init<>())
@@ -3286,13 +3287,13 @@ void init_structs(py::module_& m) {
 		.def_property("ExchangeID", [](CThostFtdcQryMDTraderOfferField& a) {return encoding_cast(a.ExchangeID);}, [](CThostFtdcQryMDTraderOfferField& a, char c[]) {strcpy(a.ExchangeID, c);})
 		.def_property("ParticipantID", [](CThostFtdcQryMDTraderOfferField& a) {return encoding_cast(a.ParticipantID);}, [](CThostFtdcQryMDTraderOfferField& a, char c[]) {strcpy(a.ParticipantID, c);})
 		.def_property("TraderID", [](CThostFtdcQryMDTraderOfferField& a) {return encoding_cast(a.TraderID);}, [](CThostFtdcQryMDTraderOfferField& a, char c[]) {strcpy(a.TraderID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryMDTraderOfferField& a) { std::vector<std::string> b = { "ExchangeID", "ParticipantID", "TraderID" }; return b;});
 
 	py::class_<CThostFtdcQryNoticeField>(m, "CThostFtdcQryNoticeField")
 		.def(py::init<>())
 		.def("__copy__", [](const CThostFtdcQryNoticeField& a) {return CThostFtdcQryNoticeField(a);})
 		.def_property("BrokerID", [](CThostFtdcQryNoticeField& a) {return encoding_cast(a.BrokerID);}, [](CThostFtdcQryNoticeField& a, char c[]) {strcpy(a.BrokerID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryNoticeField& a) { std::vector<std::string> b = { "BrokerID" }; return b;});
 
 	py::class_<CThostFtdcNoticeField>(m, "CThostFtdcNoticeField")
 		.def(py::init<>())
@@ -3300,7 +3301,7 @@ void init_structs(py::module_& m) {
 		.def_property("BrokerID", [](CThostFtdcNoticeField& a) {return encoding_cast(a.BrokerID);}, [](CThostFtdcNoticeField& a, char c[]) {strcpy(a.BrokerID, c);})
 		.def_property("Content", [](CThostFtdcNoticeField& a) {return encoding_cast(a.Content);}, [](CThostFtdcNoticeField& a, char c[]) {strcpy(a.Content, c);})
 		.def_property("SequenceLabel", [](CThostFtdcNoticeField& a) {return encoding_cast(a.SequenceLabel);}, [](CThostFtdcNoticeField& a, char c[]) {strcpy(a.SequenceLabel, c);})
-		;
+		.def("keys", [](const CThostFtdcNoticeField& a) { std::vector<std::string> b = { "BrokerID", "Content", "SequenceLabel" }; return b;});
 
 	py::class_<CThostFtdcUserRightField>(m, "CThostFtdcUserRightField")
 		.def(py::init<>())
@@ -3309,7 +3310,7 @@ void init_structs(py::module_& m) {
 		.def_property("UserID", [](CThostFtdcUserRightField& a) {return encoding_cast(a.UserID);}, [](CThostFtdcUserRightField& a, char c[]) {strcpy(a.UserID, c);})
 		.def_readwrite("UserRightType", &CThostFtdcUserRightField::UserRightType)
 		.def_readwrite("IsForbidden", &CThostFtdcUserRightField::IsForbidden)
-		;
+		.def("keys", [](const CThostFtdcUserRightField& a) { std::vector<std::string> b = { "BrokerID", "UserID", "UserRightType", "IsForbidden" }; return b;});
 
 	py::class_<CThostFtdcQrySettlementInfoConfirmField>(m, "CThostFtdcQrySettlementInfoConfirmField")
 		.def(py::init<>())
@@ -3318,13 +3319,13 @@ void init_structs(py::module_& m) {
 		.def_property("InvestorID", [](CThostFtdcQrySettlementInfoConfirmField& a) {return encoding_cast(a.InvestorID);}, [](CThostFtdcQrySettlementInfoConfirmField& a, char c[]) {strcpy(a.InvestorID, c);})
 		.def_property("AccountID", [](CThostFtdcQrySettlementInfoConfirmField& a) {return encoding_cast(a.AccountID);}, [](CThostFtdcQrySettlementInfoConfirmField& a, char c[]) {strcpy(a.AccountID, c);})
 		.def_property("CurrencyID", [](CThostFtdcQrySettlementInfoConfirmField& a) {return encoding_cast(a.CurrencyID);}, [](CThostFtdcQrySettlementInfoConfirmField& a, char c[]) {strcpy(a.CurrencyID, c);})
-		;
+		.def("keys", [](const CThostFtdcQrySettlementInfoConfirmField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "AccountID", "CurrencyID" }; return b;});
 
 	py::class_<CThostFtdcLoadSettlementInfoField>(m, "CThostFtdcLoadSettlementInfoField")
 		.def(py::init<>())
 		.def("__copy__", [](const CThostFtdcLoadSettlementInfoField& a) {return CThostFtdcLoadSettlementInfoField(a);})
 		.def_property("BrokerID", [](CThostFtdcLoadSettlementInfoField& a) {return encoding_cast(a.BrokerID);}, [](CThostFtdcLoadSettlementInfoField& a, char c[]) {strcpy(a.BrokerID, c);})
-		;
+		.def("keys", [](const CThostFtdcLoadSettlementInfoField& a) { std::vector<std::string> b = { "BrokerID" }; return b;});
 
 	py::class_<CThostFtdcBrokerWithdrawAlgorithmField>(m, "CThostFtdcBrokerWithdrawAlgorithmField")
 		.def(py::init<>())
@@ -3339,7 +3340,7 @@ void init_structs(py::module_& m) {
 		.def_property("CurrencyID", [](CThostFtdcBrokerWithdrawAlgorithmField& a) {return encoding_cast(a.CurrencyID);}, [](CThostFtdcBrokerWithdrawAlgorithmField& a, char c[]) {strcpy(a.CurrencyID, c);})
 		.def_readwrite("FundMortgageRatio", &CThostFtdcBrokerWithdrawAlgorithmField::FundMortgageRatio)
 		.def_readwrite("BalanceAlgorithm", &CThostFtdcBrokerWithdrawAlgorithmField::BalanceAlgorithm)
-		;
+		.def("keys", [](const CThostFtdcBrokerWithdrawAlgorithmField& a) { std::vector<std::string> b = { "BrokerID", "WithdrawAlgorithm", "UsingRatio", "IncludeCloseProfit", "AllWithoutTrade", "AvailIncludeCloseProfit", "IsBrokerUserEvent", "CurrencyID", "FundMortgageRatio", "BalanceAlgorithm" }; return b;});
 
 	py::class_<CThostFtdcTradingAccountPasswordUpdateV1Field>(m, "CThostFtdcTradingAccountPasswordUpdateV1Field")
 		.def(py::init<>())
@@ -3348,7 +3349,7 @@ void init_structs(py::module_& m) {
 		.def_property("InvestorID", [](CThostFtdcTradingAccountPasswordUpdateV1Field& a) {return encoding_cast(a.InvestorID);}, [](CThostFtdcTradingAccountPasswordUpdateV1Field& a, char c[]) {strcpy(a.InvestorID, c);})
 		.def_property("OldPassword", [](CThostFtdcTradingAccountPasswordUpdateV1Field& a) {return encoding_cast(a.OldPassword);}, [](CThostFtdcTradingAccountPasswordUpdateV1Field& a, char c[]) {strcpy(a.OldPassword, c);})
 		.def_property("NewPassword", [](CThostFtdcTradingAccountPasswordUpdateV1Field& a) {return encoding_cast(a.NewPassword);}, [](CThostFtdcTradingAccountPasswordUpdateV1Field& a, char c[]) {strcpy(a.NewPassword, c);})
-		;
+		.def("keys", [](const CThostFtdcTradingAccountPasswordUpdateV1Field& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "OldPassword", "NewPassword" }; return b;});
 
 	py::class_<CThostFtdcTradingAccountPasswordUpdateField>(m, "CThostFtdcTradingAccountPasswordUpdateField")
 		.def(py::init<>())
@@ -3358,7 +3359,7 @@ void init_structs(py::module_& m) {
 		.def_property("OldPassword", [](CThostFtdcTradingAccountPasswordUpdateField& a) {return encoding_cast(a.OldPassword);}, [](CThostFtdcTradingAccountPasswordUpdateField& a, char c[]) {strcpy(a.OldPassword, c);})
 		.def_property("NewPassword", [](CThostFtdcTradingAccountPasswordUpdateField& a) {return encoding_cast(a.NewPassword);}, [](CThostFtdcTradingAccountPasswordUpdateField& a, char c[]) {strcpy(a.NewPassword, c);})
 		.def_property("CurrencyID", [](CThostFtdcTradingAccountPasswordUpdateField& a) {return encoding_cast(a.CurrencyID);}, [](CThostFtdcTradingAccountPasswordUpdateField& a, char c[]) {strcpy(a.CurrencyID, c);})
-		;
+		.def("keys", [](const CThostFtdcTradingAccountPasswordUpdateField& a) { std::vector<std::string> b = { "BrokerID", "AccountID", "OldPassword", "NewPassword", "CurrencyID" }; return b;});
 
 	py::class_<CThostFtdcQryCombinationLegField>(m, "CThostFtdcQryCombinationLegField")
 		.def(py::init<>())
@@ -3366,13 +3367,13 @@ void init_structs(py::module_& m) {
 		.def_property("CombInstrumentID", [](CThostFtdcQryCombinationLegField& a) {return encoding_cast(a.CombInstrumentID);}, [](CThostFtdcQryCombinationLegField& a, char c[]) {strcpy(a.CombInstrumentID, c);})
 		.def_readwrite("LegID", &CThostFtdcQryCombinationLegField::LegID)
 		.def_property("LegInstrumentID", [](CThostFtdcQryCombinationLegField& a) {return encoding_cast(a.LegInstrumentID);}, [](CThostFtdcQryCombinationLegField& a, char c[]) {strcpy(a.LegInstrumentID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryCombinationLegField& a) { std::vector<std::string> b = { "CombInstrumentID", "LegID", "LegInstrumentID" }; return b;});
 
 	py::class_<CThostFtdcQrySyncStatusField>(m, "CThostFtdcQrySyncStatusField")
 		.def(py::init<>())
 		.def("__copy__", [](const CThostFtdcQrySyncStatusField& a) {return CThostFtdcQrySyncStatusField(a);})
 		.def_property("TradingDay", [](CThostFtdcQrySyncStatusField& a) {return encoding_cast(a.TradingDay);}, [](CThostFtdcQrySyncStatusField& a, char c[]) {strcpy(a.TradingDay, c);})
-		;
+		.def("keys", [](const CThostFtdcQrySyncStatusField& a) { std::vector<std::string> b = { "TradingDay" }; return b;});
 
 	py::class_<CThostFtdcCombinationLegField>(m, "CThostFtdcCombinationLegField")
 		.def(py::init<>())
@@ -3383,21 +3384,21 @@ void init_structs(py::module_& m) {
 		.def_readwrite("Direction", &CThostFtdcCombinationLegField::Direction)
 		.def_readwrite("LegMultiple", &CThostFtdcCombinationLegField::LegMultiple)
 		.def_readwrite("ImplyLevel", &CThostFtdcCombinationLegField::ImplyLevel)
-		;
+		.def("keys", [](const CThostFtdcCombinationLegField& a) { std::vector<std::string> b = { "CombInstrumentID", "LegID", "LegInstrumentID", "Direction", "LegMultiple", "ImplyLevel" }; return b;});
 
 	py::class_<CThostFtdcSyncStatusField>(m, "CThostFtdcSyncStatusField")
 		.def(py::init<>())
 		.def("__copy__", [](const CThostFtdcSyncStatusField& a) {return CThostFtdcSyncStatusField(a);})
 		.def_property("TradingDay", [](CThostFtdcSyncStatusField& a) {return encoding_cast(a.TradingDay);}, [](CThostFtdcSyncStatusField& a, char c[]) {strcpy(a.TradingDay, c);})
 		.def_readwrite("DataSyncStatus", &CThostFtdcSyncStatusField::DataSyncStatus)
-		;
+		.def("keys", [](const CThostFtdcSyncStatusField& a) { std::vector<std::string> b = { "TradingDay", "DataSyncStatus" }; return b;});
 
 	py::class_<CThostFtdcQryLinkManField>(m, "CThostFtdcQryLinkManField")
 		.def(py::init<>())
 		.def("__copy__", [](const CThostFtdcQryLinkManField& a) {return CThostFtdcQryLinkManField(a);})
 		.def_property("BrokerID", [](CThostFtdcQryLinkManField& a) {return encoding_cast(a.BrokerID);}, [](CThostFtdcQryLinkManField& a, char c[]) {strcpy(a.BrokerID, c);})
 		.def_property("InvestorID", [](CThostFtdcQryLinkManField& a) {return encoding_cast(a.InvestorID);}, [](CThostFtdcQryLinkManField& a, char c[]) {strcpy(a.InvestorID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryLinkManField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID" }; return b;});
 
 	py::class_<CThostFtdcLinkManField>(m, "CThostFtdcLinkManField")
 		.def(py::init<>())
@@ -3414,7 +3415,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("Priority", &CThostFtdcLinkManField::Priority)
 		.def_property("UOAZipCode", [](CThostFtdcLinkManField& a) {return encoding_cast(a.UOAZipCode);}, [](CThostFtdcLinkManField& a, char c[]) {strcpy(a.UOAZipCode, c);})
 		.def_property("PersonFullName", [](CThostFtdcLinkManField& a) {return encoding_cast(a.PersonFullName);}, [](CThostFtdcLinkManField& a, char c[]) {strcpy(a.PersonFullName, c);})
-		;
+		.def("keys", [](const CThostFtdcLinkManField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "PersonType", "IdentifiedCardType", "IdentifiedCardNo", "PersonName", "Telephone", "Address", "ZipCode", "Priority", "UOAZipCode", "PersonFullName" }; return b;});
 
 	py::class_<CThostFtdcQryBrokerUserEventField>(m, "CThostFtdcQryBrokerUserEventField")
 		.def(py::init<>())
@@ -3422,7 +3423,7 @@ void init_structs(py::module_& m) {
 		.def_property("BrokerID", [](CThostFtdcQryBrokerUserEventField& a) {return encoding_cast(a.BrokerID);}, [](CThostFtdcQryBrokerUserEventField& a, char c[]) {strcpy(a.BrokerID, c);})
 		.def_property("UserID", [](CThostFtdcQryBrokerUserEventField& a) {return encoding_cast(a.UserID);}, [](CThostFtdcQryBrokerUserEventField& a, char c[]) {strcpy(a.UserID, c);})
 		.def_readwrite("UserEventType", &CThostFtdcQryBrokerUserEventField::UserEventType)
-		;
+		.def("keys", [](const CThostFtdcQryBrokerUserEventField& a) { std::vector<std::string> b = { "BrokerID", "UserID", "UserEventType" }; return b;});
 
 	py::class_<CThostFtdcBrokerUserEventField>(m, "CThostFtdcBrokerUserEventField")
 		.def(py::init<>())
@@ -3436,7 +3437,7 @@ void init_structs(py::module_& m) {
 		.def_property("UserEventInfo", [](CThostFtdcBrokerUserEventField& a) {return encoding_cast(a.UserEventInfo);}, [](CThostFtdcBrokerUserEventField& a, char c[]) {strcpy(a.UserEventInfo, c);})
 		.def_property("InvestorID", [](CThostFtdcBrokerUserEventField& a) {return encoding_cast(a.InvestorID);}, [](CThostFtdcBrokerUserEventField& a, char c[]) {strcpy(a.InvestorID, c);})
 		.def_property("InstrumentID", [](CThostFtdcBrokerUserEventField& a) {return encoding_cast(a.InstrumentID);}, [](CThostFtdcBrokerUserEventField& a, char c[]) {strcpy(a.InstrumentID, c);})
-		;
+		.def("keys", [](const CThostFtdcBrokerUserEventField& a) { std::vector<std::string> b = { "BrokerID", "UserID", "UserEventType", "EventSequenceNo", "EventDate", "EventTime", "UserEventInfo", "InvestorID", "InstrumentID" }; return b;});
 
 	py::class_<CThostFtdcQryContractBankField>(m, "CThostFtdcQryContractBankField")
 		.def(py::init<>())
@@ -3444,7 +3445,7 @@ void init_structs(py::module_& m) {
 		.def_property("BrokerID", [](CThostFtdcQryContractBankField& a) {return encoding_cast(a.BrokerID);}, [](CThostFtdcQryContractBankField& a, char c[]) {strcpy(a.BrokerID, c);})
 		.def_property("BankID", [](CThostFtdcQryContractBankField& a) {return encoding_cast(a.BankID);}, [](CThostFtdcQryContractBankField& a, char c[]) {strcpy(a.BankID, c);})
 		.def_property("BankBrchID", [](CThostFtdcQryContractBankField& a) {return encoding_cast(a.BankBrchID);}, [](CThostFtdcQryContractBankField& a, char c[]) {strcpy(a.BankBrchID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryContractBankField& a) { std::vector<std::string> b = { "BrokerID", "BankID", "BankBrchID" }; return b;});
 
 	py::class_<CThostFtdcContractBankField>(m, "CThostFtdcContractBankField")
 		.def(py::init<>())
@@ -3453,7 +3454,7 @@ void init_structs(py::module_& m) {
 		.def_property("BankID", [](CThostFtdcContractBankField& a) {return encoding_cast(a.BankID);}, [](CThostFtdcContractBankField& a, char c[]) {strcpy(a.BankID, c);})
 		.def_property("BankBrchID", [](CThostFtdcContractBankField& a) {return encoding_cast(a.BankBrchID);}, [](CThostFtdcContractBankField& a, char c[]) {strcpy(a.BankBrchID, c);})
 		.def_property("BankName", [](CThostFtdcContractBankField& a) {return encoding_cast(a.BankName);}, [](CThostFtdcContractBankField& a, char c[]) {strcpy(a.BankName, c);})
-		;
+		.def("keys", [](const CThostFtdcContractBankField& a) { std::vector<std::string> b = { "BrokerID", "BankID", "BankBrchID", "BankName" }; return b;});
 
 	py::class_<CThostFtdcInvestorPositionCombineDetailField>(m, "CThostFtdcInvestorPositionCombineDetailField")
 		.def(py::init<>())
@@ -3479,7 +3480,7 @@ void init_structs(py::module_& m) {
 		.def_property("CombInstrumentID", [](CThostFtdcInvestorPositionCombineDetailField& a) {return encoding_cast(a.CombInstrumentID);}, [](CThostFtdcInvestorPositionCombineDetailField& a, char c[]) {strcpy(a.CombInstrumentID, c);})
 		.def_readwrite("TradeGroupID", &CThostFtdcInvestorPositionCombineDetailField::TradeGroupID)
 		.def_property("InvestUnitID", [](CThostFtdcInvestorPositionCombineDetailField& a) {return encoding_cast(a.InvestUnitID);}, [](CThostFtdcInvestorPositionCombineDetailField& a, char c[]) {strcpy(a.InvestUnitID, c);})
-		;
+		.def("keys", [](const CThostFtdcInvestorPositionCombineDetailField& a) { std::vector<std::string> b = { "TradingDay", "OpenDate", "ExchangeID", "SettlementID", "BrokerID", "InvestorID", "ComTradeID", "TradeID", "InstrumentID", "HedgeFlag", "Direction", "TotalAmt", "Margin", "ExchMargin", "MarginRateByMoney", "MarginRateByVolume", "LegID", "LegMultiple", "CombInstrumentID", "TradeGroupID", "InvestUnitID" }; return b;});
 
 	py::class_<CThostFtdcParkedOrderField>(m, "CThostFtdcParkedOrderField")
 		.def(py::init<>())
@@ -3519,7 +3520,7 @@ void init_structs(py::module_& m) {
 		.def_property("InvestUnitID", [](CThostFtdcParkedOrderField& a) {return encoding_cast(a.InvestUnitID);}, [](CThostFtdcParkedOrderField& a, char c[]) {strcpy(a.InvestUnitID, c);})
 		.def_property("IPAddress", [](CThostFtdcParkedOrderField& a) {return encoding_cast(a.IPAddress);}, [](CThostFtdcParkedOrderField& a, char c[]) {strcpy(a.IPAddress, c);})
 		.def_property("MacAddress", [](CThostFtdcParkedOrderField& a) {return encoding_cast(a.MacAddress);}, [](CThostFtdcParkedOrderField& a, char c[]) {strcpy(a.MacAddress, c);})
-		;
+		.def("keys", [](const CThostFtdcParkedOrderField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "InstrumentID", "OrderRef", "UserID", "OrderPriceType", "Direction", "CombOffsetFlag", "CombHedgeFlag", "LimitPrice", "VolumeTotalOriginal", "TimeCondition", "GTDDate", "VolumeCondition", "MinVolume", "ContingentCondition", "StopPrice", "ForceCloseReason", "IsAutoSuspend", "BusinessUnit", "RequestID", "UserForceClose", "ExchangeID", "ParkedOrderID", "UserType", "Status", "ErrorID", "ErrorMsg", "IsSwapOrder", "AccountID", "CurrencyID", "ClientID", "InvestUnitID", "IPAddress", "MacAddress" }; return b;});
 
 	py::class_<CThostFtdcParkedOrderActionField>(m, "CThostFtdcParkedOrderActionField")
 		.def(py::init<>())
@@ -3546,7 +3547,7 @@ void init_structs(py::module_& m) {
 		.def_property("InvestUnitID", [](CThostFtdcParkedOrderActionField& a) {return encoding_cast(a.InvestUnitID);}, [](CThostFtdcParkedOrderActionField& a, char c[]) {strcpy(a.InvestUnitID, c);})
 		.def_property("IPAddress", [](CThostFtdcParkedOrderActionField& a) {return encoding_cast(a.IPAddress);}, [](CThostFtdcParkedOrderActionField& a, char c[]) {strcpy(a.IPAddress, c);})
 		.def_property("MacAddress", [](CThostFtdcParkedOrderActionField& a) {return encoding_cast(a.MacAddress);}, [](CThostFtdcParkedOrderActionField& a, char c[]) {strcpy(a.MacAddress, c);})
-		;
+		.def("keys", [](const CThostFtdcParkedOrderActionField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "OrderActionRef", "OrderRef", "RequestID", "FrontID", "SessionID", "ExchangeID", "OrderSysID", "ActionFlag", "LimitPrice", "VolumeChange", "UserID", "InstrumentID", "ParkedOrderActionID", "UserType", "Status", "ErrorID", "ErrorMsg", "InvestUnitID", "IPAddress", "MacAddress" }; return b;});
 
 	py::class_<CThostFtdcQryParkedOrderField>(m, "CThostFtdcQryParkedOrderField")
 		.def(py::init<>())
@@ -3556,7 +3557,7 @@ void init_structs(py::module_& m) {
 		.def_property("InstrumentID", [](CThostFtdcQryParkedOrderField& a) {return encoding_cast(a.InstrumentID);}, [](CThostFtdcQryParkedOrderField& a, char c[]) {strcpy(a.InstrumentID, c);})
 		.def_property("ExchangeID", [](CThostFtdcQryParkedOrderField& a) {return encoding_cast(a.ExchangeID);}, [](CThostFtdcQryParkedOrderField& a, char c[]) {strcpy(a.ExchangeID, c);})
 		.def_property("InvestUnitID", [](CThostFtdcQryParkedOrderField& a) {return encoding_cast(a.InvestUnitID);}, [](CThostFtdcQryParkedOrderField& a, char c[]) {strcpy(a.InvestUnitID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryParkedOrderField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "InstrumentID", "ExchangeID", "InvestUnitID" }; return b;});
 
 	py::class_<CThostFtdcQryParkedOrderActionField>(m, "CThostFtdcQryParkedOrderActionField")
 		.def(py::init<>())
@@ -3566,7 +3567,7 @@ void init_structs(py::module_& m) {
 		.def_property("InstrumentID", [](CThostFtdcQryParkedOrderActionField& a) {return encoding_cast(a.InstrumentID);}, [](CThostFtdcQryParkedOrderActionField& a, char c[]) {strcpy(a.InstrumentID, c);})
 		.def_property("ExchangeID", [](CThostFtdcQryParkedOrderActionField& a) {return encoding_cast(a.ExchangeID);}, [](CThostFtdcQryParkedOrderActionField& a, char c[]) {strcpy(a.ExchangeID, c);})
 		.def_property("InvestUnitID", [](CThostFtdcQryParkedOrderActionField& a) {return encoding_cast(a.InvestUnitID);}, [](CThostFtdcQryParkedOrderActionField& a, char c[]) {strcpy(a.InvestUnitID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryParkedOrderActionField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "InstrumentID", "ExchangeID", "InvestUnitID" }; return b;});
 
 	py::class_<CThostFtdcRemoveParkedOrderField>(m, "CThostFtdcRemoveParkedOrderField")
 		.def(py::init<>())
@@ -3575,7 +3576,7 @@ void init_structs(py::module_& m) {
 		.def_property("InvestorID", [](CThostFtdcRemoveParkedOrderField& a) {return encoding_cast(a.InvestorID);}, [](CThostFtdcRemoveParkedOrderField& a, char c[]) {strcpy(a.InvestorID, c);})
 		.def_property("ParkedOrderID", [](CThostFtdcRemoveParkedOrderField& a) {return encoding_cast(a.ParkedOrderID);}, [](CThostFtdcRemoveParkedOrderField& a, char c[]) {strcpy(a.ParkedOrderID, c);})
 		.def_property("InvestUnitID", [](CThostFtdcRemoveParkedOrderField& a) {return encoding_cast(a.InvestUnitID);}, [](CThostFtdcRemoveParkedOrderField& a, char c[]) {strcpy(a.InvestUnitID, c);})
-		;
+		.def("keys", [](const CThostFtdcRemoveParkedOrderField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "ParkedOrderID", "InvestUnitID" }; return b;});
 
 	py::class_<CThostFtdcRemoveParkedOrderActionField>(m, "CThostFtdcRemoveParkedOrderActionField")
 		.def(py::init<>())
@@ -3584,7 +3585,7 @@ void init_structs(py::module_& m) {
 		.def_property("InvestorID", [](CThostFtdcRemoveParkedOrderActionField& a) {return encoding_cast(a.InvestorID);}, [](CThostFtdcRemoveParkedOrderActionField& a, char c[]) {strcpy(a.InvestorID, c);})
 		.def_property("ParkedOrderActionID", [](CThostFtdcRemoveParkedOrderActionField& a) {return encoding_cast(a.ParkedOrderActionID);}, [](CThostFtdcRemoveParkedOrderActionField& a, char c[]) {strcpy(a.ParkedOrderActionID, c);})
 		.def_property("InvestUnitID", [](CThostFtdcRemoveParkedOrderActionField& a) {return encoding_cast(a.InvestUnitID);}, [](CThostFtdcRemoveParkedOrderActionField& a, char c[]) {strcpy(a.InvestUnitID, c);})
-		;
+		.def("keys", [](const CThostFtdcRemoveParkedOrderActionField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "ParkedOrderActionID", "InvestUnitID" }; return b;});
 
 	py::class_<CThostFtdcInvestorWithdrawAlgorithmField>(m, "CThostFtdcInvestorWithdrawAlgorithmField")
 		.def(py::init<>())
@@ -3595,7 +3596,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("UsingRatio", &CThostFtdcInvestorWithdrawAlgorithmField::UsingRatio)
 		.def_property("CurrencyID", [](CThostFtdcInvestorWithdrawAlgorithmField& a) {return encoding_cast(a.CurrencyID);}, [](CThostFtdcInvestorWithdrawAlgorithmField& a, char c[]) {strcpy(a.CurrencyID, c);})
 		.def_readwrite("FundMortgageRatio", &CThostFtdcInvestorWithdrawAlgorithmField::FundMortgageRatio)
-		;
+		.def("keys", [](const CThostFtdcInvestorWithdrawAlgorithmField& a) { std::vector<std::string> b = { "BrokerID", "InvestorRange", "InvestorID", "UsingRatio", "CurrencyID", "FundMortgageRatio" }; return b;});
 
 	py::class_<CThostFtdcQryInvestorPositionCombineDetailField>(m, "CThostFtdcQryInvestorPositionCombineDetailField")
 		.def(py::init<>())
@@ -3605,13 +3606,13 @@ void init_structs(py::module_& m) {
 		.def_property("CombInstrumentID", [](CThostFtdcQryInvestorPositionCombineDetailField& a) {return encoding_cast(a.CombInstrumentID);}, [](CThostFtdcQryInvestorPositionCombineDetailField& a, char c[]) {strcpy(a.CombInstrumentID, c);})
 		.def_property("ExchangeID", [](CThostFtdcQryInvestorPositionCombineDetailField& a) {return encoding_cast(a.ExchangeID);}, [](CThostFtdcQryInvestorPositionCombineDetailField& a, char c[]) {strcpy(a.ExchangeID, c);})
 		.def_property("InvestUnitID", [](CThostFtdcQryInvestorPositionCombineDetailField& a) {return encoding_cast(a.InvestUnitID);}, [](CThostFtdcQryInvestorPositionCombineDetailField& a, char c[]) {strcpy(a.InvestUnitID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryInvestorPositionCombineDetailField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "CombInstrumentID", "ExchangeID", "InvestUnitID" }; return b;});
 
 	py::class_<CThostFtdcMarketDataAveragePriceField>(m, "CThostFtdcMarketDataAveragePriceField")
 		.def(py::init<>())
 		.def("__copy__", [](const CThostFtdcMarketDataAveragePriceField& a) {return CThostFtdcMarketDataAveragePriceField(a);})
 		.def_readwrite("AveragePrice", &CThostFtdcMarketDataAveragePriceField::AveragePrice)
-		;
+		.def("keys", [](const CThostFtdcMarketDataAveragePriceField& a) { std::vector<std::string> b = { "AveragePrice" }; return b;});
 
 	py::class_<CThostFtdcVerifyInvestorPasswordField>(m, "CThostFtdcVerifyInvestorPasswordField")
 		.def(py::init<>())
@@ -3619,7 +3620,7 @@ void init_structs(py::module_& m) {
 		.def_property("BrokerID", [](CThostFtdcVerifyInvestorPasswordField& a) {return encoding_cast(a.BrokerID);}, [](CThostFtdcVerifyInvestorPasswordField& a, char c[]) {strcpy(a.BrokerID, c);})
 		.def_property("InvestorID", [](CThostFtdcVerifyInvestorPasswordField& a) {return encoding_cast(a.InvestorID);}, [](CThostFtdcVerifyInvestorPasswordField& a, char c[]) {strcpy(a.InvestorID, c);})
 		.def_property("Password", [](CThostFtdcVerifyInvestorPasswordField& a) {return encoding_cast(a.Password);}, [](CThostFtdcVerifyInvestorPasswordField& a, char c[]) {strcpy(a.Password, c);})
-		;
+		.def("keys", [](const CThostFtdcVerifyInvestorPasswordField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "Password" }; return b;});
 
 	py::class_<CThostFtdcUserIPField>(m, "CThostFtdcUserIPField")
 		.def(py::init<>())
@@ -3629,7 +3630,7 @@ void init_structs(py::module_& m) {
 		.def_property("IPAddress", [](CThostFtdcUserIPField& a) {return encoding_cast(a.IPAddress);}, [](CThostFtdcUserIPField& a, char c[]) {strcpy(a.IPAddress, c);})
 		.def_property("IPMask", [](CThostFtdcUserIPField& a) {return encoding_cast(a.IPMask);}, [](CThostFtdcUserIPField& a, char c[]) {strcpy(a.IPMask, c);})
 		.def_property("MacAddress", [](CThostFtdcUserIPField& a) {return encoding_cast(a.MacAddress);}, [](CThostFtdcUserIPField& a, char c[]) {strcpy(a.MacAddress, c);})
-		;
+		.def("keys", [](const CThostFtdcUserIPField& a) { std::vector<std::string> b = { "BrokerID", "UserID", "IPAddress", "IPMask", "MacAddress" }; return b;});
 
 	py::class_<CThostFtdcTradingNoticeInfoField>(m, "CThostFtdcTradingNoticeInfoField")
 		.def(py::init<>())
@@ -3641,7 +3642,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("SequenceSeries", &CThostFtdcTradingNoticeInfoField::SequenceSeries)
 		.def_readwrite("SequenceNo", &CThostFtdcTradingNoticeInfoField::SequenceNo)
 		.def_property("InvestUnitID", [](CThostFtdcTradingNoticeInfoField& a) {return encoding_cast(a.InvestUnitID);}, [](CThostFtdcTradingNoticeInfoField& a, char c[]) {strcpy(a.InvestUnitID, c);})
-		;
+		.def("keys", [](const CThostFtdcTradingNoticeInfoField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "SendTime", "FieldContent", "SequenceSeries", "SequenceNo", "InvestUnitID" }; return b;});
 
 	py::class_<CThostFtdcTradingNoticeField>(m, "CThostFtdcTradingNoticeField")
 		.def(py::init<>())
@@ -3655,7 +3656,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("SequenceNo", &CThostFtdcTradingNoticeField::SequenceNo)
 		.def_property("FieldContent", [](CThostFtdcTradingNoticeField& a) {return encoding_cast(a.FieldContent);}, [](CThostFtdcTradingNoticeField& a, char c[]) {strcpy(a.FieldContent, c);})
 		.def_property("InvestUnitID", [](CThostFtdcTradingNoticeField& a) {return encoding_cast(a.InvestUnitID);}, [](CThostFtdcTradingNoticeField& a, char c[]) {strcpy(a.InvestUnitID, c);})
-		;
+		.def("keys", [](const CThostFtdcTradingNoticeField& a) { std::vector<std::string> b = { "BrokerID", "InvestorRange", "InvestorID", "SequenceSeries", "UserID", "SendTime", "SequenceNo", "FieldContent", "InvestUnitID" }; return b;});
 
 	py::class_<CThostFtdcQryTradingNoticeField>(m, "CThostFtdcQryTradingNoticeField")
 		.def(py::init<>())
@@ -3663,14 +3664,14 @@ void init_structs(py::module_& m) {
 		.def_property("BrokerID", [](CThostFtdcQryTradingNoticeField& a) {return encoding_cast(a.BrokerID);}, [](CThostFtdcQryTradingNoticeField& a, char c[]) {strcpy(a.BrokerID, c);})
 		.def_property("InvestorID", [](CThostFtdcQryTradingNoticeField& a) {return encoding_cast(a.InvestorID);}, [](CThostFtdcQryTradingNoticeField& a, char c[]) {strcpy(a.InvestorID, c);})
 		.def_property("InvestUnitID", [](CThostFtdcQryTradingNoticeField& a) {return encoding_cast(a.InvestUnitID);}, [](CThostFtdcQryTradingNoticeField& a, char c[]) {strcpy(a.InvestUnitID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryTradingNoticeField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "InvestUnitID" }; return b;});
 
 	py::class_<CThostFtdcQryErrOrderField>(m, "CThostFtdcQryErrOrderField")
 		.def(py::init<>())
 		.def("__copy__", [](const CThostFtdcQryErrOrderField& a) {return CThostFtdcQryErrOrderField(a);})
 		.def_property("BrokerID", [](CThostFtdcQryErrOrderField& a) {return encoding_cast(a.BrokerID);}, [](CThostFtdcQryErrOrderField& a, char c[]) {strcpy(a.BrokerID, c);})
 		.def_property("InvestorID", [](CThostFtdcQryErrOrderField& a) {return encoding_cast(a.InvestorID);}, [](CThostFtdcQryErrOrderField& a, char c[]) {strcpy(a.InvestorID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryErrOrderField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID" }; return b;});
 
 	py::class_<CThostFtdcErrOrderField>(m, "CThostFtdcErrOrderField")
 		.def(py::init<>())
@@ -3707,7 +3708,7 @@ void init_structs(py::module_& m) {
 		.def_property("ClientID", [](CThostFtdcErrOrderField& a) {return encoding_cast(a.ClientID);}, [](CThostFtdcErrOrderField& a, char c[]) {strcpy(a.ClientID, c);})
 		.def_property("IPAddress", [](CThostFtdcErrOrderField& a) {return encoding_cast(a.IPAddress);}, [](CThostFtdcErrOrderField& a, char c[]) {strcpy(a.IPAddress, c);})
 		.def_property("MacAddress", [](CThostFtdcErrOrderField& a) {return encoding_cast(a.MacAddress);}, [](CThostFtdcErrOrderField& a, char c[]) {strcpy(a.MacAddress, c);})
-		;
+		.def("keys", [](const CThostFtdcErrOrderField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "InstrumentID", "OrderRef", "UserID", "OrderPriceType", "Direction", "CombOffsetFlag", "CombHedgeFlag", "LimitPrice", "VolumeTotalOriginal", "TimeCondition", "GTDDate", "VolumeCondition", "MinVolume", "ContingentCondition", "StopPrice", "ForceCloseReason", "IsAutoSuspend", "BusinessUnit", "RequestID", "UserForceClose", "ErrorID", "ErrorMsg", "IsSwapOrder", "ExchangeID", "InvestUnitID", "AccountID", "CurrencyID", "ClientID", "IPAddress", "MacAddress" }; return b;});
 
 	py::class_<CThostFtdcErrorConditionalOrderField>(m, "CThostFtdcErrorConditionalOrderField")
 		.def(py::init<>())
@@ -3777,14 +3778,14 @@ void init_structs(py::module_& m) {
 		.def_property("CurrencyID", [](CThostFtdcErrorConditionalOrderField& a) {return encoding_cast(a.CurrencyID);}, [](CThostFtdcErrorConditionalOrderField& a, char c[]) {strcpy(a.CurrencyID, c);})
 		.def_property("IPAddress", [](CThostFtdcErrorConditionalOrderField& a) {return encoding_cast(a.IPAddress);}, [](CThostFtdcErrorConditionalOrderField& a, char c[]) {strcpy(a.IPAddress, c);})
 		.def_property("MacAddress", [](CThostFtdcErrorConditionalOrderField& a) {return encoding_cast(a.MacAddress);}, [](CThostFtdcErrorConditionalOrderField& a, char c[]) {strcpy(a.MacAddress, c);})
-		;
+		.def("keys", [](const CThostFtdcErrorConditionalOrderField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "InstrumentID", "OrderRef", "UserID", "OrderPriceType", "Direction", "CombOffsetFlag", "CombHedgeFlag", "LimitPrice", "VolumeTotalOriginal", "TimeCondition", "GTDDate", "VolumeCondition", "MinVolume", "ContingentCondition", "StopPrice", "ForceCloseReason", "IsAutoSuspend", "BusinessUnit", "RequestID", "OrderLocalID", "ExchangeID", "ParticipantID", "ClientID", "ExchangeInstID", "TraderID", "InstallID", "OrderSubmitStatus", "NotifySequence", "TradingDay", "SettlementID", "OrderSysID", "OrderSource", "OrderStatus", "OrderType", "VolumeTraded", "VolumeTotal", "InsertDate", "InsertTime", "ActiveTime", "SuspendTime", "UpdateTime", "CancelTime", "ActiveTraderID", "ClearingPartID", "SequenceNo", "FrontID", "SessionID", "UserProductInfo", "StatusMsg", "UserForceClose", "ActiveUserID", "BrokerOrderSeq", "RelativeOrderSysID", "ZCETotalTradedVolume", "ErrorID", "ErrorMsg", "IsSwapOrder", "BranchID", "InvestUnitID", "AccountID", "CurrencyID", "IPAddress", "MacAddress" }; return b;});
 
 	py::class_<CThostFtdcQryErrOrderActionField>(m, "CThostFtdcQryErrOrderActionField")
 		.def(py::init<>())
 		.def("__copy__", [](const CThostFtdcQryErrOrderActionField& a) {return CThostFtdcQryErrOrderActionField(a);})
 		.def_property("BrokerID", [](CThostFtdcQryErrOrderActionField& a) {return encoding_cast(a.BrokerID);}, [](CThostFtdcQryErrOrderActionField& a, char c[]) {strcpy(a.BrokerID, c);})
 		.def_property("InvestorID", [](CThostFtdcQryErrOrderActionField& a) {return encoding_cast(a.InvestorID);}, [](CThostFtdcQryErrOrderActionField& a, char c[]) {strcpy(a.InvestorID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryErrOrderActionField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID" }; return b;});
 
 	py::class_<CThostFtdcErrOrderActionField>(m, "CThostFtdcErrOrderActionField")
 		.def(py::init<>())
@@ -3820,13 +3821,13 @@ void init_structs(py::module_& m) {
 		.def_property("MacAddress", [](CThostFtdcErrOrderActionField& a) {return encoding_cast(a.MacAddress);}, [](CThostFtdcErrOrderActionField& a, char c[]) {strcpy(a.MacAddress, c);})
 		.def_readwrite("ErrorID", &CThostFtdcErrOrderActionField::ErrorID)
 		.def_property("ErrorMsg", [](CThostFtdcErrOrderActionField& a) {return encoding_cast(a.ErrorMsg);}, [](CThostFtdcErrOrderActionField& a, char c[]) {strcpy(a.ErrorMsg, c);})
-		;
+		.def("keys", [](const CThostFtdcErrOrderActionField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "OrderActionRef", "OrderRef", "RequestID", "FrontID", "SessionID", "ExchangeID", "OrderSysID", "ActionFlag", "LimitPrice", "VolumeChange", "ActionDate", "ActionTime", "TraderID", "InstallID", "OrderLocalID", "ActionLocalID", "ParticipantID", "ClientID", "BusinessUnit", "OrderActionStatus", "UserID", "StatusMsg", "InstrumentID", "BranchID", "InvestUnitID", "IPAddress", "MacAddress", "ErrorID", "ErrorMsg" }; return b;});
 
 	py::class_<CThostFtdcQryExchangeSequenceField>(m, "CThostFtdcQryExchangeSequenceField")
 		.def(py::init<>())
 		.def("__copy__", [](const CThostFtdcQryExchangeSequenceField& a) {return CThostFtdcQryExchangeSequenceField(a);})
 		.def_property("ExchangeID", [](CThostFtdcQryExchangeSequenceField& a) {return encoding_cast(a.ExchangeID);}, [](CThostFtdcQryExchangeSequenceField& a, char c[]) {strcpy(a.ExchangeID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryExchangeSequenceField& a) { std::vector<std::string> b = { "ExchangeID" }; return b;});
 
 	py::class_<CThostFtdcExchangeSequenceField>(m, "CThostFtdcExchangeSequenceField")
 		.def(py::init<>())
@@ -3834,7 +3835,7 @@ void init_structs(py::module_& m) {
 		.def_property("ExchangeID", [](CThostFtdcExchangeSequenceField& a) {return encoding_cast(a.ExchangeID);}, [](CThostFtdcExchangeSequenceField& a, char c[]) {strcpy(a.ExchangeID, c);})
 		.def_readwrite("SequenceNo", &CThostFtdcExchangeSequenceField::SequenceNo)
 		.def_readwrite("MarketStatus", &CThostFtdcExchangeSequenceField::MarketStatus)
-		;
+		.def("keys", [](const CThostFtdcExchangeSequenceField& a) { std::vector<std::string> b = { "ExchangeID", "SequenceNo", "MarketStatus" }; return b;});
 
 	py::class_<CThostFtdcQueryMaxOrderVolumeWithPriceField>(m, "CThostFtdcQueryMaxOrderVolumeWithPriceField")
 		.def(py::init<>())
@@ -3849,7 +3850,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("Price", &CThostFtdcQueryMaxOrderVolumeWithPriceField::Price)
 		.def_property("ExchangeID", [](CThostFtdcQueryMaxOrderVolumeWithPriceField& a) {return encoding_cast(a.ExchangeID);}, [](CThostFtdcQueryMaxOrderVolumeWithPriceField& a, char c[]) {strcpy(a.ExchangeID, c);})
 		.def_property("InvestUnitID", [](CThostFtdcQueryMaxOrderVolumeWithPriceField& a) {return encoding_cast(a.InvestUnitID);}, [](CThostFtdcQueryMaxOrderVolumeWithPriceField& a, char c[]) {strcpy(a.InvestUnitID, c);})
-		;
+		.def("keys", [](const CThostFtdcQueryMaxOrderVolumeWithPriceField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "InstrumentID", "Direction", "OffsetFlag", "HedgeFlag", "MaxVolume", "Price", "ExchangeID", "InvestUnitID" }; return b;});
 
 	py::class_<CThostFtdcQryBrokerTradingParamsField>(m, "CThostFtdcQryBrokerTradingParamsField")
 		.def(py::init<>())
@@ -3858,7 +3859,7 @@ void init_structs(py::module_& m) {
 		.def_property("InvestorID", [](CThostFtdcQryBrokerTradingParamsField& a) {return encoding_cast(a.InvestorID);}, [](CThostFtdcQryBrokerTradingParamsField& a, char c[]) {strcpy(a.InvestorID, c);})
 		.def_property("CurrencyID", [](CThostFtdcQryBrokerTradingParamsField& a) {return encoding_cast(a.CurrencyID);}, [](CThostFtdcQryBrokerTradingParamsField& a, char c[]) {strcpy(a.CurrencyID, c);})
 		.def_property("AccountID", [](CThostFtdcQryBrokerTradingParamsField& a) {return encoding_cast(a.AccountID);}, [](CThostFtdcQryBrokerTradingParamsField& a, char c[]) {strcpy(a.AccountID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryBrokerTradingParamsField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "CurrencyID", "AccountID" }; return b;});
 
 	py::class_<CThostFtdcBrokerTradingParamsField>(m, "CThostFtdcBrokerTradingParamsField")
 		.def(py::init<>())
@@ -3871,7 +3872,7 @@ void init_structs(py::module_& m) {
 		.def_property("CurrencyID", [](CThostFtdcBrokerTradingParamsField& a) {return encoding_cast(a.CurrencyID);}, [](CThostFtdcBrokerTradingParamsField& a, char c[]) {strcpy(a.CurrencyID, c);})
 		.def_readwrite("OptionRoyaltyPriceType", &CThostFtdcBrokerTradingParamsField::OptionRoyaltyPriceType)
 		.def_property("AccountID", [](CThostFtdcBrokerTradingParamsField& a) {return encoding_cast(a.AccountID);}, [](CThostFtdcBrokerTradingParamsField& a, char c[]) {strcpy(a.AccountID, c);})
-		;
+		.def("keys", [](const CThostFtdcBrokerTradingParamsField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "MarginPriceType", "Algorithm", "AvailIncludeCloseProfit", "CurrencyID", "OptionRoyaltyPriceType", "AccountID" }; return b;});
 
 	py::class_<CThostFtdcQryBrokerTradingAlgosField>(m, "CThostFtdcQryBrokerTradingAlgosField")
 		.def(py::init<>())
@@ -3879,7 +3880,7 @@ void init_structs(py::module_& m) {
 		.def_property("BrokerID", [](CThostFtdcQryBrokerTradingAlgosField& a) {return encoding_cast(a.BrokerID);}, [](CThostFtdcQryBrokerTradingAlgosField& a, char c[]) {strcpy(a.BrokerID, c);})
 		.def_property("ExchangeID", [](CThostFtdcQryBrokerTradingAlgosField& a) {return encoding_cast(a.ExchangeID);}, [](CThostFtdcQryBrokerTradingAlgosField& a, char c[]) {strcpy(a.ExchangeID, c);})
 		.def_property("InstrumentID", [](CThostFtdcQryBrokerTradingAlgosField& a) {return encoding_cast(a.InstrumentID);}, [](CThostFtdcQryBrokerTradingAlgosField& a, char c[]) {strcpy(a.InstrumentID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryBrokerTradingAlgosField& a) { std::vector<std::string> b = { "BrokerID", "ExchangeID", "InstrumentID" }; return b;});
 
 	py::class_<CThostFtdcBrokerTradingAlgosField>(m, "CThostFtdcBrokerTradingAlgosField")
 		.def(py::init<>())
@@ -3890,14 +3891,14 @@ void init_structs(py::module_& m) {
 		.def_readwrite("HandlePositionAlgoID", &CThostFtdcBrokerTradingAlgosField::HandlePositionAlgoID)
 		.def_readwrite("FindMarginRateAlgoID", &CThostFtdcBrokerTradingAlgosField::FindMarginRateAlgoID)
 		.def_readwrite("HandleTradingAccountAlgoID", &CThostFtdcBrokerTradingAlgosField::HandleTradingAccountAlgoID)
-		;
+		.def("keys", [](const CThostFtdcBrokerTradingAlgosField& a) { std::vector<std::string> b = { "BrokerID", "ExchangeID", "InstrumentID", "HandlePositionAlgoID", "FindMarginRateAlgoID", "HandleTradingAccountAlgoID" }; return b;});
 
 	py::class_<CThostFtdcQueryBrokerDepositField>(m, "CThostFtdcQueryBrokerDepositField")
 		.def(py::init<>())
 		.def("__copy__", [](const CThostFtdcQueryBrokerDepositField& a) {return CThostFtdcQueryBrokerDepositField(a);})
 		.def_property("BrokerID", [](CThostFtdcQueryBrokerDepositField& a) {return encoding_cast(a.BrokerID);}, [](CThostFtdcQueryBrokerDepositField& a, char c[]) {strcpy(a.BrokerID, c);})
 		.def_property("ExchangeID", [](CThostFtdcQueryBrokerDepositField& a) {return encoding_cast(a.ExchangeID);}, [](CThostFtdcQueryBrokerDepositField& a, char c[]) {strcpy(a.ExchangeID, c);})
-		;
+		.def("keys", [](const CThostFtdcQueryBrokerDepositField& a) { std::vector<std::string> b = { "BrokerID", "ExchangeID" }; return b;});
 
 	py::class_<CThostFtdcBrokerDepositField>(m, "CThostFtdcBrokerDepositField")
 		.def(py::init<>())
@@ -3915,13 +3916,13 @@ void init_structs(py::module_& m) {
 		.def_readwrite("Available", &CThostFtdcBrokerDepositField::Available)
 		.def_readwrite("Reserve", &CThostFtdcBrokerDepositField::Reserve)
 		.def_readwrite("FrozenMargin", &CThostFtdcBrokerDepositField::FrozenMargin)
-		;
+		.def("keys", [](const CThostFtdcBrokerDepositField& a) { std::vector<std::string> b = { "TradingDay", "BrokerID", "ParticipantID", "ExchangeID", "PreBalance", "CurrMargin", "CloseProfit", "Balance", "Deposit", "Withdraw", "Available", "Reserve", "FrozenMargin" }; return b;});
 
 	py::class_<CThostFtdcQryCFMMCBrokerKeyField>(m, "CThostFtdcQryCFMMCBrokerKeyField")
 		.def(py::init<>())
 		.def("__copy__", [](const CThostFtdcQryCFMMCBrokerKeyField& a) {return CThostFtdcQryCFMMCBrokerKeyField(a);})
 		.def_property("BrokerID", [](CThostFtdcQryCFMMCBrokerKeyField& a) {return encoding_cast(a.BrokerID);}, [](CThostFtdcQryCFMMCBrokerKeyField& a, char c[]) {strcpy(a.BrokerID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryCFMMCBrokerKeyField& a) { std::vector<std::string> b = { "BrokerID" }; return b;});
 
 	py::class_<CThostFtdcCFMMCBrokerKeyField>(m, "CThostFtdcCFMMCBrokerKeyField")
 		.def(py::init<>())
@@ -3933,7 +3934,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("KeyID", &CThostFtdcCFMMCBrokerKeyField::KeyID)
 		.def_property("CurrentKey", [](CThostFtdcCFMMCBrokerKeyField& a) {return encoding_cast(a.CurrentKey);}, [](CThostFtdcCFMMCBrokerKeyField& a, char c[]) {strcpy(a.CurrentKey, c);})
 		.def_readwrite("KeyKind", &CThostFtdcCFMMCBrokerKeyField::KeyKind)
-		;
+		.def("keys", [](const CThostFtdcCFMMCBrokerKeyField& a) { std::vector<std::string> b = { "BrokerID", "ParticipantID", "CreateDate", "CreateTime", "KeyID", "CurrentKey", "KeyKind" }; return b;});
 
 	py::class_<CThostFtdcCFMMCTradingAccountKeyField>(m, "CThostFtdcCFMMCTradingAccountKeyField")
 		.def(py::init<>())
@@ -3943,14 +3944,14 @@ void init_structs(py::module_& m) {
 		.def_property("AccountID", [](CThostFtdcCFMMCTradingAccountKeyField& a) {return encoding_cast(a.AccountID);}, [](CThostFtdcCFMMCTradingAccountKeyField& a, char c[]) {strcpy(a.AccountID, c);})
 		.def_readwrite("KeyID", &CThostFtdcCFMMCTradingAccountKeyField::KeyID)
 		.def_property("CurrentKey", [](CThostFtdcCFMMCTradingAccountKeyField& a) {return encoding_cast(a.CurrentKey);}, [](CThostFtdcCFMMCTradingAccountKeyField& a, char c[]) {strcpy(a.CurrentKey, c);})
-		;
+		.def("keys", [](const CThostFtdcCFMMCTradingAccountKeyField& a) { std::vector<std::string> b = { "BrokerID", "ParticipantID", "AccountID", "KeyID", "CurrentKey" }; return b;});
 
 	py::class_<CThostFtdcQryCFMMCTradingAccountKeyField>(m, "CThostFtdcQryCFMMCTradingAccountKeyField")
 		.def(py::init<>())
 		.def("__copy__", [](const CThostFtdcQryCFMMCTradingAccountKeyField& a) {return CThostFtdcQryCFMMCTradingAccountKeyField(a);})
 		.def_property("BrokerID", [](CThostFtdcQryCFMMCTradingAccountKeyField& a) {return encoding_cast(a.BrokerID);}, [](CThostFtdcQryCFMMCTradingAccountKeyField& a, char c[]) {strcpy(a.BrokerID, c);})
 		.def_property("InvestorID", [](CThostFtdcQryCFMMCTradingAccountKeyField& a) {return encoding_cast(a.InvestorID);}, [](CThostFtdcQryCFMMCTradingAccountKeyField& a, char c[]) {strcpy(a.InvestorID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryCFMMCTradingAccountKeyField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID" }; return b;});
 
 	py::class_<CThostFtdcBrokerUserOTPParamField>(m, "CThostFtdcBrokerUserOTPParamField")
 		.def(py::init<>())
@@ -3963,7 +3964,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("LastDrift", &CThostFtdcBrokerUserOTPParamField::LastDrift)
 		.def_readwrite("LastSuccess", &CThostFtdcBrokerUserOTPParamField::LastSuccess)
 		.def_readwrite("OTPType", &CThostFtdcBrokerUserOTPParamField::OTPType)
-		;
+		.def("keys", [](const CThostFtdcBrokerUserOTPParamField& a) { std::vector<std::string> b = { "BrokerID", "UserID", "OTPVendorsID", "SerialNumber", "AuthKey", "LastDrift", "LastSuccess", "OTPType" }; return b;});
 
 	py::class_<CThostFtdcManualSyncBrokerUserOTPField>(m, "CThostFtdcManualSyncBrokerUserOTPField")
 		.def(py::init<>())
@@ -3973,7 +3974,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("OTPType", &CThostFtdcManualSyncBrokerUserOTPField::OTPType)
 		.def_property("FirstOTP", [](CThostFtdcManualSyncBrokerUserOTPField& a) {return encoding_cast(a.FirstOTP);}, [](CThostFtdcManualSyncBrokerUserOTPField& a, char c[]) {strcpy(a.FirstOTP, c);})
 		.def_property("SecondOTP", [](CThostFtdcManualSyncBrokerUserOTPField& a) {return encoding_cast(a.SecondOTP);}, [](CThostFtdcManualSyncBrokerUserOTPField& a, char c[]) {strcpy(a.SecondOTP, c);})
-		;
+		.def("keys", [](const CThostFtdcManualSyncBrokerUserOTPField& a) { std::vector<std::string> b = { "BrokerID", "UserID", "OTPType", "FirstOTP", "SecondOTP" }; return b;});
 
 	py::class_<CThostFtdcCommRateModelField>(m, "CThostFtdcCommRateModelField")
 		.def(py::init<>())
@@ -3981,14 +3982,14 @@ void init_structs(py::module_& m) {
 		.def_property("BrokerID", [](CThostFtdcCommRateModelField& a) {return encoding_cast(a.BrokerID);}, [](CThostFtdcCommRateModelField& a, char c[]) {strcpy(a.BrokerID, c);})
 		.def_property("CommModelID", [](CThostFtdcCommRateModelField& a) {return encoding_cast(a.CommModelID);}, [](CThostFtdcCommRateModelField& a, char c[]) {strcpy(a.CommModelID, c);})
 		.def_property("CommModelName", [](CThostFtdcCommRateModelField& a) {return encoding_cast(a.CommModelName);}, [](CThostFtdcCommRateModelField& a, char c[]) {strcpy(a.CommModelName, c);})
-		;
+		.def("keys", [](const CThostFtdcCommRateModelField& a) { std::vector<std::string> b = { "BrokerID", "CommModelID", "CommModelName" }; return b;});
 
 	py::class_<CThostFtdcQryCommRateModelField>(m, "CThostFtdcQryCommRateModelField")
 		.def(py::init<>())
 		.def("__copy__", [](const CThostFtdcQryCommRateModelField& a) {return CThostFtdcQryCommRateModelField(a);})
 		.def_property("BrokerID", [](CThostFtdcQryCommRateModelField& a) {return encoding_cast(a.BrokerID);}, [](CThostFtdcQryCommRateModelField& a, char c[]) {strcpy(a.BrokerID, c);})
 		.def_property("CommModelID", [](CThostFtdcQryCommRateModelField& a) {return encoding_cast(a.CommModelID);}, [](CThostFtdcQryCommRateModelField& a, char c[]) {strcpy(a.CommModelID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryCommRateModelField& a) { std::vector<std::string> b = { "BrokerID", "CommModelID" }; return b;});
 
 	py::class_<CThostFtdcMarginModelField>(m, "CThostFtdcMarginModelField")
 		.def(py::init<>())
@@ -3996,14 +3997,14 @@ void init_structs(py::module_& m) {
 		.def_property("BrokerID", [](CThostFtdcMarginModelField& a) {return encoding_cast(a.BrokerID);}, [](CThostFtdcMarginModelField& a, char c[]) {strcpy(a.BrokerID, c);})
 		.def_property("MarginModelID", [](CThostFtdcMarginModelField& a) {return encoding_cast(a.MarginModelID);}, [](CThostFtdcMarginModelField& a, char c[]) {strcpy(a.MarginModelID, c);})
 		.def_property("MarginModelName", [](CThostFtdcMarginModelField& a) {return encoding_cast(a.MarginModelName);}, [](CThostFtdcMarginModelField& a, char c[]) {strcpy(a.MarginModelName, c);})
-		;
+		.def("keys", [](const CThostFtdcMarginModelField& a) { std::vector<std::string> b = { "BrokerID", "MarginModelID", "MarginModelName" }; return b;});
 
 	py::class_<CThostFtdcQryMarginModelField>(m, "CThostFtdcQryMarginModelField")
 		.def(py::init<>())
 		.def("__copy__", [](const CThostFtdcQryMarginModelField& a) {return CThostFtdcQryMarginModelField(a);})
 		.def_property("BrokerID", [](CThostFtdcQryMarginModelField& a) {return encoding_cast(a.BrokerID);}, [](CThostFtdcQryMarginModelField& a, char c[]) {strcpy(a.BrokerID, c);})
 		.def_property("MarginModelID", [](CThostFtdcQryMarginModelField& a) {return encoding_cast(a.MarginModelID);}, [](CThostFtdcQryMarginModelField& a, char c[]) {strcpy(a.MarginModelID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryMarginModelField& a) { std::vector<std::string> b = { "BrokerID", "MarginModelID" }; return b;});
 
 	py::class_<CThostFtdcEWarrantOffsetField>(m, "CThostFtdcEWarrantOffsetField")
 		.def(py::init<>())
@@ -4017,7 +4018,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("HedgeFlag", &CThostFtdcEWarrantOffsetField::HedgeFlag)
 		.def_readwrite("Volume", &CThostFtdcEWarrantOffsetField::Volume)
 		.def_property("InvestUnitID", [](CThostFtdcEWarrantOffsetField& a) {return encoding_cast(a.InvestUnitID);}, [](CThostFtdcEWarrantOffsetField& a, char c[]) {strcpy(a.InvestUnitID, c);})
-		;
+		.def("keys", [](const CThostFtdcEWarrantOffsetField& a) { std::vector<std::string> b = { "TradingDay", "BrokerID", "InvestorID", "ExchangeID", "InstrumentID", "Direction", "HedgeFlag", "Volume", "InvestUnitID" }; return b;});
 
 	py::class_<CThostFtdcQryEWarrantOffsetField>(m, "CThostFtdcQryEWarrantOffsetField")
 		.def(py::init<>())
@@ -4027,7 +4028,7 @@ void init_structs(py::module_& m) {
 		.def_property("ExchangeID", [](CThostFtdcQryEWarrantOffsetField& a) {return encoding_cast(a.ExchangeID);}, [](CThostFtdcQryEWarrantOffsetField& a, char c[]) {strcpy(a.ExchangeID, c);})
 		.def_property("InstrumentID", [](CThostFtdcQryEWarrantOffsetField& a) {return encoding_cast(a.InstrumentID);}, [](CThostFtdcQryEWarrantOffsetField& a, char c[]) {strcpy(a.InstrumentID, c);})
 		.def_property("InvestUnitID", [](CThostFtdcQryEWarrantOffsetField& a) {return encoding_cast(a.InvestUnitID);}, [](CThostFtdcQryEWarrantOffsetField& a, char c[]) {strcpy(a.InvestUnitID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryEWarrantOffsetField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "ExchangeID", "InstrumentID", "InvestUnitID" }; return b;});
 
 	py::class_<CThostFtdcQryInvestorProductGroupMarginField>(m, "CThostFtdcQryInvestorProductGroupMarginField")
 		.def(py::init<>())
@@ -4038,7 +4039,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("HedgeFlag", &CThostFtdcQryInvestorProductGroupMarginField::HedgeFlag)
 		.def_property("ExchangeID", [](CThostFtdcQryInvestorProductGroupMarginField& a) {return encoding_cast(a.ExchangeID);}, [](CThostFtdcQryInvestorProductGroupMarginField& a, char c[]) {strcpy(a.ExchangeID, c);})
 		.def_property("InvestUnitID", [](CThostFtdcQryInvestorProductGroupMarginField& a) {return encoding_cast(a.InvestUnitID);}, [](CThostFtdcQryInvestorProductGroupMarginField& a, char c[]) {strcpy(a.InvestUnitID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryInvestorProductGroupMarginField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "ProductGroupID", "HedgeFlag", "ExchangeID", "InvestUnitID" }; return b;});
 
 	py::class_<CThostFtdcInvestorProductGroupMarginField>(m, "CThostFtdcInvestorProductGroupMarginField")
 		.def(py::init<>())
@@ -4072,7 +4073,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("HedgeFlag", &CThostFtdcInvestorProductGroupMarginField::HedgeFlag)
 		.def_property("ExchangeID", [](CThostFtdcInvestorProductGroupMarginField& a) {return encoding_cast(a.ExchangeID);}, [](CThostFtdcInvestorProductGroupMarginField& a, char c[]) {strcpy(a.ExchangeID, c);})
 		.def_property("InvestUnitID", [](CThostFtdcInvestorProductGroupMarginField& a) {return encoding_cast(a.InvestUnitID);}, [](CThostFtdcInvestorProductGroupMarginField& a, char c[]) {strcpy(a.InvestUnitID, c);})
-		;
+		.def("keys", [](const CThostFtdcInvestorProductGroupMarginField& a) { std::vector<std::string> b = { "ProductGroupID", "BrokerID", "InvestorID", "TradingDay", "SettlementID", "FrozenMargin", "LongFrozenMargin", "ShortFrozenMargin", "UseMargin", "LongUseMargin", "ShortUseMargin", "ExchMargin", "LongExchMargin", "ShortExchMargin", "CloseProfit", "FrozenCommission", "Commission", "FrozenCash", "CashIn", "PositionProfit", "OffsetAmount", "LongOffsetAmount", "ShortOffsetAmount", "ExchOffsetAmount", "LongExchOffsetAmount", "ShortExchOffsetAmount", "HedgeFlag", "ExchangeID", "InvestUnitID" }; return b;});
 
 	py::class_<CThostFtdcQueryCFMMCTradingAccountTokenField>(m, "CThostFtdcQueryCFMMCTradingAccountTokenField")
 		.def(py::init<>())
@@ -4080,7 +4081,7 @@ void init_structs(py::module_& m) {
 		.def_property("BrokerID", [](CThostFtdcQueryCFMMCTradingAccountTokenField& a) {return encoding_cast(a.BrokerID);}, [](CThostFtdcQueryCFMMCTradingAccountTokenField& a, char c[]) {strcpy(a.BrokerID, c);})
 		.def_property("InvestorID", [](CThostFtdcQueryCFMMCTradingAccountTokenField& a) {return encoding_cast(a.InvestorID);}, [](CThostFtdcQueryCFMMCTradingAccountTokenField& a, char c[]) {strcpy(a.InvestorID, c);})
 		.def_property("InvestUnitID", [](CThostFtdcQueryCFMMCTradingAccountTokenField& a) {return encoding_cast(a.InvestUnitID);}, [](CThostFtdcQueryCFMMCTradingAccountTokenField& a, char c[]) {strcpy(a.InvestUnitID, c);})
-		;
+		.def("keys", [](const CThostFtdcQueryCFMMCTradingAccountTokenField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID", "InvestUnitID" }; return b;});
 
 	py::class_<CThostFtdcCFMMCTradingAccountTokenField>(m, "CThostFtdcCFMMCTradingAccountTokenField")
 		.def(py::init<>())
@@ -4090,14 +4091,14 @@ void init_structs(py::module_& m) {
 		.def_property("AccountID", [](CThostFtdcCFMMCTradingAccountTokenField& a) {return encoding_cast(a.AccountID);}, [](CThostFtdcCFMMCTradingAccountTokenField& a, char c[]) {strcpy(a.AccountID, c);})
 		.def_readwrite("KeyID", &CThostFtdcCFMMCTradingAccountTokenField::KeyID)
 		.def_property("Token", [](CThostFtdcCFMMCTradingAccountTokenField& a) {return encoding_cast(a.Token);}, [](CThostFtdcCFMMCTradingAccountTokenField& a, char c[]) {strcpy(a.Token, c);})
-		;
+		.def("keys", [](const CThostFtdcCFMMCTradingAccountTokenField& a) { std::vector<std::string> b = { "BrokerID", "ParticipantID", "AccountID", "KeyID", "Token" }; return b;});
 
 	py::class_<CThostFtdcQryProductGroupField>(m, "CThostFtdcQryProductGroupField")
 		.def(py::init<>())
 		.def("__copy__", [](const CThostFtdcQryProductGroupField& a) {return CThostFtdcQryProductGroupField(a);})
 		.def_property("ProductID", [](CThostFtdcQryProductGroupField& a) {return encoding_cast(a.ProductID);}, [](CThostFtdcQryProductGroupField& a, char c[]) {strcpy(a.ProductID, c);})
 		.def_property("ExchangeID", [](CThostFtdcQryProductGroupField& a) {return encoding_cast(a.ExchangeID);}, [](CThostFtdcQryProductGroupField& a, char c[]) {strcpy(a.ExchangeID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryProductGroupField& a) { std::vector<std::string> b = { "ProductID", "ExchangeID" }; return b;});
 
 	py::class_<CThostFtdcProductGroupField>(m, "CThostFtdcProductGroupField")
 		.def(py::init<>())
@@ -4105,7 +4106,7 @@ void init_structs(py::module_& m) {
 		.def_property("ProductID", [](CThostFtdcProductGroupField& a) {return encoding_cast(a.ProductID);}, [](CThostFtdcProductGroupField& a, char c[]) {strcpy(a.ProductID, c);})
 		.def_property("ExchangeID", [](CThostFtdcProductGroupField& a) {return encoding_cast(a.ExchangeID);}, [](CThostFtdcProductGroupField& a, char c[]) {strcpy(a.ExchangeID, c);})
 		.def_property("ProductGroupID", [](CThostFtdcProductGroupField& a) {return encoding_cast(a.ProductGroupID);}, [](CThostFtdcProductGroupField& a, char c[]) {strcpy(a.ProductGroupID, c);})
-		;
+		.def("keys", [](const CThostFtdcProductGroupField& a) { std::vector<std::string> b = { "ProductID", "ExchangeID", "ProductGroupID" }; return b;});
 
 	py::class_<CThostFtdcBulletinField>(m, "CThostFtdcBulletinField")
 		.def(py::init<>())
@@ -4122,7 +4123,7 @@ void init_structs(py::module_& m) {
 		.def_property("Content", [](CThostFtdcBulletinField& a) {return encoding_cast(a.Content);}, [](CThostFtdcBulletinField& a, char c[]) {strcpy(a.Content, c);})
 		.def_property("URLLink", [](CThostFtdcBulletinField& a) {return encoding_cast(a.URLLink);}, [](CThostFtdcBulletinField& a, char c[]) {strcpy(a.URLLink, c);})
 		.def_property("MarketID", [](CThostFtdcBulletinField& a) {return encoding_cast(a.MarketID);}, [](CThostFtdcBulletinField& a, char c[]) {strcpy(a.MarketID, c);})
-		;
+		.def("keys", [](const CThostFtdcBulletinField& a) { std::vector<std::string> b = { "ExchangeID", "TradingDay", "BulletinID", "SequenceNo", "NewsType", "NewsUrgency", "SendTime", "Abstract", "ComeFrom", "Content", "URLLink", "MarketID" }; return b;});
 
 	py::class_<CThostFtdcQryBulletinField>(m, "CThostFtdcQryBulletinField")
 		.def(py::init<>())
@@ -4132,7 +4133,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("SequenceNo", &CThostFtdcQryBulletinField::SequenceNo)
 		.def_property("NewsType", [](CThostFtdcQryBulletinField& a) {return encoding_cast(a.NewsType);}, [](CThostFtdcQryBulletinField& a, char c[]) {strcpy(a.NewsType, c);})
 		.def_readwrite("NewsUrgency", &CThostFtdcQryBulletinField::NewsUrgency)
-		;
+		.def("keys", [](const CThostFtdcQryBulletinField& a) { std::vector<std::string> b = { "ExchangeID", "BulletinID", "SequenceNo", "NewsType", "NewsUrgency" }; return b;});
 
 	py::class_<CThostFtdcMulticastInstrumentField>(m, "CThostFtdcMulticastInstrumentField")
 		.def(py::init<>())
@@ -4143,14 +4144,14 @@ void init_structs(py::module_& m) {
 		.def_readwrite("CodePrice", &CThostFtdcMulticastInstrumentField::CodePrice)
 		.def_readwrite("VolumeMultiple", &CThostFtdcMulticastInstrumentField::VolumeMultiple)
 		.def_readwrite("PriceTick", &CThostFtdcMulticastInstrumentField::PriceTick)
-		;
+		.def("keys", [](const CThostFtdcMulticastInstrumentField& a) { std::vector<std::string> b = { "TopicID", "InstrumentID", "InstrumentNo", "CodePrice", "VolumeMultiple", "PriceTick" }; return b;});
 
 	py::class_<CThostFtdcQryMulticastInstrumentField>(m, "CThostFtdcQryMulticastInstrumentField")
 		.def(py::init<>())
 		.def("__copy__", [](const CThostFtdcQryMulticastInstrumentField& a) {return CThostFtdcQryMulticastInstrumentField(a);})
 		.def_readwrite("TopicID", &CThostFtdcQryMulticastInstrumentField::TopicID)
 		.def_property("InstrumentID", [](CThostFtdcQryMulticastInstrumentField& a) {return encoding_cast(a.InstrumentID);}, [](CThostFtdcQryMulticastInstrumentField& a, char c[]) {strcpy(a.InstrumentID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryMulticastInstrumentField& a) { std::vector<std::string> b = { "TopicID", "InstrumentID" }; return b;});
 
 	py::class_<CThostFtdcAppIDAuthAssignField>(m, "CThostFtdcAppIDAuthAssignField")
 		.def(py::init<>())
@@ -4158,7 +4159,7 @@ void init_structs(py::module_& m) {
 		.def_property("BrokerID", [](CThostFtdcAppIDAuthAssignField& a) {return encoding_cast(a.BrokerID);}, [](CThostFtdcAppIDAuthAssignField& a, char c[]) {strcpy(a.BrokerID, c);})
 		.def_property("AppID", [](CThostFtdcAppIDAuthAssignField& a) {return encoding_cast(a.AppID);}, [](CThostFtdcAppIDAuthAssignField& a, char c[]) {strcpy(a.AppID, c);})
 		.def_readwrite("DRIdentityID", &CThostFtdcAppIDAuthAssignField::DRIdentityID)
-		;
+		.def("keys", [](const CThostFtdcAppIDAuthAssignField& a) { std::vector<std::string> b = { "BrokerID", "AppID", "DRIdentityID" }; return b;});
 
 	py::class_<CThostFtdcReqOpenAccountField>(m, "CThostFtdcReqOpenAccountField")
 		.def(py::init<>())
@@ -4208,7 +4209,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("TID", &CThostFtdcReqOpenAccountField::TID)
 		.def_property("UserID", [](CThostFtdcReqOpenAccountField& a) {return encoding_cast(a.UserID);}, [](CThostFtdcReqOpenAccountField& a, char c[]) {strcpy(a.UserID, c);})
 		.def_property("LongCustomerName", [](CThostFtdcReqOpenAccountField& a) {return encoding_cast(a.LongCustomerName);}, [](CThostFtdcReqOpenAccountField& a, char c[]) {strcpy(a.LongCustomerName, c);})
-		;
+		.def("keys", [](const CThostFtdcReqOpenAccountField& a) { std::vector<std::string> b = { "TradeCode", "BankID", "BankBranchID", "BrokerID", "BrokerBranchID", "TradeDate", "TradeTime", "BankSerial", "TradingDay", "PlateSerial", "LastFragment", "SessionID", "CustomerName", "IdCardType", "IdentifiedCardNo", "Gender", "CountryCode", "CustType", "Address", "ZipCode", "Telephone", "MobilePhone", "Fax", "EMail", "MoneyAccountStatus", "BankAccount", "BankPassWord", "AccountID", "Password", "InstallID", "VerifyCertNoFlag", "CurrencyID", "CashExchangeCode", "Digest", "BankAccType", "DeviceID", "BankSecuAccType", "BrokerIDByBank", "BankSecuAcc", "BankPwdFlag", "SecuPwdFlag", "OperNo", "TID", "UserID", "LongCustomerName" }; return b;});
 
 	py::class_<CThostFtdcReqCancelAccountField>(m, "CThostFtdcReqCancelAccountField")
 		.def(py::init<>())
@@ -4258,7 +4259,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("TID", &CThostFtdcReqCancelAccountField::TID)
 		.def_property("UserID", [](CThostFtdcReqCancelAccountField& a) {return encoding_cast(a.UserID);}, [](CThostFtdcReqCancelAccountField& a, char c[]) {strcpy(a.UserID, c);})
 		.def_property("LongCustomerName", [](CThostFtdcReqCancelAccountField& a) {return encoding_cast(a.LongCustomerName);}, [](CThostFtdcReqCancelAccountField& a, char c[]) {strcpy(a.LongCustomerName, c);})
-		;
+		.def("keys", [](const CThostFtdcReqCancelAccountField& a) { std::vector<std::string> b = { "TradeCode", "BankID", "BankBranchID", "BrokerID", "BrokerBranchID", "TradeDate", "TradeTime", "BankSerial", "TradingDay", "PlateSerial", "LastFragment", "SessionID", "CustomerName", "IdCardType", "IdentifiedCardNo", "Gender", "CountryCode", "CustType", "Address", "ZipCode", "Telephone", "MobilePhone", "Fax", "EMail", "MoneyAccountStatus", "BankAccount", "BankPassWord", "AccountID", "Password", "InstallID", "VerifyCertNoFlag", "CurrencyID", "CashExchangeCode", "Digest", "BankAccType", "DeviceID", "BankSecuAccType", "BrokerIDByBank", "BankSecuAcc", "BankPwdFlag", "SecuPwdFlag", "OperNo", "TID", "UserID", "LongCustomerName" }; return b;});
 
 	py::class_<CThostFtdcReqChangeAccountField>(m, "CThostFtdcReqChangeAccountField")
 		.def(py::init<>())
@@ -4304,7 +4305,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("TID", &CThostFtdcReqChangeAccountField::TID)
 		.def_property("Digest", [](CThostFtdcReqChangeAccountField& a) {return encoding_cast(a.Digest);}, [](CThostFtdcReqChangeAccountField& a, char c[]) {strcpy(a.Digest, c);})
 		.def_property("LongCustomerName", [](CThostFtdcReqChangeAccountField& a) {return encoding_cast(a.LongCustomerName);}, [](CThostFtdcReqChangeAccountField& a, char c[]) {strcpy(a.LongCustomerName, c);})
-		;
+		.def("keys", [](const CThostFtdcReqChangeAccountField& a) { std::vector<std::string> b = { "TradeCode", "BankID", "BankBranchID", "BrokerID", "BrokerBranchID", "TradeDate", "TradeTime", "BankSerial", "TradingDay", "PlateSerial", "LastFragment", "SessionID", "CustomerName", "IdCardType", "IdentifiedCardNo", "Gender", "CountryCode", "CustType", "Address", "ZipCode", "Telephone", "MobilePhone", "Fax", "EMail", "MoneyAccountStatus", "BankAccount", "BankPassWord", "NewBankAccount", "NewBankPassWord", "AccountID", "Password", "BankAccType", "InstallID", "VerifyCertNoFlag", "CurrencyID", "BrokerIDByBank", "BankPwdFlag", "SecuPwdFlag", "TID", "Digest", "LongCustomerName" }; return b;});
 
 	py::class_<CThostFtdcReqTransferField>(m, "CThostFtdcReqTransferField")
 		.def(py::init<>())
@@ -4353,7 +4354,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("TID", &CThostFtdcReqTransferField::TID)
 		.def_readwrite("TransferStatus", &CThostFtdcReqTransferField::TransferStatus)
 		.def_property("LongCustomerName", [](CThostFtdcReqTransferField& a) {return encoding_cast(a.LongCustomerName);}, [](CThostFtdcReqTransferField& a, char c[]) {strcpy(a.LongCustomerName, c);})
-		;
+		.def("keys", [](const CThostFtdcReqTransferField& a) { std::vector<std::string> b = { "TradeCode", "BankID", "BankBranchID", "BrokerID", "BrokerBranchID", "TradeDate", "TradeTime", "BankSerial", "TradingDay", "PlateSerial", "LastFragment", "SessionID", "CustomerName", "IdCardType", "IdentifiedCardNo", "CustType", "BankAccount", "BankPassWord", "AccountID", "Password", "InstallID", "FutureSerial", "UserID", "VerifyCertNoFlag", "CurrencyID", "TradeAmount", "FutureFetchAmount", "FeePayFlag", "CustFee", "BrokerFee", "Message", "Digest", "BankAccType", "DeviceID", "BankSecuAccType", "BrokerIDByBank", "BankSecuAcc", "BankPwdFlag", "SecuPwdFlag", "OperNo", "RequestID", "TID", "TransferStatus", "LongCustomerName" }; return b;});
 
 	py::class_<CThostFtdcRspTransferField>(m, "CThostFtdcRspTransferField")
 		.def(py::init<>())
@@ -4404,7 +4405,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("ErrorID", &CThostFtdcRspTransferField::ErrorID)
 		.def_property("ErrorMsg", [](CThostFtdcRspTransferField& a) {return encoding_cast(a.ErrorMsg);}, [](CThostFtdcRspTransferField& a, char c[]) {strcpy(a.ErrorMsg, c);})
 		.def_property("LongCustomerName", [](CThostFtdcRspTransferField& a) {return encoding_cast(a.LongCustomerName);}, [](CThostFtdcRspTransferField& a, char c[]) {strcpy(a.LongCustomerName, c);})
-		;
+		.def("keys", [](const CThostFtdcRspTransferField& a) { std::vector<std::string> b = { "TradeCode", "BankID", "BankBranchID", "BrokerID", "BrokerBranchID", "TradeDate", "TradeTime", "BankSerial", "TradingDay", "PlateSerial", "LastFragment", "SessionID", "CustomerName", "IdCardType", "IdentifiedCardNo", "CustType", "BankAccount", "BankPassWord", "AccountID", "Password", "InstallID", "FutureSerial", "UserID", "VerifyCertNoFlag", "CurrencyID", "TradeAmount", "FutureFetchAmount", "FeePayFlag", "CustFee", "BrokerFee", "Message", "Digest", "BankAccType", "DeviceID", "BankSecuAccType", "BrokerIDByBank", "BankSecuAcc", "BankPwdFlag", "SecuPwdFlag", "OperNo", "RequestID", "TID", "TransferStatus", "ErrorID", "ErrorMsg", "LongCustomerName" }; return b;});
 
 	py::class_<CThostFtdcReqRepealField>(m, "CThostFtdcReqRepealField")
 		.def(py::init<>())
@@ -4460,7 +4461,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("TID", &CThostFtdcReqRepealField::TID)
 		.def_readwrite("TransferStatus", &CThostFtdcReqRepealField::TransferStatus)
 		.def_property("LongCustomerName", [](CThostFtdcReqRepealField& a) {return encoding_cast(a.LongCustomerName);}, [](CThostFtdcReqRepealField& a, char c[]) {strcpy(a.LongCustomerName, c);})
-		;
+		.def("keys", [](const CThostFtdcReqRepealField& a) { std::vector<std::string> b = { "RepealTimeInterval", "RepealedTimes", "BankRepealFlag", "BrokerRepealFlag", "PlateRepealSerial", "BankRepealSerial", "FutureRepealSerial", "TradeCode", "BankID", "BankBranchID", "BrokerID", "BrokerBranchID", "TradeDate", "TradeTime", "BankSerial", "TradingDay", "PlateSerial", "LastFragment", "SessionID", "CustomerName", "IdCardType", "IdentifiedCardNo", "CustType", "BankAccount", "BankPassWord", "AccountID", "Password", "InstallID", "FutureSerial", "UserID", "VerifyCertNoFlag", "CurrencyID", "TradeAmount", "FutureFetchAmount", "FeePayFlag", "CustFee", "BrokerFee", "Message", "Digest", "BankAccType", "DeviceID", "BankSecuAccType", "BrokerIDByBank", "BankSecuAcc", "BankPwdFlag", "SecuPwdFlag", "OperNo", "RequestID", "TID", "TransferStatus", "LongCustomerName" }; return b;});
 
 	py::class_<CThostFtdcRspRepealField>(m, "CThostFtdcRspRepealField")
 		.def(py::init<>())
@@ -4518,7 +4519,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("ErrorID", &CThostFtdcRspRepealField::ErrorID)
 		.def_property("ErrorMsg", [](CThostFtdcRspRepealField& a) {return encoding_cast(a.ErrorMsg);}, [](CThostFtdcRspRepealField& a, char c[]) {strcpy(a.ErrorMsg, c);})
 		.def_property("LongCustomerName", [](CThostFtdcRspRepealField& a) {return encoding_cast(a.LongCustomerName);}, [](CThostFtdcRspRepealField& a, char c[]) {strcpy(a.LongCustomerName, c);})
-		;
+		.def("keys", [](const CThostFtdcRspRepealField& a) { std::vector<std::string> b = { "RepealTimeInterval", "RepealedTimes", "BankRepealFlag", "BrokerRepealFlag", "PlateRepealSerial", "BankRepealSerial", "FutureRepealSerial", "TradeCode", "BankID", "BankBranchID", "BrokerID", "BrokerBranchID", "TradeDate", "TradeTime", "BankSerial", "TradingDay", "PlateSerial", "LastFragment", "SessionID", "CustomerName", "IdCardType", "IdentifiedCardNo", "CustType", "BankAccount", "BankPassWord", "AccountID", "Password", "InstallID", "FutureSerial", "UserID", "VerifyCertNoFlag", "CurrencyID", "TradeAmount", "FutureFetchAmount", "FeePayFlag", "CustFee", "BrokerFee", "Message", "Digest", "BankAccType", "DeviceID", "BankSecuAccType", "BrokerIDByBank", "BankSecuAcc", "BankPwdFlag", "SecuPwdFlag", "OperNo", "RequestID", "TID", "TransferStatus", "ErrorID", "ErrorMsg", "LongCustomerName" }; return b;});
 
 	py::class_<CThostFtdcReqQueryAccountField>(m, "CThostFtdcReqQueryAccountField")
 		.def(py::init<>())
@@ -4560,7 +4561,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("RequestID", &CThostFtdcReqQueryAccountField::RequestID)
 		.def_readwrite("TID", &CThostFtdcReqQueryAccountField::TID)
 		.def_property("LongCustomerName", [](CThostFtdcReqQueryAccountField& a) {return encoding_cast(a.LongCustomerName);}, [](CThostFtdcReqQueryAccountField& a, char c[]) {strcpy(a.LongCustomerName, c);})
-		;
+		.def("keys", [](const CThostFtdcReqQueryAccountField& a) { std::vector<std::string> b = { "TradeCode", "BankID", "BankBranchID", "BrokerID", "BrokerBranchID", "TradeDate", "TradeTime", "BankSerial", "TradingDay", "PlateSerial", "LastFragment", "SessionID", "CustomerName", "IdCardType", "IdentifiedCardNo", "CustType", "BankAccount", "BankPassWord", "AccountID", "Password", "FutureSerial", "InstallID", "UserID", "VerifyCertNoFlag", "CurrencyID", "Digest", "BankAccType", "DeviceID", "BankSecuAccType", "BrokerIDByBank", "BankSecuAcc", "BankPwdFlag", "SecuPwdFlag", "OperNo", "RequestID", "TID", "LongCustomerName" }; return b;});
 
 	py::class_<CThostFtdcRspQueryAccountField>(m, "CThostFtdcRspQueryAccountField")
 		.def(py::init<>())
@@ -4604,7 +4605,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("BankUseAmount", &CThostFtdcRspQueryAccountField::BankUseAmount)
 		.def_readwrite("BankFetchAmount", &CThostFtdcRspQueryAccountField::BankFetchAmount)
 		.def_property("LongCustomerName", [](CThostFtdcRspQueryAccountField& a) {return encoding_cast(a.LongCustomerName);}, [](CThostFtdcRspQueryAccountField& a, char c[]) {strcpy(a.LongCustomerName, c);})
-		;
+		.def("keys", [](const CThostFtdcRspQueryAccountField& a) { std::vector<std::string> b = { "TradeCode", "BankID", "BankBranchID", "BrokerID", "BrokerBranchID", "TradeDate", "TradeTime", "BankSerial", "TradingDay", "PlateSerial", "LastFragment", "SessionID", "CustomerName", "IdCardType", "IdentifiedCardNo", "CustType", "BankAccount", "BankPassWord", "AccountID", "Password", "FutureSerial", "InstallID", "UserID", "VerifyCertNoFlag", "CurrencyID", "Digest", "BankAccType", "DeviceID", "BankSecuAccType", "BrokerIDByBank", "BankSecuAcc", "BankPwdFlag", "SecuPwdFlag", "OperNo", "RequestID", "TID", "BankUseAmount", "BankFetchAmount", "LongCustomerName" }; return b;});
 
 	py::class_<CThostFtdcFutureSignIOField>(m, "CThostFtdcFutureSignIOField")
 		.def(py::init<>())
@@ -4630,7 +4631,7 @@ void init_structs(py::module_& m) {
 		.def_property("OperNo", [](CThostFtdcFutureSignIOField& a) {return encoding_cast(a.OperNo);}, [](CThostFtdcFutureSignIOField& a, char c[]) {strcpy(a.OperNo, c);})
 		.def_readwrite("RequestID", &CThostFtdcFutureSignIOField::RequestID)
 		.def_readwrite("TID", &CThostFtdcFutureSignIOField::TID)
-		;
+		.def("keys", [](const CThostFtdcFutureSignIOField& a) { std::vector<std::string> b = { "TradeCode", "BankID", "BankBranchID", "BrokerID", "BrokerBranchID", "TradeDate", "TradeTime", "BankSerial", "TradingDay", "PlateSerial", "LastFragment", "SessionID", "InstallID", "UserID", "Digest", "CurrencyID", "DeviceID", "BrokerIDByBank", "OperNo", "RequestID", "TID" }; return b;});
 
 	py::class_<CThostFtdcRspFutureSignInField>(m, "CThostFtdcRspFutureSignInField")
 		.def(py::init<>())
@@ -4660,7 +4661,7 @@ void init_structs(py::module_& m) {
 		.def_property("ErrorMsg", [](CThostFtdcRspFutureSignInField& a) {return encoding_cast(a.ErrorMsg);}, [](CThostFtdcRspFutureSignInField& a, char c[]) {strcpy(a.ErrorMsg, c);})
 		.def_property("PinKey", [](CThostFtdcRspFutureSignInField& a) {return encoding_cast(a.PinKey);}, [](CThostFtdcRspFutureSignInField& a, char c[]) {strcpy(a.PinKey, c);})
 		.def_property("MacKey", [](CThostFtdcRspFutureSignInField& a) {return encoding_cast(a.MacKey);}, [](CThostFtdcRspFutureSignInField& a, char c[]) {strcpy(a.MacKey, c);})
-		;
+		.def("keys", [](const CThostFtdcRspFutureSignInField& a) { std::vector<std::string> b = { "TradeCode", "BankID", "BankBranchID", "BrokerID", "BrokerBranchID", "TradeDate", "TradeTime", "BankSerial", "TradingDay", "PlateSerial", "LastFragment", "SessionID", "InstallID", "UserID", "Digest", "CurrencyID", "DeviceID", "BrokerIDByBank", "OperNo", "RequestID", "TID", "ErrorID", "ErrorMsg", "PinKey", "MacKey" }; return b;});
 
 	py::class_<CThostFtdcReqFutureSignOutField>(m, "CThostFtdcReqFutureSignOutField")
 		.def(py::init<>())
@@ -4686,7 +4687,7 @@ void init_structs(py::module_& m) {
 		.def_property("OperNo", [](CThostFtdcReqFutureSignOutField& a) {return encoding_cast(a.OperNo);}, [](CThostFtdcReqFutureSignOutField& a, char c[]) {strcpy(a.OperNo, c);})
 		.def_readwrite("RequestID", &CThostFtdcReqFutureSignOutField::RequestID)
 		.def_readwrite("TID", &CThostFtdcReqFutureSignOutField::TID)
-		;
+		.def("keys", [](const CThostFtdcReqFutureSignOutField& a) { std::vector<std::string> b = { "TradeCode", "BankID", "BankBranchID", "BrokerID", "BrokerBranchID", "TradeDate", "TradeTime", "BankSerial", "TradingDay", "PlateSerial", "LastFragment", "SessionID", "InstallID", "UserID", "Digest", "CurrencyID", "DeviceID", "BrokerIDByBank", "OperNo", "RequestID", "TID" }; return b;});
 
 	py::class_<CThostFtdcRspFutureSignOutField>(m, "CThostFtdcRspFutureSignOutField")
 		.def(py::init<>())
@@ -4714,7 +4715,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("TID", &CThostFtdcRspFutureSignOutField::TID)
 		.def_readwrite("ErrorID", &CThostFtdcRspFutureSignOutField::ErrorID)
 		.def_property("ErrorMsg", [](CThostFtdcRspFutureSignOutField& a) {return encoding_cast(a.ErrorMsg);}, [](CThostFtdcRspFutureSignOutField& a, char c[]) {strcpy(a.ErrorMsg, c);})
-		;
+		.def("keys", [](const CThostFtdcRspFutureSignOutField& a) { std::vector<std::string> b = { "TradeCode", "BankID", "BankBranchID", "BrokerID", "BrokerBranchID", "TradeDate", "TradeTime", "BankSerial", "TradingDay", "PlateSerial", "LastFragment", "SessionID", "InstallID", "UserID", "Digest", "CurrencyID", "DeviceID", "BrokerIDByBank", "OperNo", "RequestID", "TID", "ErrorID", "ErrorMsg" }; return b;});
 
 	py::class_<CThostFtdcReqQueryTradeResultBySerialField>(m, "CThostFtdcReqQueryTradeResultBySerialField")
 		.def(py::init<>())
@@ -4746,7 +4747,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("TradeAmount", &CThostFtdcReqQueryTradeResultBySerialField::TradeAmount)
 		.def_property("Digest", [](CThostFtdcReqQueryTradeResultBySerialField& a) {return encoding_cast(a.Digest);}, [](CThostFtdcReqQueryTradeResultBySerialField& a, char c[]) {strcpy(a.Digest, c);})
 		.def_property("LongCustomerName", [](CThostFtdcReqQueryTradeResultBySerialField& a) {return encoding_cast(a.LongCustomerName);}, [](CThostFtdcReqQueryTradeResultBySerialField& a, char c[]) {strcpy(a.LongCustomerName, c);})
-		;
+		.def("keys", [](const CThostFtdcReqQueryTradeResultBySerialField& a) { std::vector<std::string> b = { "TradeCode", "BankID", "BankBranchID", "BrokerID", "BrokerBranchID", "TradeDate", "TradeTime", "BankSerial", "TradingDay", "PlateSerial", "LastFragment", "SessionID", "Reference", "RefrenceIssureType", "RefrenceIssure", "CustomerName", "IdCardType", "IdentifiedCardNo", "CustType", "BankAccount", "BankPassWord", "AccountID", "Password", "CurrencyID", "TradeAmount", "Digest", "LongCustomerName" }; return b;});
 
 	py::class_<CThostFtdcRspQueryTradeResultBySerialField>(m, "CThostFtdcRspQueryTradeResultBySerialField")
 		.def(py::init<>())
@@ -4777,7 +4778,7 @@ void init_structs(py::module_& m) {
 		.def_property("CurrencyID", [](CThostFtdcRspQueryTradeResultBySerialField& a) {return encoding_cast(a.CurrencyID);}, [](CThostFtdcRspQueryTradeResultBySerialField& a, char c[]) {strcpy(a.CurrencyID, c);})
 		.def_readwrite("TradeAmount", &CThostFtdcRspQueryTradeResultBySerialField::TradeAmount)
 		.def_property("Digest", [](CThostFtdcRspQueryTradeResultBySerialField& a) {return encoding_cast(a.Digest);}, [](CThostFtdcRspQueryTradeResultBySerialField& a, char c[]) {strcpy(a.Digest, c);})
-		;
+		.def("keys", [](const CThostFtdcRspQueryTradeResultBySerialField& a) { std::vector<std::string> b = { "TradeCode", "BankID", "BankBranchID", "BrokerID", "BrokerBranchID", "TradeDate", "TradeTime", "BankSerial", "TradingDay", "PlateSerial", "LastFragment", "SessionID", "ErrorID", "ErrorMsg", "Reference", "RefrenceIssureType", "RefrenceIssure", "OriginReturnCode", "OriginDescrInfoForReturnCode", "BankAccount", "BankPassWord", "AccountID", "Password", "CurrencyID", "TradeAmount", "Digest" }; return b;});
 
 	py::class_<CThostFtdcReqDayEndFileReadyField>(m, "CThostFtdcReqDayEndFileReadyField")
 		.def(py::init<>())
@@ -4796,14 +4797,14 @@ void init_structs(py::module_& m) {
 		.def_readwrite("SessionID", &CThostFtdcReqDayEndFileReadyField::SessionID)
 		.def_readwrite("FileBusinessCode", &CThostFtdcReqDayEndFileReadyField::FileBusinessCode)
 		.def_property("Digest", [](CThostFtdcReqDayEndFileReadyField& a) {return encoding_cast(a.Digest);}, [](CThostFtdcReqDayEndFileReadyField& a, char c[]) {strcpy(a.Digest, c);})
-		;
+		.def("keys", [](const CThostFtdcReqDayEndFileReadyField& a) { std::vector<std::string> b = { "TradeCode", "BankID", "BankBranchID", "BrokerID", "BrokerBranchID", "TradeDate", "TradeTime", "BankSerial", "TradingDay", "PlateSerial", "LastFragment", "SessionID", "FileBusinessCode", "Digest" }; return b;});
 
 	py::class_<CThostFtdcReturnResultField>(m, "CThostFtdcReturnResultField")
 		.def(py::init<>())
 		.def("__copy__", [](const CThostFtdcReturnResultField& a) {return CThostFtdcReturnResultField(a);})
 		.def_property("ReturnCode", [](CThostFtdcReturnResultField& a) {return encoding_cast(a.ReturnCode);}, [](CThostFtdcReturnResultField& a, char c[]) {strcpy(a.ReturnCode, c);})
 		.def_property("DescrInfoForReturnCode", [](CThostFtdcReturnResultField& a) {return encoding_cast(a.DescrInfoForReturnCode);}, [](CThostFtdcReturnResultField& a, char c[]) {strcpy(a.DescrInfoForReturnCode, c);})
-		;
+		.def("keys", [](const CThostFtdcReturnResultField& a) { std::vector<std::string> b = { "ReturnCode", "DescrInfoForReturnCode" }; return b;});
 
 	py::class_<CThostFtdcVerifyFuturePasswordField>(m, "CThostFtdcVerifyFuturePasswordField")
 		.def(py::init<>())
@@ -4827,7 +4828,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("InstallID", &CThostFtdcVerifyFuturePasswordField::InstallID)
 		.def_readwrite("TID", &CThostFtdcVerifyFuturePasswordField::TID)
 		.def_property("CurrencyID", [](CThostFtdcVerifyFuturePasswordField& a) {return encoding_cast(a.CurrencyID);}, [](CThostFtdcVerifyFuturePasswordField& a, char c[]) {strcpy(a.CurrencyID, c);})
-		;
+		.def("keys", [](const CThostFtdcVerifyFuturePasswordField& a) { std::vector<std::string> b = { "TradeCode", "BankID", "BankBranchID", "BrokerID", "BrokerBranchID", "TradeDate", "TradeTime", "BankSerial", "TradingDay", "PlateSerial", "LastFragment", "SessionID", "AccountID", "Password", "BankAccount", "BankPassWord", "InstallID", "TID", "CurrencyID" }; return b;});
 
 	py::class_<CThostFtdcVerifyCustInfoField>(m, "CThostFtdcVerifyCustInfoField")
 		.def(py::init<>())
@@ -4837,7 +4838,7 @@ void init_structs(py::module_& m) {
 		.def_property("IdentifiedCardNo", [](CThostFtdcVerifyCustInfoField& a) {return encoding_cast(a.IdentifiedCardNo);}, [](CThostFtdcVerifyCustInfoField& a, char c[]) {strcpy(a.IdentifiedCardNo, c);})
 		.def_readwrite("CustType", &CThostFtdcVerifyCustInfoField::CustType)
 		.def_property("LongCustomerName", [](CThostFtdcVerifyCustInfoField& a) {return encoding_cast(a.LongCustomerName);}, [](CThostFtdcVerifyCustInfoField& a, char c[]) {strcpy(a.LongCustomerName, c);})
-		;
+		.def("keys", [](const CThostFtdcVerifyCustInfoField& a) { std::vector<std::string> b = { "CustomerName", "IdCardType", "IdentifiedCardNo", "CustType", "LongCustomerName" }; return b;});
 
 	py::class_<CThostFtdcVerifyFuturePasswordAndCustInfoField>(m, "CThostFtdcVerifyFuturePasswordAndCustInfoField")
 		.def(py::init<>())
@@ -4850,7 +4851,7 @@ void init_structs(py::module_& m) {
 		.def_property("Password", [](CThostFtdcVerifyFuturePasswordAndCustInfoField& a) {return encoding_cast(a.Password);}, [](CThostFtdcVerifyFuturePasswordAndCustInfoField& a, char c[]) {strcpy(a.Password, c);})
 		.def_property("CurrencyID", [](CThostFtdcVerifyFuturePasswordAndCustInfoField& a) {return encoding_cast(a.CurrencyID);}, [](CThostFtdcVerifyFuturePasswordAndCustInfoField& a, char c[]) {strcpy(a.CurrencyID, c);})
 		.def_property("LongCustomerName", [](CThostFtdcVerifyFuturePasswordAndCustInfoField& a) {return encoding_cast(a.LongCustomerName);}, [](CThostFtdcVerifyFuturePasswordAndCustInfoField& a, char c[]) {strcpy(a.LongCustomerName, c);})
-		;
+		.def("keys", [](const CThostFtdcVerifyFuturePasswordAndCustInfoField& a) { std::vector<std::string> b = { "CustomerName", "IdCardType", "IdentifiedCardNo", "CustType", "AccountID", "Password", "CurrencyID", "LongCustomerName" }; return b;});
 
 	py::class_<CThostFtdcDepositResultInformField>(m, "CThostFtdcDepositResultInformField")
 		.def(py::init<>())
@@ -4862,7 +4863,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("RequestID", &CThostFtdcDepositResultInformField::RequestID)
 		.def_property("ReturnCode", [](CThostFtdcDepositResultInformField& a) {return encoding_cast(a.ReturnCode);}, [](CThostFtdcDepositResultInformField& a, char c[]) {strcpy(a.ReturnCode, c);})
 		.def_property("DescrInfoForReturnCode", [](CThostFtdcDepositResultInformField& a) {return encoding_cast(a.DescrInfoForReturnCode);}, [](CThostFtdcDepositResultInformField& a, char c[]) {strcpy(a.DescrInfoForReturnCode, c);})
-		;
+		.def("keys", [](const CThostFtdcDepositResultInformField& a) { std::vector<std::string> b = { "DepositSeqNo", "BrokerID", "InvestorID", "Deposit", "RequestID", "ReturnCode", "DescrInfoForReturnCode" }; return b;});
 
 	py::class_<CThostFtdcReqSyncKeyField>(m, "CThostFtdcReqSyncKeyField")
 		.def(py::init<>())
@@ -4887,7 +4888,7 @@ void init_structs(py::module_& m) {
 		.def_property("OperNo", [](CThostFtdcReqSyncKeyField& a) {return encoding_cast(a.OperNo);}, [](CThostFtdcReqSyncKeyField& a, char c[]) {strcpy(a.OperNo, c);})
 		.def_readwrite("RequestID", &CThostFtdcReqSyncKeyField::RequestID)
 		.def_readwrite("TID", &CThostFtdcReqSyncKeyField::TID)
-		;
+		.def("keys", [](const CThostFtdcReqSyncKeyField& a) { std::vector<std::string> b = { "TradeCode", "BankID", "BankBranchID", "BrokerID", "BrokerBranchID", "TradeDate", "TradeTime", "BankSerial", "TradingDay", "PlateSerial", "LastFragment", "SessionID", "InstallID", "UserID", "Message", "DeviceID", "BrokerIDByBank", "OperNo", "RequestID", "TID" }; return b;});
 
 	py::class_<CThostFtdcRspSyncKeyField>(m, "CThostFtdcRspSyncKeyField")
 		.def(py::init<>())
@@ -4914,7 +4915,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("TID", &CThostFtdcRspSyncKeyField::TID)
 		.def_readwrite("ErrorID", &CThostFtdcRspSyncKeyField::ErrorID)
 		.def_property("ErrorMsg", [](CThostFtdcRspSyncKeyField& a) {return encoding_cast(a.ErrorMsg);}, [](CThostFtdcRspSyncKeyField& a, char c[]) {strcpy(a.ErrorMsg, c);})
-		;
+		.def("keys", [](const CThostFtdcRspSyncKeyField& a) { std::vector<std::string> b = { "TradeCode", "BankID", "BankBranchID", "BrokerID", "BrokerBranchID", "TradeDate", "TradeTime", "BankSerial", "TradingDay", "PlateSerial", "LastFragment", "SessionID", "InstallID", "UserID", "Message", "DeviceID", "BrokerIDByBank", "OperNo", "RequestID", "TID", "ErrorID", "ErrorMsg" }; return b;});
 
 	py::class_<CThostFtdcNotifyQueryAccountField>(m, "CThostFtdcNotifyQueryAccountField")
 		.def(py::init<>())
@@ -4960,7 +4961,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("ErrorID", &CThostFtdcNotifyQueryAccountField::ErrorID)
 		.def_property("ErrorMsg", [](CThostFtdcNotifyQueryAccountField& a) {return encoding_cast(a.ErrorMsg);}, [](CThostFtdcNotifyQueryAccountField& a, char c[]) {strcpy(a.ErrorMsg, c);})
 		.def_property("LongCustomerName", [](CThostFtdcNotifyQueryAccountField& a) {return encoding_cast(a.LongCustomerName);}, [](CThostFtdcNotifyQueryAccountField& a, char c[]) {strcpy(a.LongCustomerName, c);})
-		;
+		.def("keys", [](const CThostFtdcNotifyQueryAccountField& a) { std::vector<std::string> b = { "TradeCode", "BankID", "BankBranchID", "BrokerID", "BrokerBranchID", "TradeDate", "TradeTime", "BankSerial", "TradingDay", "PlateSerial", "LastFragment", "SessionID", "CustomerName", "IdCardType", "IdentifiedCardNo", "CustType", "BankAccount", "BankPassWord", "AccountID", "Password", "FutureSerial", "InstallID", "UserID", "VerifyCertNoFlag", "CurrencyID", "Digest", "BankAccType", "DeviceID", "BankSecuAccType", "BrokerIDByBank", "BankSecuAcc", "BankPwdFlag", "SecuPwdFlag", "OperNo", "RequestID", "TID", "BankUseAmount", "BankFetchAmount", "ErrorID", "ErrorMsg", "LongCustomerName" }; return b;});
 
 	py::class_<CThostFtdcTransferSerialField>(m, "CThostFtdcTransferSerialField")
 		.def(py::init<>())
@@ -4993,7 +4994,7 @@ void init_structs(py::module_& m) {
 		.def_property("BankNewAccount", [](CThostFtdcTransferSerialField& a) {return encoding_cast(a.BankNewAccount);}, [](CThostFtdcTransferSerialField& a, char c[]) {strcpy(a.BankNewAccount, c);})
 		.def_readwrite("ErrorID", &CThostFtdcTransferSerialField::ErrorID)
 		.def_property("ErrorMsg", [](CThostFtdcTransferSerialField& a) {return encoding_cast(a.ErrorMsg);}, [](CThostFtdcTransferSerialField& a, char c[]) {strcpy(a.ErrorMsg, c);})
-		;
+		.def("keys", [](const CThostFtdcTransferSerialField& a) { std::vector<std::string> b = { "PlateSerial", "TradeDate", "TradingDay", "TradeTime", "TradeCode", "SessionID", "BankID", "BankBranchID", "BankAccType", "BankAccount", "BankSerial", "BrokerID", "BrokerBranchID", "FutureAccType", "AccountID", "InvestorID", "FutureSerial", "IdCardType", "IdentifiedCardNo", "CurrencyID", "TradeAmount", "CustFee", "BrokerFee", "AvailabilityFlag", "OperatorCode", "BankNewAccount", "ErrorID", "ErrorMsg" }; return b;});
 
 	py::class_<CThostFtdcQryTransferSerialField>(m, "CThostFtdcQryTransferSerialField")
 		.def(py::init<>())
@@ -5002,7 +5003,7 @@ void init_structs(py::module_& m) {
 		.def_property("AccountID", [](CThostFtdcQryTransferSerialField& a) {return encoding_cast(a.AccountID);}, [](CThostFtdcQryTransferSerialField& a, char c[]) {strcpy(a.AccountID, c);})
 		.def_property("BankID", [](CThostFtdcQryTransferSerialField& a) {return encoding_cast(a.BankID);}, [](CThostFtdcQryTransferSerialField& a, char c[]) {strcpy(a.BankID, c);})
 		.def_property("CurrencyID", [](CThostFtdcQryTransferSerialField& a) {return encoding_cast(a.CurrencyID);}, [](CThostFtdcQryTransferSerialField& a, char c[]) {strcpy(a.CurrencyID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryTransferSerialField& a) { std::vector<std::string> b = { "BrokerID", "AccountID", "BankID", "CurrencyID" }; return b;});
 
 	py::class_<CThostFtdcNotifyFutureSignInField>(m, "CThostFtdcNotifyFutureSignInField")
 		.def(py::init<>())
@@ -5032,7 +5033,7 @@ void init_structs(py::module_& m) {
 		.def_property("ErrorMsg", [](CThostFtdcNotifyFutureSignInField& a) {return encoding_cast(a.ErrorMsg);}, [](CThostFtdcNotifyFutureSignInField& a, char c[]) {strcpy(a.ErrorMsg, c);})
 		.def_property("PinKey", [](CThostFtdcNotifyFutureSignInField& a) {return encoding_cast(a.PinKey);}, [](CThostFtdcNotifyFutureSignInField& a, char c[]) {strcpy(a.PinKey, c);})
 		.def_property("MacKey", [](CThostFtdcNotifyFutureSignInField& a) {return encoding_cast(a.MacKey);}, [](CThostFtdcNotifyFutureSignInField& a, char c[]) {strcpy(a.MacKey, c);})
-		;
+		.def("keys", [](const CThostFtdcNotifyFutureSignInField& a) { std::vector<std::string> b = { "TradeCode", "BankID", "BankBranchID", "BrokerID", "BrokerBranchID", "TradeDate", "TradeTime", "BankSerial", "TradingDay", "PlateSerial", "LastFragment", "SessionID", "InstallID", "UserID", "Digest", "CurrencyID", "DeviceID", "BrokerIDByBank", "OperNo", "RequestID", "TID", "ErrorID", "ErrorMsg", "PinKey", "MacKey" }; return b;});
 
 	py::class_<CThostFtdcNotifyFutureSignOutField>(m, "CThostFtdcNotifyFutureSignOutField")
 		.def(py::init<>())
@@ -5060,7 +5061,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("TID", &CThostFtdcNotifyFutureSignOutField::TID)
 		.def_readwrite("ErrorID", &CThostFtdcNotifyFutureSignOutField::ErrorID)
 		.def_property("ErrorMsg", [](CThostFtdcNotifyFutureSignOutField& a) {return encoding_cast(a.ErrorMsg);}, [](CThostFtdcNotifyFutureSignOutField& a, char c[]) {strcpy(a.ErrorMsg, c);})
-		;
+		.def("keys", [](const CThostFtdcNotifyFutureSignOutField& a) { std::vector<std::string> b = { "TradeCode", "BankID", "BankBranchID", "BrokerID", "BrokerBranchID", "TradeDate", "TradeTime", "BankSerial", "TradingDay", "PlateSerial", "LastFragment", "SessionID", "InstallID", "UserID", "Digest", "CurrencyID", "DeviceID", "BrokerIDByBank", "OperNo", "RequestID", "TID", "ErrorID", "ErrorMsg" }; return b;});
 
 	py::class_<CThostFtdcNotifySyncKeyField>(m, "CThostFtdcNotifySyncKeyField")
 		.def(py::init<>())
@@ -5087,7 +5088,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("TID", &CThostFtdcNotifySyncKeyField::TID)
 		.def_readwrite("ErrorID", &CThostFtdcNotifySyncKeyField::ErrorID)
 		.def_property("ErrorMsg", [](CThostFtdcNotifySyncKeyField& a) {return encoding_cast(a.ErrorMsg);}, [](CThostFtdcNotifySyncKeyField& a, char c[]) {strcpy(a.ErrorMsg, c);})
-		;
+		.def("keys", [](const CThostFtdcNotifySyncKeyField& a) { std::vector<std::string> b = { "TradeCode", "BankID", "BankBranchID", "BrokerID", "BrokerBranchID", "TradeDate", "TradeTime", "BankSerial", "TradingDay", "PlateSerial", "LastFragment", "SessionID", "InstallID", "UserID", "Message", "DeviceID", "BrokerIDByBank", "OperNo", "RequestID", "TID", "ErrorID", "ErrorMsg" }; return b;});
 
 	py::class_<CThostFtdcQryAccountregisterField>(m, "CThostFtdcQryAccountregisterField")
 		.def(py::init<>())
@@ -5097,7 +5098,7 @@ void init_structs(py::module_& m) {
 		.def_property("BankID", [](CThostFtdcQryAccountregisterField& a) {return encoding_cast(a.BankID);}, [](CThostFtdcQryAccountregisterField& a, char c[]) {strcpy(a.BankID, c);})
 		.def_property("BankBranchID", [](CThostFtdcQryAccountregisterField& a) {return encoding_cast(a.BankBranchID);}, [](CThostFtdcQryAccountregisterField& a, char c[]) {strcpy(a.BankBranchID, c);})
 		.def_property("CurrencyID", [](CThostFtdcQryAccountregisterField& a) {return encoding_cast(a.CurrencyID);}, [](CThostFtdcQryAccountregisterField& a, char c[]) {strcpy(a.CurrencyID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryAccountregisterField& a) { std::vector<std::string> b = { "BrokerID", "AccountID", "BankID", "BankBranchID", "CurrencyID" }; return b;});
 
 	py::class_<CThostFtdcAccountregisterField>(m, "CThostFtdcAccountregisterField")
 		.def(py::init<>())
@@ -5120,7 +5121,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("CustType", &CThostFtdcAccountregisterField::CustType)
 		.def_readwrite("BankAccType", &CThostFtdcAccountregisterField::BankAccType)
 		.def_property("LongCustomerName", [](CThostFtdcAccountregisterField& a) {return encoding_cast(a.LongCustomerName);}, [](CThostFtdcAccountregisterField& a, char c[]) {strcpy(a.LongCustomerName, c);})
-		;
+		.def("keys", [](const CThostFtdcAccountregisterField& a) { std::vector<std::string> b = { "TradeDay", "BankID", "BankBranchID", "BankAccount", "BrokerID", "BrokerBranchID", "AccountID", "IdCardType", "IdentifiedCardNo", "CustomerName", "CurrencyID", "OpenOrDestroy", "RegDate", "OutDate", "TID", "CustType", "BankAccType", "LongCustomerName" }; return b;});
 
 	py::class_<CThostFtdcOpenAccountField>(m, "CThostFtdcOpenAccountField")
 		.def(py::init<>())
@@ -5172,7 +5173,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("ErrorID", &CThostFtdcOpenAccountField::ErrorID)
 		.def_property("ErrorMsg", [](CThostFtdcOpenAccountField& a) {return encoding_cast(a.ErrorMsg);}, [](CThostFtdcOpenAccountField& a, char c[]) {strcpy(a.ErrorMsg, c);})
 		.def_property("LongCustomerName", [](CThostFtdcOpenAccountField& a) {return encoding_cast(a.LongCustomerName);}, [](CThostFtdcOpenAccountField& a, char c[]) {strcpy(a.LongCustomerName, c);})
-		;
+		.def("keys", [](const CThostFtdcOpenAccountField& a) { std::vector<std::string> b = { "TradeCode", "BankID", "BankBranchID", "BrokerID", "BrokerBranchID", "TradeDate", "TradeTime", "BankSerial", "TradingDay", "PlateSerial", "LastFragment", "SessionID", "CustomerName", "IdCardType", "IdentifiedCardNo", "Gender", "CountryCode", "CustType", "Address", "ZipCode", "Telephone", "MobilePhone", "Fax", "EMail", "MoneyAccountStatus", "BankAccount", "BankPassWord", "AccountID", "Password", "InstallID", "VerifyCertNoFlag", "CurrencyID", "CashExchangeCode", "Digest", "BankAccType", "DeviceID", "BankSecuAccType", "BrokerIDByBank", "BankSecuAcc", "BankPwdFlag", "SecuPwdFlag", "OperNo", "TID", "UserID", "ErrorID", "ErrorMsg", "LongCustomerName" }; return b;});
 
 	py::class_<CThostFtdcCancelAccountField>(m, "CThostFtdcCancelAccountField")
 		.def(py::init<>())
@@ -5224,7 +5225,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("ErrorID", &CThostFtdcCancelAccountField::ErrorID)
 		.def_property("ErrorMsg", [](CThostFtdcCancelAccountField& a) {return encoding_cast(a.ErrorMsg);}, [](CThostFtdcCancelAccountField& a, char c[]) {strcpy(a.ErrorMsg, c);})
 		.def_property("LongCustomerName", [](CThostFtdcCancelAccountField& a) {return encoding_cast(a.LongCustomerName);}, [](CThostFtdcCancelAccountField& a, char c[]) {strcpy(a.LongCustomerName, c);})
-		;
+		.def("keys", [](const CThostFtdcCancelAccountField& a) { std::vector<std::string> b = { "TradeCode", "BankID", "BankBranchID", "BrokerID", "BrokerBranchID", "TradeDate", "TradeTime", "BankSerial", "TradingDay", "PlateSerial", "LastFragment", "SessionID", "CustomerName", "IdCardType", "IdentifiedCardNo", "Gender", "CountryCode", "CustType", "Address", "ZipCode", "Telephone", "MobilePhone", "Fax", "EMail", "MoneyAccountStatus", "BankAccount", "BankPassWord", "AccountID", "Password", "InstallID", "VerifyCertNoFlag", "CurrencyID", "CashExchangeCode", "Digest", "BankAccType", "DeviceID", "BankSecuAccType", "BrokerIDByBank", "BankSecuAcc", "BankPwdFlag", "SecuPwdFlag", "OperNo", "TID", "UserID", "ErrorID", "ErrorMsg", "LongCustomerName" }; return b;});
 
 	py::class_<CThostFtdcChangeAccountField>(m, "CThostFtdcChangeAccountField")
 		.def(py::init<>())
@@ -5272,7 +5273,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("ErrorID", &CThostFtdcChangeAccountField::ErrorID)
 		.def_property("ErrorMsg", [](CThostFtdcChangeAccountField& a) {return encoding_cast(a.ErrorMsg);}, [](CThostFtdcChangeAccountField& a, char c[]) {strcpy(a.ErrorMsg, c);})
 		.def_property("LongCustomerName", [](CThostFtdcChangeAccountField& a) {return encoding_cast(a.LongCustomerName);}, [](CThostFtdcChangeAccountField& a, char c[]) {strcpy(a.LongCustomerName, c);})
-		;
+		.def("keys", [](const CThostFtdcChangeAccountField& a) { std::vector<std::string> b = { "TradeCode", "BankID", "BankBranchID", "BrokerID", "BrokerBranchID", "TradeDate", "TradeTime", "BankSerial", "TradingDay", "PlateSerial", "LastFragment", "SessionID", "CustomerName", "IdCardType", "IdentifiedCardNo", "Gender", "CountryCode", "CustType", "Address", "ZipCode", "Telephone", "MobilePhone", "Fax", "EMail", "MoneyAccountStatus", "BankAccount", "BankPassWord", "NewBankAccount", "NewBankPassWord", "AccountID", "Password", "BankAccType", "InstallID", "VerifyCertNoFlag", "CurrencyID", "BrokerIDByBank", "BankPwdFlag", "SecuPwdFlag", "TID", "Digest", "ErrorID", "ErrorMsg", "LongCustomerName" }; return b;});
 
 	py::class_<CThostFtdcSecAgentACIDMapField>(m, "CThostFtdcSecAgentACIDMapField")
 		.def(py::init<>())
@@ -5282,7 +5283,7 @@ void init_structs(py::module_& m) {
 		.def_property("AccountID", [](CThostFtdcSecAgentACIDMapField& a) {return encoding_cast(a.AccountID);}, [](CThostFtdcSecAgentACIDMapField& a, char c[]) {strcpy(a.AccountID, c);})
 		.def_property("CurrencyID", [](CThostFtdcSecAgentACIDMapField& a) {return encoding_cast(a.CurrencyID);}, [](CThostFtdcSecAgentACIDMapField& a, char c[]) {strcpy(a.CurrencyID, c);})
 		.def_property("BrokerSecAgentID", [](CThostFtdcSecAgentACIDMapField& a) {return encoding_cast(a.BrokerSecAgentID);}, [](CThostFtdcSecAgentACIDMapField& a, char c[]) {strcpy(a.BrokerSecAgentID, c);})
-		;
+		.def("keys", [](const CThostFtdcSecAgentACIDMapField& a) { std::vector<std::string> b = { "BrokerID", "UserID", "AccountID", "CurrencyID", "BrokerSecAgentID" }; return b;});
 
 	py::class_<CThostFtdcQrySecAgentACIDMapField>(m, "CThostFtdcQrySecAgentACIDMapField")
 		.def(py::init<>())
@@ -5291,7 +5292,7 @@ void init_structs(py::module_& m) {
 		.def_property("UserID", [](CThostFtdcQrySecAgentACIDMapField& a) {return encoding_cast(a.UserID);}, [](CThostFtdcQrySecAgentACIDMapField& a, char c[]) {strcpy(a.UserID, c);})
 		.def_property("AccountID", [](CThostFtdcQrySecAgentACIDMapField& a) {return encoding_cast(a.AccountID);}, [](CThostFtdcQrySecAgentACIDMapField& a, char c[]) {strcpy(a.AccountID, c);})
 		.def_property("CurrencyID", [](CThostFtdcQrySecAgentACIDMapField& a) {return encoding_cast(a.CurrencyID);}, [](CThostFtdcQrySecAgentACIDMapField& a, char c[]) {strcpy(a.CurrencyID, c);})
-		;
+		.def("keys", [](const CThostFtdcQrySecAgentACIDMapField& a) { std::vector<std::string> b = { "BrokerID", "UserID", "AccountID", "CurrencyID" }; return b;});
 
 	py::class_<CThostFtdcUserRightsAssignField>(m, "CThostFtdcUserRightsAssignField")
 		.def(py::init<>())
@@ -5299,7 +5300,7 @@ void init_structs(py::module_& m) {
 		.def_property("BrokerID", [](CThostFtdcUserRightsAssignField& a) {return encoding_cast(a.BrokerID);}, [](CThostFtdcUserRightsAssignField& a, char c[]) {strcpy(a.BrokerID, c);})
 		.def_property("UserID", [](CThostFtdcUserRightsAssignField& a) {return encoding_cast(a.UserID);}, [](CThostFtdcUserRightsAssignField& a, char c[]) {strcpy(a.UserID, c);})
 		.def_readwrite("DRIdentityID", &CThostFtdcUserRightsAssignField::DRIdentityID)
-		;
+		.def("keys", [](const CThostFtdcUserRightsAssignField& a) { std::vector<std::string> b = { "BrokerID", "UserID", "DRIdentityID" }; return b;});
 
 	py::class_<CThostFtdcBrokerUserRightAssignField>(m, "CThostFtdcBrokerUserRightAssignField")
 		.def(py::init<>())
@@ -5307,7 +5308,7 @@ void init_structs(py::module_& m) {
 		.def_property("BrokerID", [](CThostFtdcBrokerUserRightAssignField& a) {return encoding_cast(a.BrokerID);}, [](CThostFtdcBrokerUserRightAssignField& a, char c[]) {strcpy(a.BrokerID, c);})
 		.def_readwrite("DRIdentityID", &CThostFtdcBrokerUserRightAssignField::DRIdentityID)
 		.def_readwrite("Tradeable", &CThostFtdcBrokerUserRightAssignField::Tradeable)
-		;
+		.def("keys", [](const CThostFtdcBrokerUserRightAssignField& a) { std::vector<std::string> b = { "BrokerID", "DRIdentityID", "Tradeable" }; return b;});
 
 	py::class_<CThostFtdcDRTransferField>(m, "CThostFtdcDRTransferField")
 		.def(py::init<>())
@@ -5316,7 +5317,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("DestDRIdentityID", &CThostFtdcDRTransferField::DestDRIdentityID)
 		.def_property("OrigBrokerID", [](CThostFtdcDRTransferField& a) {return encoding_cast(a.OrigBrokerID);}, [](CThostFtdcDRTransferField& a, char c[]) {strcpy(a.OrigBrokerID, c);})
 		.def_property("DestBrokerID", [](CThostFtdcDRTransferField& a) {return encoding_cast(a.DestBrokerID);}, [](CThostFtdcDRTransferField& a, char c[]) {strcpy(a.DestBrokerID, c);})
-		;
+		.def("keys", [](const CThostFtdcDRTransferField& a) { std::vector<std::string> b = { "OrigDRIdentityID", "DestDRIdentityID", "OrigBrokerID", "DestBrokerID" }; return b;});
 
 	py::class_<CThostFtdcFensUserInfoField>(m, "CThostFtdcFensUserInfoField")
 		.def(py::init<>())
@@ -5324,13 +5325,13 @@ void init_structs(py::module_& m) {
 		.def_property("BrokerID", [](CThostFtdcFensUserInfoField& a) {return encoding_cast(a.BrokerID);}, [](CThostFtdcFensUserInfoField& a, char c[]) {strcpy(a.BrokerID, c);})
 		.def_property("UserID", [](CThostFtdcFensUserInfoField& a) {return encoding_cast(a.UserID);}, [](CThostFtdcFensUserInfoField& a, char c[]) {strcpy(a.UserID, c);})
 		.def_readwrite("LoginMode", &CThostFtdcFensUserInfoField::LoginMode)
-		;
+		.def("keys", [](const CThostFtdcFensUserInfoField& a) { std::vector<std::string> b = { "BrokerID", "UserID", "LoginMode" }; return b;});
 
 	py::class_<CThostFtdcCurrTransferIdentityField>(m, "CThostFtdcCurrTransferIdentityField")
 		.def(py::init<>())
 		.def("__copy__", [](const CThostFtdcCurrTransferIdentityField& a) {return CThostFtdcCurrTransferIdentityField(a);})
 		.def_readwrite("IdentityID", &CThostFtdcCurrTransferIdentityField::IdentityID)
-		;
+		.def("keys", [](const CThostFtdcCurrTransferIdentityField& a) { std::vector<std::string> b = { "IdentityID" }; return b;});
 
 	py::class_<CThostFtdcLoginForbiddenUserField>(m, "CThostFtdcLoginForbiddenUserField")
 		.def(py::init<>())
@@ -5338,14 +5339,14 @@ void init_structs(py::module_& m) {
 		.def_property("BrokerID", [](CThostFtdcLoginForbiddenUserField& a) {return encoding_cast(a.BrokerID);}, [](CThostFtdcLoginForbiddenUserField& a, char c[]) {strcpy(a.BrokerID, c);})
 		.def_property("UserID", [](CThostFtdcLoginForbiddenUserField& a) {return encoding_cast(a.UserID);}, [](CThostFtdcLoginForbiddenUserField& a, char c[]) {strcpy(a.UserID, c);})
 		.def_property("IPAddress", [](CThostFtdcLoginForbiddenUserField& a) {return encoding_cast(a.IPAddress);}, [](CThostFtdcLoginForbiddenUserField& a, char c[]) {strcpy(a.IPAddress, c);})
-		;
+		.def("keys", [](const CThostFtdcLoginForbiddenUserField& a) { std::vector<std::string> b = { "BrokerID", "UserID", "IPAddress" }; return b;});
 
 	py::class_<CThostFtdcQryLoginForbiddenUserField>(m, "CThostFtdcQryLoginForbiddenUserField")
 		.def(py::init<>())
 		.def("__copy__", [](const CThostFtdcQryLoginForbiddenUserField& a) {return CThostFtdcQryLoginForbiddenUserField(a);})
 		.def_property("BrokerID", [](CThostFtdcQryLoginForbiddenUserField& a) {return encoding_cast(a.BrokerID);}, [](CThostFtdcQryLoginForbiddenUserField& a, char c[]) {strcpy(a.BrokerID, c);})
 		.def_property("UserID", [](CThostFtdcQryLoginForbiddenUserField& a) {return encoding_cast(a.UserID);}, [](CThostFtdcQryLoginForbiddenUserField& a, char c[]) {strcpy(a.UserID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryLoginForbiddenUserField& a) { std::vector<std::string> b = { "BrokerID", "UserID" }; return b;});
 
 	py::class_<CThostFtdcMulticastGroupInfoField>(m, "CThostFtdcMulticastGroupInfoField")
 		.def(py::init<>())
@@ -5353,7 +5354,7 @@ void init_structs(py::module_& m) {
 		.def_property("GroupIP", [](CThostFtdcMulticastGroupInfoField& a) {return encoding_cast(a.GroupIP);}, [](CThostFtdcMulticastGroupInfoField& a, char c[]) {strcpy(a.GroupIP, c);})
 		.def_readwrite("GroupPort", &CThostFtdcMulticastGroupInfoField::GroupPort)
 		.def_property("SourceIP", [](CThostFtdcMulticastGroupInfoField& a) {return encoding_cast(a.SourceIP);}, [](CThostFtdcMulticastGroupInfoField& a, char c[]) {strcpy(a.SourceIP, c);})
-		;
+		.def("keys", [](const CThostFtdcMulticastGroupInfoField& a) { std::vector<std::string> b = { "GroupIP", "GroupPort", "SourceIP" }; return b;});
 
 	py::class_<CThostFtdcTradingAccountReserveField>(m, "CThostFtdcTradingAccountReserveField")
 		.def(py::init<>())
@@ -5362,26 +5363,26 @@ void init_structs(py::module_& m) {
 		.def_property("AccountID", [](CThostFtdcTradingAccountReserveField& a) {return encoding_cast(a.AccountID);}, [](CThostFtdcTradingAccountReserveField& a, char c[]) {strcpy(a.AccountID, c);})
 		.def_readwrite("Reserve", &CThostFtdcTradingAccountReserveField::Reserve)
 		.def_property("CurrencyID", [](CThostFtdcTradingAccountReserveField& a) {return encoding_cast(a.CurrencyID);}, [](CThostFtdcTradingAccountReserveField& a, char c[]) {strcpy(a.CurrencyID, c);})
-		;
+		.def("keys", [](const CThostFtdcTradingAccountReserveField& a) { std::vector<std::string> b = { "BrokerID", "AccountID", "Reserve", "CurrencyID" }; return b;});
 
 	py::class_<CThostFtdcQryLoginForbiddenIPField>(m, "CThostFtdcQryLoginForbiddenIPField")
 		.def(py::init<>())
 		.def("__copy__", [](const CThostFtdcQryLoginForbiddenIPField& a) {return CThostFtdcQryLoginForbiddenIPField(a);})
 		.def_property("IPAddress", [](CThostFtdcQryLoginForbiddenIPField& a) {return encoding_cast(a.IPAddress);}, [](CThostFtdcQryLoginForbiddenIPField& a, char c[]) {strcpy(a.IPAddress, c);})
-		;
+		.def("keys", [](const CThostFtdcQryLoginForbiddenIPField& a) { std::vector<std::string> b = { "IPAddress" }; return b;});
 
 	py::class_<CThostFtdcQryIPListField>(m, "CThostFtdcQryIPListField")
 		.def(py::init<>())
 		.def("__copy__", [](const CThostFtdcQryIPListField& a) {return CThostFtdcQryIPListField(a);})
 		.def_property("IPAddress", [](CThostFtdcQryIPListField& a) {return encoding_cast(a.IPAddress);}, [](CThostFtdcQryIPListField& a, char c[]) {strcpy(a.IPAddress, c);})
-		;
+		.def("keys", [](const CThostFtdcQryIPListField& a) { std::vector<std::string> b = { "IPAddress" }; return b;});
 
 	py::class_<CThostFtdcQryUserRightsAssignField>(m, "CThostFtdcQryUserRightsAssignField")
 		.def(py::init<>())
 		.def("__copy__", [](const CThostFtdcQryUserRightsAssignField& a) {return CThostFtdcQryUserRightsAssignField(a);})
 		.def_property("BrokerID", [](CThostFtdcQryUserRightsAssignField& a) {return encoding_cast(a.BrokerID);}, [](CThostFtdcQryUserRightsAssignField& a, char c[]) {strcpy(a.BrokerID, c);})
 		.def_property("UserID", [](CThostFtdcQryUserRightsAssignField& a) {return encoding_cast(a.UserID);}, [](CThostFtdcQryUserRightsAssignField& a, char c[]) {strcpy(a.UserID, c);})
-		;
+		.def("keys", [](const CThostFtdcQryUserRightsAssignField& a) { std::vector<std::string> b = { "BrokerID", "UserID" }; return b;});
 
 	py::class_<CThostFtdcReserveOpenAccountConfirmField>(m, "CThostFtdcReserveOpenAccountConfirmField")
 		.def(py::init<>())
@@ -5427,7 +5428,7 @@ void init_structs(py::module_& m) {
 		.def_property("BookPsw", [](CThostFtdcReserveOpenAccountConfirmField& a) {return encoding_cast(a.BookPsw);}, [](CThostFtdcReserveOpenAccountConfirmField& a, char c[]) {strcpy(a.BookPsw, c);})
 		.def_readwrite("ErrorID", &CThostFtdcReserveOpenAccountConfirmField::ErrorID)
 		.def_property("ErrorMsg", [](CThostFtdcReserveOpenAccountConfirmField& a) {return encoding_cast(a.ErrorMsg);}, [](CThostFtdcReserveOpenAccountConfirmField& a, char c[]) {strcpy(a.ErrorMsg, c);})
-		;
+		.def("keys", [](const CThostFtdcReserveOpenAccountConfirmField& a) { std::vector<std::string> b = { "TradeCode", "BankID", "BankBranchID", "BrokerID", "BrokerBranchID", "TradeDate", "TradeTime", "BankSerial", "TradingDay", "PlateSerial", "LastFragment", "SessionID", "CustomerName", "IdCardType", "IdentifiedCardNo", "Gender", "CountryCode", "CustType", "Address", "ZipCode", "Telephone", "MobilePhone", "Fax", "EMail", "MoneyAccountStatus", "BankAccount", "BankPassWord", "InstallID", "VerifyCertNoFlag", "CurrencyID", "Digest", "BankAccType", "BrokerIDByBank", "TID", "AccountID", "Password", "BankReserveOpenSeq", "BookDate", "BookPsw", "ErrorID", "ErrorMsg" }; return b;});
 
 	py::class_<CThostFtdcReserveOpenAccountField>(m, "CThostFtdcReserveOpenAccountField")
 		.def(py::init<>())
@@ -5469,7 +5470,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("ReserveOpenAccStas", &CThostFtdcReserveOpenAccountField::ReserveOpenAccStas)
 		.def_readwrite("ErrorID", &CThostFtdcReserveOpenAccountField::ErrorID)
 		.def_property("ErrorMsg", [](CThostFtdcReserveOpenAccountField& a) {return encoding_cast(a.ErrorMsg);}, [](CThostFtdcReserveOpenAccountField& a, char c[]) {strcpy(a.ErrorMsg, c);})
-		;
+		.def("keys", [](const CThostFtdcReserveOpenAccountField& a) { std::vector<std::string> b = { "TradeCode", "BankID", "BankBranchID", "BrokerID", "BrokerBranchID", "TradeDate", "TradeTime", "BankSerial", "TradingDay", "PlateSerial", "LastFragment", "SessionID", "CustomerName", "IdCardType", "IdentifiedCardNo", "Gender", "CountryCode", "CustType", "Address", "ZipCode", "Telephone", "MobilePhone", "Fax", "EMail", "MoneyAccountStatus", "BankAccount", "BankPassWord", "InstallID", "VerifyCertNoFlag", "CurrencyID", "Digest", "BankAccType", "BrokerIDByBank", "TID", "ReserveOpenAccStas", "ErrorID", "ErrorMsg" }; return b;});
 
 	py::class_<CThostFtdcAccountPropertyField>(m, "CThostFtdcAccountPropertyField")
 		.def(py::init<>())
@@ -5488,33 +5489,33 @@ void init_structs(py::module_& m) {
 		.def_property("OperateDate", [](CThostFtdcAccountPropertyField& a) {return encoding_cast(a.OperateDate);}, [](CThostFtdcAccountPropertyField& a, char c[]) {strcpy(a.OperateDate, c);})
 		.def_property("OperateTime", [](CThostFtdcAccountPropertyField& a) {return encoding_cast(a.OperateTime);}, [](CThostFtdcAccountPropertyField& a, char c[]) {strcpy(a.OperateTime, c);})
 		.def_property("CurrencyID", [](CThostFtdcAccountPropertyField& a) {return encoding_cast(a.CurrencyID);}, [](CThostFtdcAccountPropertyField& a, char c[]) {strcpy(a.CurrencyID, c);})
-		;
+		.def("keys", [](const CThostFtdcAccountPropertyField& a) { std::vector<std::string> b = { "BrokerID", "AccountID", "BankID", "BankAccount", "OpenName", "OpenBank", "IsActive", "AccountSourceType", "OpenDate", "CancelDate", "OperatorID", "OperateDate", "OperateTime", "CurrencyID" }; return b;});
 
 	py::class_<CThostFtdcQryCurrDRIdentityField>(m, "CThostFtdcQryCurrDRIdentityField")
 		.def(py::init<>())
 		.def("__copy__", [](const CThostFtdcQryCurrDRIdentityField& a) {return CThostFtdcQryCurrDRIdentityField(a);})
 		.def_readwrite("DRIdentityID", &CThostFtdcQryCurrDRIdentityField::DRIdentityID)
-		;
+		.def("keys", [](const CThostFtdcQryCurrDRIdentityField& a) { std::vector<std::string> b = { "DRIdentityID" }; return b;});
 
 	py::class_<CThostFtdcCurrDRIdentityField>(m, "CThostFtdcCurrDRIdentityField")
 		.def(py::init<>())
 		.def("__copy__", [](const CThostFtdcCurrDRIdentityField& a) {return CThostFtdcCurrDRIdentityField(a);})
 		.def_readwrite("DRIdentityID", &CThostFtdcCurrDRIdentityField::DRIdentityID)
-		;
+		.def("keys", [](const CThostFtdcCurrDRIdentityField& a) { std::vector<std::string> b = { "DRIdentityID" }; return b;});
 
 	py::class_<CThostFtdcQrySecAgentCheckModeField>(m, "CThostFtdcQrySecAgentCheckModeField")
 		.def(py::init<>())
 		.def("__copy__", [](const CThostFtdcQrySecAgentCheckModeField& a) {return CThostFtdcQrySecAgentCheckModeField(a);})
 		.def_property("BrokerID", [](CThostFtdcQrySecAgentCheckModeField& a) {return encoding_cast(a.BrokerID);}, [](CThostFtdcQrySecAgentCheckModeField& a, char c[]) {strcpy(a.BrokerID, c);})
 		.def_property("InvestorID", [](CThostFtdcQrySecAgentCheckModeField& a) {return encoding_cast(a.InvestorID);}, [](CThostFtdcQrySecAgentCheckModeField& a, char c[]) {strcpy(a.InvestorID, c);})
-		;
+		.def("keys", [](const CThostFtdcQrySecAgentCheckModeField& a) { std::vector<std::string> b = { "BrokerID", "InvestorID" }; return b;});
 
 	py::class_<CThostFtdcQrySecAgentTradeInfoField>(m, "CThostFtdcQrySecAgentTradeInfoField")
 		.def(py::init<>())
 		.def("__copy__", [](const CThostFtdcQrySecAgentTradeInfoField& a) {return CThostFtdcQrySecAgentTradeInfoField(a);})
 		.def_property("BrokerID", [](CThostFtdcQrySecAgentTradeInfoField& a) {return encoding_cast(a.BrokerID);}, [](CThostFtdcQrySecAgentTradeInfoField& a, char c[]) {strcpy(a.BrokerID, c);})
 		.def_property("BrokerSecAgentID", [](CThostFtdcQrySecAgentTradeInfoField& a) {return encoding_cast(a.BrokerSecAgentID);}, [](CThostFtdcQrySecAgentTradeInfoField& a, char c[]) {strcpy(a.BrokerSecAgentID, c);})
-		;
+		.def("keys", [](const CThostFtdcQrySecAgentTradeInfoField& a) { std::vector<std::string> b = { "BrokerID", "BrokerSecAgentID" }; return b;});
 
 	py::class_<CThostFtdcUserSystemInfoField>(m, "CThostFtdcUserSystemInfoField")
 		.def(py::init<>())
@@ -5527,7 +5528,7 @@ void init_structs(py::module_& m) {
 		.def_readwrite("ClientIPPort", &CThostFtdcUserSystemInfoField::ClientIPPort)
 		.def_property("ClientLoginTime", [](CThostFtdcUserSystemInfoField& a) {return encoding_cast(a.ClientLoginTime);}, [](CThostFtdcUserSystemInfoField& a, char c[]) {strcpy(a.ClientLoginTime, c);})
 		.def_property("ClientAppID", [](CThostFtdcUserSystemInfoField& a) {return encoding_cast(a.ClientAppID);}, [](CThostFtdcUserSystemInfoField& a, char c[]) {strcpy(a.ClientAppID, c);})
-		;
+		.def("keys", [](const CThostFtdcUserSystemInfoField& a) { std::vector<std::string> b = { "BrokerID", "UserID", "ClientSystemInfoLen", "ClientSystemInfo", "ClientPublicIP", "ClientIPPort", "ClientLoginTime", "ClientAppID" }; return b;});
 
 	py::class_<CThostFtdcReqUserAuthMethodField>(m, "CThostFtdcReqUserAuthMethodField")
 		.def(py::init<>())
@@ -5535,13 +5536,13 @@ void init_structs(py::module_& m) {
 		.def_property("TradingDay", [](CThostFtdcReqUserAuthMethodField& a) {return encoding_cast(a.TradingDay);}, [](CThostFtdcReqUserAuthMethodField& a, char c[]) {strcpy(a.TradingDay, c);})
 		.def_property("BrokerID", [](CThostFtdcReqUserAuthMethodField& a) {return encoding_cast(a.BrokerID);}, [](CThostFtdcReqUserAuthMethodField& a, char c[]) {strcpy(a.BrokerID, c);})
 		.def_property("UserID", [](CThostFtdcReqUserAuthMethodField& a) {return encoding_cast(a.UserID);}, [](CThostFtdcReqUserAuthMethodField& a, char c[]) {strcpy(a.UserID, c);})
-		;
+		.def("keys", [](const CThostFtdcReqUserAuthMethodField& a) { std::vector<std::string> b = { "TradingDay", "BrokerID", "UserID" }; return b;});
 
 	py::class_<CThostFtdcRspUserAuthMethodField>(m, "CThostFtdcRspUserAuthMethodField")
 		.def(py::init<>())
 		.def("__copy__", [](const CThostFtdcRspUserAuthMethodField& a) {return CThostFtdcRspUserAuthMethodField(a);})
 		.def_readwrite("UsableAuthMethod", &CThostFtdcRspUserAuthMethodField::UsableAuthMethod)
-		;
+		.def("keys", [](const CThostFtdcRspUserAuthMethodField& a) { std::vector<std::string> b = { "UsableAuthMethod" }; return b;});
 
 	py::class_<CThostFtdcReqGenUserCaptchaField>(m, "CThostFtdcReqGenUserCaptchaField")
 		.def(py::init<>())
@@ -5549,7 +5550,7 @@ void init_structs(py::module_& m) {
 		.def_property("TradingDay", [](CThostFtdcReqGenUserCaptchaField& a) {return encoding_cast(a.TradingDay);}, [](CThostFtdcReqGenUserCaptchaField& a, char c[]) {strcpy(a.TradingDay, c);})
 		.def_property("BrokerID", [](CThostFtdcReqGenUserCaptchaField& a) {return encoding_cast(a.BrokerID);}, [](CThostFtdcReqGenUserCaptchaField& a, char c[]) {strcpy(a.BrokerID, c);})
 		.def_property("UserID", [](CThostFtdcReqGenUserCaptchaField& a) {return encoding_cast(a.UserID);}, [](CThostFtdcReqGenUserCaptchaField& a, char c[]) {strcpy(a.UserID, c);})
-		;
+		.def("keys", [](const CThostFtdcReqGenUserCaptchaField& a) { std::vector<std::string> b = { "TradingDay", "BrokerID", "UserID" }; return b;});
 
 	py::class_<CThostFtdcRspGenUserCaptchaField>(m, "CThostFtdcRspGenUserCaptchaField")
 		.def(py::init<>())
@@ -5558,7 +5559,7 @@ void init_structs(py::module_& m) {
 		.def_property("UserID", [](CThostFtdcRspGenUserCaptchaField& a) {return encoding_cast(a.UserID);}, [](CThostFtdcRspGenUserCaptchaField& a, char c[]) {strcpy(a.UserID, c);})
 		.def_readwrite("CaptchaInfoLen", &CThostFtdcRspGenUserCaptchaField::CaptchaInfoLen)
 		.def_property("CaptchaInfo", [](CThostFtdcRspGenUserCaptchaField& a) {return encoding_cast(a.CaptchaInfo);}, [](CThostFtdcRspGenUserCaptchaField& a, char c[]) {strcpy(a.CaptchaInfo, c);})
-		;
+		.def("keys", [](const CThostFtdcRspGenUserCaptchaField& a) { std::vector<std::string> b = { "BrokerID", "UserID", "CaptchaInfoLen", "CaptchaInfo" }; return b;});
 
 	py::class_<CThostFtdcReqGenUserTextField>(m, "CThostFtdcReqGenUserTextField")
 		.def(py::init<>())
@@ -5566,13 +5567,13 @@ void init_structs(py::module_& m) {
 		.def_property("TradingDay", [](CThostFtdcReqGenUserTextField& a) {return encoding_cast(a.TradingDay);}, [](CThostFtdcReqGenUserTextField& a, char c[]) {strcpy(a.TradingDay, c);})
 		.def_property("BrokerID", [](CThostFtdcReqGenUserTextField& a) {return encoding_cast(a.BrokerID);}, [](CThostFtdcReqGenUserTextField& a, char c[]) {strcpy(a.BrokerID, c);})
 		.def_property("UserID", [](CThostFtdcReqGenUserTextField& a) {return encoding_cast(a.UserID);}, [](CThostFtdcReqGenUserTextField& a, char c[]) {strcpy(a.UserID, c);})
-		;
+		.def("keys", [](const CThostFtdcReqGenUserTextField& a) { std::vector<std::string> b = { "TradingDay", "BrokerID", "UserID" }; return b;});
 
 	py::class_<CThostFtdcRspGenUserTextField>(m, "CThostFtdcRspGenUserTextField")
 		.def(py::init<>())
 		.def("__copy__", [](const CThostFtdcRspGenUserTextField& a) {return CThostFtdcRspGenUserTextField(a);})
 		.def_readwrite("UserTextSeq", &CThostFtdcRspGenUserTextField::UserTextSeq)
-		;
+		.def("keys", [](const CThostFtdcRspGenUserTextField& a) { std::vector<std::string> b = { "UserTextSeq" }; return b;});
 
 	py::class_<CThostFtdcReqUserLoginWithCaptchaField>(m, "CThostFtdcReqUserLoginWithCaptchaField")
 		.def(py::init<>())
@@ -5589,7 +5590,7 @@ void init_structs(py::module_& m) {
 		.def_property("LoginRemark", [](CThostFtdcReqUserLoginWithCaptchaField& a) {return encoding_cast(a.LoginRemark);}, [](CThostFtdcReqUserLoginWithCaptchaField& a, char c[]) {strcpy(a.LoginRemark, c);})
 		.def_property("Captcha", [](CThostFtdcReqUserLoginWithCaptchaField& a) {return encoding_cast(a.Captcha);}, [](CThostFtdcReqUserLoginWithCaptchaField& a, char c[]) {strcpy(a.Captcha, c);})
 		.def_readwrite("ClientIPPort", &CThostFtdcReqUserLoginWithCaptchaField::ClientIPPort)
-		;
+		.def("keys", [](const CThostFtdcReqUserLoginWithCaptchaField& a) { std::vector<std::string> b = { "TradingDay", "BrokerID", "UserID", "Password", "UserProductInfo", "InterfaceProductInfo", "ProtocolInfo", "MacAddress", "ClientIPAddress", "LoginRemark", "Captcha", "ClientIPPort" }; return b;});
 
 	py::class_<CThostFtdcReqUserLoginWithTextField>(m, "CThostFtdcReqUserLoginWithTextField")
 		.def(py::init<>())
@@ -5606,7 +5607,7 @@ void init_structs(py::module_& m) {
 		.def_property("LoginRemark", [](CThostFtdcReqUserLoginWithTextField& a) {return encoding_cast(a.LoginRemark);}, [](CThostFtdcReqUserLoginWithTextField& a, char c[]) {strcpy(a.LoginRemark, c);})
 		.def_property("Text", [](CThostFtdcReqUserLoginWithTextField& a) {return encoding_cast(a.Text);}, [](CThostFtdcReqUserLoginWithTextField& a, char c[]) {strcpy(a.Text, c);})
 		.def_readwrite("ClientIPPort", &CThostFtdcReqUserLoginWithTextField::ClientIPPort)
-		;
+		.def("keys", [](const CThostFtdcReqUserLoginWithTextField& a) { std::vector<std::string> b = { "TradingDay", "BrokerID", "UserID", "Password", "UserProductInfo", "InterfaceProductInfo", "ProtocolInfo", "MacAddress", "ClientIPAddress", "LoginRemark", "Text", "ClientIPPort" }; return b;});
 
 	py::class_<CThostFtdcReqUserLoginWithOTPField>(m, "CThostFtdcReqUserLoginWithOTPField")
 		.def(py::init<>())
@@ -5623,13 +5624,13 @@ void init_structs(py::module_& m) {
 		.def_property("LoginRemark", [](CThostFtdcReqUserLoginWithOTPField& a) {return encoding_cast(a.LoginRemark);}, [](CThostFtdcReqUserLoginWithOTPField& a, char c[]) {strcpy(a.LoginRemark, c);})
 		.def_property("OTPPassword", [](CThostFtdcReqUserLoginWithOTPField& a) {return encoding_cast(a.OTPPassword);}, [](CThostFtdcReqUserLoginWithOTPField& a, char c[]) {strcpy(a.OTPPassword, c);})
 		.def_readwrite("ClientIPPort", &CThostFtdcReqUserLoginWithOTPField::ClientIPPort)
-		;
+		.def("keys", [](const CThostFtdcReqUserLoginWithOTPField& a) { std::vector<std::string> b = { "TradingDay", "BrokerID", "UserID", "Password", "UserProductInfo", "InterfaceProductInfo", "ProtocolInfo", "MacAddress", "ClientIPAddress", "LoginRemark", "OTPPassword", "ClientIPPort" }; return b;});
 
 	py::class_<CThostFtdcReqApiHandshakeField>(m, "CThostFtdcReqApiHandshakeField")
 		.def(py::init<>())
 		.def("__copy__", [](const CThostFtdcReqApiHandshakeField& a) {return CThostFtdcReqApiHandshakeField(a);})
 		.def_property("CryptoKeyVersion", [](CThostFtdcReqApiHandshakeField& a) {return encoding_cast(a.CryptoKeyVersion);}, [](CThostFtdcReqApiHandshakeField& a, char c[]) {strcpy(a.CryptoKeyVersion, c);})
-		;
+		.def("keys", [](const CThostFtdcReqApiHandshakeField& a) { std::vector<std::string> b = { "CryptoKeyVersion" }; return b;});
 
 	py::class_<CThostFtdcRspApiHandshakeField>(m, "CThostFtdcRspApiHandshakeField")
 		.def(py::init<>())
@@ -5637,14 +5638,14 @@ void init_structs(py::module_& m) {
 		.def_readwrite("FrontHandshakeDataLen", &CThostFtdcRspApiHandshakeField::FrontHandshakeDataLen)
 		.def_property("FrontHandshakeData", [](CThostFtdcRspApiHandshakeField& a) {return encoding_cast(a.FrontHandshakeData);}, [](CThostFtdcRspApiHandshakeField& a, char c[]) {strcpy(a.FrontHandshakeData, c);})
 		.def_readwrite("IsApiAuthEnabled", &CThostFtdcRspApiHandshakeField::IsApiAuthEnabled)
-		;
+		.def("keys", [](const CThostFtdcRspApiHandshakeField& a) { std::vector<std::string> b = { "FrontHandshakeDataLen", "FrontHandshakeData", "IsApiAuthEnabled" }; return b;});
 
 	py::class_<CThostFtdcReqVerifyApiKeyField>(m, "CThostFtdcReqVerifyApiKeyField")
 		.def(py::init<>())
 		.def("__copy__", [](const CThostFtdcReqVerifyApiKeyField& a) {return CThostFtdcReqVerifyApiKeyField(a);})
 		.def_readwrite("ApiHandshakeDataLen", &CThostFtdcReqVerifyApiKeyField::ApiHandshakeDataLen)
 		.def_property("ApiHandshakeData", [](CThostFtdcReqVerifyApiKeyField& a) {return encoding_cast(a.ApiHandshakeData);}, [](CThostFtdcReqVerifyApiKeyField& a, char c[]) {strcpy(a.ApiHandshakeData, c);})
-		;
+		.def("keys", [](const CThostFtdcReqVerifyApiKeyField& a) { std::vector<std::string> b = { "ApiHandshakeDataLen", "ApiHandshakeData" }; return b;});
 
 	py::class_<CThostFtdcDepartmentUserField>(m, "CThostFtdcDepartmentUserField")
 		.def(py::init<>())
@@ -5653,24 +5654,24 @@ void init_structs(py::module_& m) {
 		.def_property("UserID", [](CThostFtdcDepartmentUserField& a) {return encoding_cast(a.UserID);}, [](CThostFtdcDepartmentUserField& a, char c[]) {strcpy(a.UserID, c);})
 		.def_readwrite("InvestorRange", &CThostFtdcDepartmentUserField::InvestorRange)
 		.def_property("InvestorID", [](CThostFtdcDepartmentUserField& a) {return encoding_cast(a.InvestorID);}, [](CThostFtdcDepartmentUserField& a, char c[]) {strcpy(a.InvestorID, c);})
-		;
+		.def("keys", [](const CThostFtdcDepartmentUserField& a) { std::vector<std::string> b = { "BrokerID", "UserID", "InvestorRange", "InvestorID" }; return b;});
 
 	py::class_<CThostFtdcQueryFreqField>(m, "CThostFtdcQueryFreqField")
 		.def(py::init<>())
 		.def("__copy__", [](const CThostFtdcQueryFreqField& a) {return CThostFtdcQueryFreqField(a);})
 		.def_readwrite("QueryFreq", &CThostFtdcQueryFreqField::QueryFreq)
-		;
+		.def("keys", [](const CThostFtdcQueryFreqField& a) { std::vector<std::string> b = { "QueryFreq" }; return b;});
 
 	py::class_<CThostFtdcAuthForbiddenIPField>(m, "CThostFtdcAuthForbiddenIPField")
 		.def(py::init<>())
 		.def("__copy__", [](const CThostFtdcAuthForbiddenIPField& a) {return CThostFtdcAuthForbiddenIPField(a);})
 		.def_property("IPAddress", [](CThostFtdcAuthForbiddenIPField& a) {return encoding_cast(a.IPAddress);}, [](CThostFtdcAuthForbiddenIPField& a, char c[]) {strcpy(a.IPAddress, c);})
-		;
+		.def("keys", [](const CThostFtdcAuthForbiddenIPField& a) { std::vector<std::string> b = { "IPAddress" }; return b;});
 
 	py::class_<CThostFtdcQryAuthForbiddenIPField>(m, "CThostFtdcQryAuthForbiddenIPField")
 		.def(py::init<>())
 		.def("__copy__", [](const CThostFtdcQryAuthForbiddenIPField& a) {return CThostFtdcQryAuthForbiddenIPField(a);})
 		.def_property("IPAddress", [](CThostFtdcQryAuthForbiddenIPField& a) {return encoding_cast(a.IPAddress);}, [](CThostFtdcQryAuthForbiddenIPField& a, char c[]) {strcpy(a.IPAddress, c);})
-		;
+		.def("keys", [](const CThostFtdcQryAuthForbiddenIPField& a) { std::vector<std::string> b = { "IPAddress" }; return b;});
 
 }

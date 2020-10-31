@@ -38,9 +38,6 @@
     <ClInclude Include="traderapi.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="utils.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="20200106_tradeapi64_se_windows\ThostFtdcMdApi.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -51,6 +48,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="20200106_tradeapi64_se_windows\ThostFtdcUserApiStruct.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="encoding.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

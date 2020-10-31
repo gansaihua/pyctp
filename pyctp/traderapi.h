@@ -26,7 +26,11 @@ public:
 	}
 
 	void Release() {
-		m_api->Release();
+		if (m_api) {
+			m_api->RegisterSpi(NULL);
+			m_api->Release();
+			m_api = NULL;
+		}
 	}
 
 	void Init() {

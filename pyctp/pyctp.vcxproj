@@ -32,7 +32,7 @@
     <ClInclude Include="20200106_tradeapi64_se_windows\ThostFtdcUserApiStruct.h" />
     <ClInclude Include="mduserapi.h" />
     <ClInclude Include="traderapi.h" />
-    <ClInclude Include="utils.h" />
+    <ClInclude Include="encoding.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="20200106_tradeapi64_se_windows\thostmduserapi_se.dll" />

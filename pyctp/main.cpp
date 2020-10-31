@@ -1,7 +1,10 @@
 ﻿#include <pybind11/pybind11.h>
+#include "encoding.h"
 
 namespace py = pybind11;
 
+
+//IconvConvertString g_icc("gb2312", "utf-8");
 
 void init_data_types(py::module_&);
 void init_structs(py::module_&);
