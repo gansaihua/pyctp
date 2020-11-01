@@ -37,9 +37,15 @@ class StructGenerator(object):
 
             if words[0] == 'struct':
                 if buffer is not None:
-                    buffer += f'.def("keys", [](const {self.name} &a) {{ std::vector<std::string> b = '
-                    buffer += '{"' + '", "'.join(fields) + '"}; '
-                    buffer += 'return b;});\n'
+                    buffer += f'''.def("to_dict", [](const {self.name} &a) {{py::dict d; '''
+                    for field, encoded in fields.items():
+                        if encoded:
+                            buffer += f'd["{field}"] = encoding_cast(a.{field}); '
+                        else:
+                            buffer += f'd["{field}"] = a.{field}; '
+                    buffer += 'return d;})'
+
+                    buffer += ';\n'
                     f2.write(buffer)
 
                 self.name = words[1]
@@ -48,23 +54,21 @@ py::class_<{self.name}>(m, "{self.name}")
 .def(py::init<>())
 .def("__copy__", [](const {self.name} &a) {{return {self.name}(a);}})
 '''
-                fields = []
+
+                fields = {}
             elif words[0].startswith('TThost'):
                 dtype = self.dtype_maps[words[0]]
                 field = words[1][:-1]  # skip the ';'
 
-                fields.append(field)
-
                 m = re.match(r'^char\[(\d+)]$', dtype)
                 if m:
-                    size = int(m.group(1))
-                    # buffer += f'.def_property("{field}", []({self.name} &a) {{char ret[{size+1}]; g_icc.encoding_cast(a.{field}, {size}, ret, {size+1}); return std::string(ret);}}, []({self.name} &a, char c[]) {{strcpy(a.{field}, c);}})'
-                    buffer += f'.def_property("{field}", []({self.name} &a) {{return encoding_cast(a.{field});}}, []({self.name} &a, char c[]) {{strcpy(a.{field}, c);}})'
+                    buffer += f'.def_property("{field}", [](const {self.name} &a) {{return encoding_cast(a.{field});}}, []({self.name} &a, char c[]) {{strcpy(a.{field}, c);}})'
                     buffer += '\n'
+                    fields[field] = True
                 else:
                     buffer += f'.def_readwrite("{field}", &{self.name}::{field})'
                     buffer += '\n'
-
+                    fields[field] = False
 
         f2.close()
         f.close()
