@@ -1,6 +1,6 @@
 ﻿#include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
-#include "20200106_tradeapi64_se_windows/ThostFtdcUserApiStruct.h"
+#include "ctp/ThostFtdcUserApiStruct.h"
 #include "encoding.h"
 
 namespace py = pybind11;

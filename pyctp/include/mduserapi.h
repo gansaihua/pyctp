@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 #include <stdio.h>
-#include "20200106_tradeapi64_se_windows/ThostFtdcMdApi.h"
+#include "ctp/ThostFtdcMdApi.h"
 
 
 class CMduserHandler : public CThostFtdcMdSpi {

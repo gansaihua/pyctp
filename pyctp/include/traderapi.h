@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 #include <stdio.h>
-#include "20200106_tradeapi64_se_windows/ThostFtdcTraderApi.h"
+#include "ctp/ThostFtdcTraderApi.h"
 
 
 class CTraderHandler : public CThostFtdcTraderSpi {
