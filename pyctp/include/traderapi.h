@@ -1,6 +1,5 @@
 ﻿#pragma once
 
-#include <stdio.h>
 #include "ctp/ThostFtdcTraderApi.h"
 
 
@@ -16,8 +15,6 @@ public:
 		m_api->SubscribePrivateTopic(THOST_TERT_QUICK);
 		m_api->RegisterFront(frontAddr);
 		m_api->Init();
-
-		printf("CTP version: %s\n", GetApiVersion());
 	}
 
 	// BEGIN CThostFtdcTraderApi interface
@@ -27,9 +24,9 @@ public:
 
 	void Release() {
 		if (m_api) {
-			m_api->RegisterSpi(NULL);
+			m_api->RegisterSpi(nullptr);
 			m_api->Release();
-			m_api = NULL;
+			m_api = nullptr;
 		}
 	}
 

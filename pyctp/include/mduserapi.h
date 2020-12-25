@@ -1,6 +1,5 @@
 ﻿#pragma once
 
-#include <stdio.h>
 #include "ctp/ThostFtdcMdApi.h"
 
 
@@ -15,8 +14,6 @@ public:
 		m_api->RegisterSpi(this);
 		m_api->RegisterFront(frontAddr);
 		m_api->Init();
-
-		printf("CTP version: %s\n", GetApiVersion());
 	}
 
 	// BEGIN CThostFtdcMdApi interface
@@ -26,9 +23,9 @@ public:
 
 	void Release() {
 		if (m_api) {
-			m_api->RegisterSpi(NULL);
+			m_api->RegisterSpi(nullptr);
 			m_api->Release();
-			m_api = NULL;
+			m_api = nullptr;
 		}
 	}
 
