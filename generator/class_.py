@@ -193,8 +193,8 @@ class ClassMethodGenerator(object):
 
 
 if __name__ == "__main__":
-    generator = ClassMethodGenerator('../20200106_tradeapi64_se_windows/ThostFtdcTraderApi.h')
+    generator = ClassMethodGenerator('../pyctp/include/ctp/ThostFtdcTraderApi.h')
     generator.run()
 
-    generator = ClassMethodGenerator('../20200106_tradeapi64_se_windows/ThostFtdcMdApi.h')
+    generator = ClassMethodGenerator('../pyctp/include/ctp/ThostFtdcMdApi.h')
     generator.run()

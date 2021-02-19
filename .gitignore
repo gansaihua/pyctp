@@ -35,6 +35,7 @@ x64/
 x86/
 .idea/
 out/
+build/
 
 # Python
 __pycache__/

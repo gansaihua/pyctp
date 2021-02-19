@@ -23,7 +23,6 @@ public:
 
 	void Release() {
 		if (m_api) {
-			m_api->RegisterSpi(nullptr);
 			m_api->Release();
 			m_api = nullptr;
 		}
@@ -57,18 +56,6 @@ public:
 		m_api->RegisterSpi(pSpi);
 	}
 
-	int ReqUserLogin(CThostFtdcReqUserLoginField* pReqUserLoginField, int nRequestID) {
-		return m_api->ReqUserLogin(pReqUserLoginField, nRequestID);
-	}
-
-	int ReqUserLogout(CThostFtdcUserLogoutField* pUserLogout, int nRequestID) {
-		return m_api->ReqUserLogout(pUserLogout, nRequestID);
-	}
-
-	int ReqQryMulticastInstrument(CThostFtdcQryMulticastInstrumentField* pQryMulticastInstrument, int nRequestID) {
-		return m_api->ReqQryMulticastInstrument(pQryMulticastInstrument, nRequestID);
-	}
-
 	int SubscribeMarketData(char* ppInstrumentID[], int nCount) {
 		return m_api->SubscribeMarketData(ppInstrumentID, nCount);
 	}
@@ -83,6 +70,18 @@ public:
 
 	int UnSubscribeForQuoteRsp(char* ppInstrumentID[], int nCount) {
 		return m_api->UnSubscribeForQuoteRsp(ppInstrumentID, nCount);
+	}
+
+	int ReqUserLogin(CThostFtdcReqUserLoginField* pReqUserLoginField, int nRequestID) {
+		return m_api->ReqUserLogin(pReqUserLoginField, nRequestID);
+	}
+
+	int ReqUserLogout(CThostFtdcUserLogoutField* pUserLogout, int nRequestID) {
+		return m_api->ReqUserLogout(pUserLogout, nRequestID);
+	}
+
+	int ReqQryMulticastInstrument(CThostFtdcQryMulticastInstrumentField* pQryMulticastInstrument, int nRequestID) {
+		return m_api->ReqQryMulticastInstrument(pQryMulticastInstrument, nRequestID);
 	}
 	// END CThostFtdcMdApi interface
 

@@ -48,5 +48,6 @@ class DataTypeGenerator(object):
 
 
 if __name__ == "__main__":
-    generator = DataTypeGenerator('../20200106_tradeapi64_se_windows/ThostFtdcUserApiDataType.h', "_def_dtypes.txt")
+    generator = DataTypeGenerator(
+        '../pyctp/include/ctp/ThostFtdcUserApiDataType.h', "_def_dtypes.txt")
     generator.run()

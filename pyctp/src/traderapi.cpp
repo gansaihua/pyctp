@@ -23,7 +23,7 @@ public:
 	void OnRspParkedOrderInsert(CThostFtdcParkedOrderField* pParkedOrder, CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast) override { PYBIND11_OVERRIDE(void, CTraderHandler, OnRspParkedOrderInsert, pParkedOrder, pRspInfo, nRequestID, bIsLast); }
 	void OnRspParkedOrderAction(CThostFtdcParkedOrderActionField* pParkedOrderAction, CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast) override { PYBIND11_OVERRIDE(void, CTraderHandler, OnRspParkedOrderAction, pParkedOrderAction, pRspInfo, nRequestID, bIsLast); }
 	void OnRspOrderAction(CThostFtdcInputOrderActionField* pInputOrderAction, CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast) override { PYBIND11_OVERRIDE(void, CTraderHandler, OnRspOrderAction, pInputOrderAction, pRspInfo, nRequestID, bIsLast); }
-	void OnRspQueryMaxOrderVolume(CThostFtdcQueryMaxOrderVolumeField* pQueryMaxOrderVolume, CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast) override { PYBIND11_OVERRIDE(void, CTraderHandler, OnRspQueryMaxOrderVolume, pQueryMaxOrderVolume, pRspInfo, nRequestID, bIsLast); }
+	void OnRspQryMaxOrderVolume(CThostFtdcQryMaxOrderVolumeField* pQryMaxOrderVolume, CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast) override { PYBIND11_OVERRIDE(void, CTraderHandler, OnRspQryMaxOrderVolume, pQryMaxOrderVolume, pRspInfo, nRequestID, bIsLast); }
 	void OnRspSettlementInfoConfirm(CThostFtdcSettlementInfoConfirmField* pSettlementInfoConfirm, CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast) override { PYBIND11_OVERRIDE(void, CTraderHandler, OnRspSettlementInfoConfirm, pSettlementInfoConfirm, pRspInfo, nRequestID, bIsLast); }
 	void OnRspRemoveParkedOrder(CThostFtdcRemoveParkedOrderField* pRemoveParkedOrder, CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast) override { PYBIND11_OVERRIDE(void, CTraderHandler, OnRspRemoveParkedOrder, pRemoveParkedOrder, pRspInfo, nRequestID, bIsLast); }
 	void OnRspRemoveParkedOrderAction(CThostFtdcRemoveParkedOrderActionField* pRemoveParkedOrderAction, CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast) override { PYBIND11_OVERRIDE(void, CTraderHandler, OnRspRemoveParkedOrderAction, pRemoveParkedOrderAction, pRspInfo, nRequestID, bIsLast); }
@@ -133,6 +133,8 @@ public:
 	void OnRtnOpenAccountByBank(CThostFtdcOpenAccountField* pOpenAccount) override { PYBIND11_OVERRIDE(void, CTraderHandler, OnRtnOpenAccountByBank, pOpenAccount); }
 	void OnRtnCancelAccountByBank(CThostFtdcCancelAccountField* pCancelAccount) override { PYBIND11_OVERRIDE(void, CTraderHandler, OnRtnCancelAccountByBank, pCancelAccount); }
 	void OnRtnChangeAccountByBank(CThostFtdcChangeAccountField* pChangeAccount) override { PYBIND11_OVERRIDE(void, CTraderHandler, OnRtnChangeAccountByBank, pChangeAccount); }
+	void OnRspQryClassifiedInstrument(CThostFtdcInstrumentField* pInstrument, CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast) override { PYBIND11_OVERRIDE(void, CTraderHandler, OnRspQryClassifiedInstrument, pInstrument, pRspInfo, nRequestID, bIsLast); }
+	void OnRspQryCombPromotionParam(CThostFtdcCombPromotionParamField* pCombPromotionParam, CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast) override { PYBIND11_OVERRIDE(void, CTraderHandler, OnRspQryCombPromotionParam, pCombPromotionParam, pRspInfo, nRequestID, bIsLast); }
 
 };
 
@@ -158,7 +160,7 @@ void init_traderapi(py::module_& m) {
 		.def("OnRspParkedOrderInsert", &CTraderHandler::OnRspParkedOrderInsert)
 		.def("OnRspParkedOrderAction", &CTraderHandler::OnRspParkedOrderAction)
 		.def("OnRspOrderAction", &CTraderHandler::OnRspOrderAction)
-		.def("OnRspQueryMaxOrderVolume", &CTraderHandler::OnRspQueryMaxOrderVolume)
+		.def("OnRspQryMaxOrderVolume", &CTraderHandler::OnRspQryMaxOrderVolume)
 		.def("OnRspSettlementInfoConfirm", &CTraderHandler::OnRspSettlementInfoConfirm)
 		.def("OnRspRemoveParkedOrder", &CTraderHandler::OnRspRemoveParkedOrder)
 		.def("OnRspRemoveParkedOrderAction", &CTraderHandler::OnRspRemoveParkedOrderAction)
@@ -268,6 +270,8 @@ void init_traderapi(py::module_& m) {
 		.def("OnRtnOpenAccountByBank", &CTraderHandler::OnRtnOpenAccountByBank)
 		.def("OnRtnCancelAccountByBank", &CTraderHandler::OnRtnCancelAccountByBank)
 		.def("OnRtnChangeAccountByBank", &CTraderHandler::OnRtnChangeAccountByBank)
+		.def("OnRspQryClassifiedInstrument", &CTraderHandler::OnRspQryClassifiedInstrument)
+		.def("OnRspQryCombPromotionParam", &CTraderHandler::OnRspQryCombPromotionParam)
 		.def("Release", &CTraderHandler::Release)
 		.def("Init", &CTraderHandler::Init)
 		.def("Join", &CTraderHandler::Join)
@@ -295,7 +299,7 @@ void init_traderapi(py::module_& m) {
 		.def("ReqParkedOrderInsert", &CTraderHandler::ReqParkedOrderInsert)
 		.def("ReqParkedOrderAction", &CTraderHandler::ReqParkedOrderAction)
 		.def("ReqOrderAction", &CTraderHandler::ReqOrderAction)
-		.def("ReqQueryMaxOrderVolume", &CTraderHandler::ReqQueryMaxOrderVolume)
+		.def("ReqQryMaxOrderVolume", &CTraderHandler::ReqQryMaxOrderVolume)
 		.def("ReqSettlementInfoConfirm", &CTraderHandler::ReqSettlementInfoConfirm)
 		.def("ReqRemoveParkedOrder", &CTraderHandler::ReqRemoveParkedOrder)
 		.def("ReqRemoveParkedOrderAction", &CTraderHandler::ReqRemoveParkedOrderAction)
@@ -362,5 +366,7 @@ void init_traderapi(py::module_& m) {
 		.def("ReqFromBankToFutureByFuture", &CTraderHandler::ReqFromBankToFutureByFuture)
 		.def("ReqFromFutureToBankByFuture", &CTraderHandler::ReqFromFutureToBankByFuture)
 		.def("ReqQueryBankAccountMoneyByFuture", &CTraderHandler::ReqQueryBankAccountMoneyByFuture)
+		.def("ReqQryClassifiedInstrument", &CTraderHandler::ReqQryClassifiedInstrument)
+		.def("ReqQryCombPromotionParam", &CTraderHandler::ReqQryCombPromotionParam)
 		;
 }

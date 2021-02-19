@@ -134,8 +134,8 @@ public:
 		return m_api->ReqOrderAction(pInputOrderAction, nRequestID);
 	}
 
-	int ReqQueryMaxOrderVolume(CThostFtdcQueryMaxOrderVolumeField* pQueryMaxOrderVolume, int nRequestID) {
-		return m_api->ReqQueryMaxOrderVolume(pQueryMaxOrderVolume, nRequestID);
+	int ReqQryMaxOrderVolume(CThostFtdcQryMaxOrderVolumeField* pQryMaxOrderVolume, int nRequestID) {
+		return m_api->ReqQryMaxOrderVolume(pQryMaxOrderVolume, nRequestID);
 	}
 
 	int ReqSettlementInfoConfirm(CThostFtdcSettlementInfoConfirmField* pSettlementInfoConfirm, int nRequestID) {
@@ -401,6 +401,15 @@ public:
 	int ReqQueryBankAccountMoneyByFuture(CThostFtdcReqQueryAccountField* pReqQueryAccount, int nRequestID) {
 		return m_api->ReqQueryBankAccountMoneyByFuture(pReqQueryAccount, nRequestID);
 	}
+
+	int ReqQryClassifiedInstrument(CThostFtdcQryClassifiedInstrumentField* pQryClassifiedInstrument, int nRequestID) {
+		return m_api->ReqQryClassifiedInstrument(pQryClassifiedInstrument, nRequestID);
+	}
+
+	int ReqQryCombPromotionParam(CThostFtdcQryCombPromotionParamField* pQryCombPromotionParam, int nRequestID) {
+		return m_api->ReqQryCombPromotionParam(pQryCombPromotionParam, nRequestID);
+	}
+
 	// END CThostFtdcTraderApi interface
-	
+
 };

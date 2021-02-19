@@ -2,8 +2,8 @@ import re
 
 
 class StructGenerator(object):
-    f_in1 = '../20200106_tradeapi64_se_windows/ThostFtdcUserApiDataType.h'
-    f_in2 = '../20200106_tradeapi64_se_windows/ThostFtdcUserApiStruct.h'
+    f_in1 = '../pyctp/include/ctp/ThostFtdcUserApiDataType.h'
+    f_in2 = '../pyctp/include/ctp/ThostFtdcUserApiStruct.h'
     f_out = '_def_structs.txt'
 
     def __init__(self):

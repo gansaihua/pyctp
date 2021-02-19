@@ -5,6 +5,7 @@ namespace py = pybind11;
 
 void init_data_types(py::module_& m) {
 
+
 	py::dict PyTThostFtdcExchangePropertyType;
 	PyTThostFtdcExchangePropertyType["THOST_FTDC_EXP_Normal"] = THOST_FTDC_EXP_Normal;
 	PyTThostFtdcExchangePropertyType["THOST_FTDC_EXP_GenOrderByTrade"] = THOST_FTDC_EXP_GenOrderByTrade;
@@ -1431,16 +1432,16 @@ void init_data_types(py::module_& m) {
 	m.attr("THOST_FTDC_VAA_AvailAbility") = THOST_FTDC_VAA_AvailAbility;
 	m.attr("THOST_FTDC_VAA_Repeal") = THOST_FTDC_VAA_Repeal;
 
-	//py::dict PyTThostFtdcVirementTradeCodeType;
-	//PyTThostFtdcVirementTradeCodeType["THOST_FTDC_VTC_BankBankToFuture"] = THOST_FTDC_VTC_BankBankToFuture;
-	//PyTThostFtdcVirementTradeCodeType["THOST_FTDC_VTC_BankFutureToBank"] = THOST_FTDC_VTC_BankFutureToBank;
-	//PyTThostFtdcVirementTradeCodeType["THOST_FTDC_VTC_FutureBankToFuture"] = THOST_FTDC_VTC_FutureBankToFuture;
-	//PyTThostFtdcVirementTradeCodeType["THOST_FTDC_VTC_FutureFutureToBank"] = THOST_FTDC_VTC_FutureFutureToBank;
-	//m.attr("TThostFtdcVirementTradeCodeType") = PyTThostFtdcVirementTradeCodeType;
-	//m.attr("THOST_FTDC_VTC_BankBankToFuture") = THOST_FTDC_VTC_BankBankToFuture;
-	//m.attr("THOST_FTDC_VTC_BankFutureToBank") = THOST_FTDC_VTC_BankFutureToBank;
-	//m.attr("THOST_FTDC_VTC_FutureBankToFuture") = THOST_FTDC_VTC_FutureBankToFuture;
-	//m.attr("THOST_FTDC_VTC_FutureFutureToBank") = THOST_FTDC_VTC_FutureFutureToBank;
+	// py::dict PyTThostFtdcVirementTradeCodeType;
+	// PyTThostFtdcVirementTradeCodeType["THOST_FTDC_VTC_BankBankToFuture"] = THOST_FTDC_VTC_BankBankToFuture;
+	// PyTThostFtdcVirementTradeCodeType["THOST_FTDC_VTC_BankFutureToBank"] = THOST_FTDC_VTC_BankFutureToBank;
+	// PyTThostFtdcVirementTradeCodeType["THOST_FTDC_VTC_FutureBankToFuture"] = THOST_FTDC_VTC_FutureBankToFuture;
+	// PyTThostFtdcVirementTradeCodeType["THOST_FTDC_VTC_FutureFutureToBank"] = THOST_FTDC_VTC_FutureFutureToBank;
+	// m.attr("TThostFtdcVirementTradeCodeType") = PyTThostFtdcVirementTradeCodeType;
+	// m.attr("THOST_FTDC_VTC_BankBankToFuture") = THOST_FTDC_VTC_BankBankToFuture;
+	// m.attr("THOST_FTDC_VTC_BankFutureToBank") = THOST_FTDC_VTC_BankFutureToBank;
+	// m.attr("THOST_FTDC_VTC_FutureBankToFuture") = THOST_FTDC_VTC_FutureBankToFuture;
+	// m.attr("THOST_FTDC_VTC_FutureFutureToBank") = THOST_FTDC_VTC_FutureFutureToBank;
 
 	py::dict PyTThostFtdcAMLGenStatusType;
 	PyTThostFtdcAMLGenStatusType["THOST_FTDC_GEN_Program"] = THOST_FTDC_GEN_Program;
@@ -2307,16 +2308,16 @@ void init_data_types(py::module_& m) {
 	m.attr("THOST_FTDC_MBTS_ByDayInsPrc") = THOST_FTDC_MBTS_ByDayInsPrc;
 	m.attr("THOST_FTDC_MBTS_ByDayIns") = THOST_FTDC_MBTS_ByDayIns;
 
-	//py::dict PyTThostFtdcFBTTradeCodeEnumType;
-	//PyTThostFtdcFBTTradeCodeEnumType["THOST_FTDC_FTC_BankLaunchBankToBroker"] = THOST_FTDC_FTC_BankLaunchBankToBroker;
-	//PyTThostFtdcFBTTradeCodeEnumType["THOST_FTDC_FTC_BrokerLaunchBankToBroker"] = THOST_FTDC_FTC_BrokerLaunchBankToBroker;
-	//PyTThostFtdcFBTTradeCodeEnumType["THOST_FTDC_FTC_BankLaunchBrokerToBank"] = THOST_FTDC_FTC_BankLaunchBrokerToBank;
-	//PyTThostFtdcFBTTradeCodeEnumType["THOST_FTDC_FTC_BrokerLaunchBrokerToBank"] = THOST_FTDC_FTC_BrokerLaunchBrokerToBank;
-	//m.attr("TThostFtdcFBTTradeCodeEnumType") = PyTThostFtdcFBTTradeCodeEnumType;
-	//m.attr("THOST_FTDC_FTC_BankLaunchBankToBroker") = THOST_FTDC_FTC_BankLaunchBankToBroker;
-	//m.attr("THOST_FTDC_FTC_BrokerLaunchBankToBroker") = THOST_FTDC_FTC_BrokerLaunchBankToBroker;
-	//m.attr("THOST_FTDC_FTC_BankLaunchBrokerToBank") = THOST_FTDC_FTC_BankLaunchBrokerToBank;
-	//m.attr("THOST_FTDC_FTC_BrokerLaunchBrokerToBank") = THOST_FTDC_FTC_BrokerLaunchBrokerToBank;
+	// py::dict PyTThostFtdcFBTTradeCodeEnumType;
+	// PyTThostFtdcFBTTradeCodeEnumType["THOST_FTDC_FTC_BankLaunchBankToBroker"] = THOST_FTDC_FTC_BankLaunchBankToBroker;
+	// PyTThostFtdcFBTTradeCodeEnumType["THOST_FTDC_FTC_BrokerLaunchBankToBroker"] = THOST_FTDC_FTC_BrokerLaunchBankToBroker;
+	// PyTThostFtdcFBTTradeCodeEnumType["THOST_FTDC_FTC_BankLaunchBrokerToBank"] = THOST_FTDC_FTC_BankLaunchBrokerToBank;
+	// PyTThostFtdcFBTTradeCodeEnumType["THOST_FTDC_FTC_BrokerLaunchBrokerToBank"] = THOST_FTDC_FTC_BrokerLaunchBrokerToBank;
+	// m.attr("TThostFtdcFBTTradeCodeEnumType") = PyTThostFtdcFBTTradeCodeEnumType;
+	// m.attr("THOST_FTDC_FTC_BankLaunchBankToBroker") = THOST_FTDC_FTC_BankLaunchBankToBroker;
+	// m.attr("THOST_FTDC_FTC_BrokerLaunchBankToBroker") = THOST_FTDC_FTC_BrokerLaunchBankToBroker;
+	// m.attr("THOST_FTDC_FTC_BankLaunchBrokerToBank") = THOST_FTDC_FTC_BankLaunchBrokerToBank;
+	// m.attr("THOST_FTDC_FTC_BrokerLaunchBrokerToBank") = THOST_FTDC_FTC_BrokerLaunchBrokerToBank;
 
 	py::dict PyTThostFtdcOTPTypeType;
 	PyTThostFtdcOTPTypeType["THOST_FTDC_OTP_NONE"] = THOST_FTDC_OTP_NONE;
@@ -3139,9 +3140,11 @@ void init_data_types(py::module_& m) {
 	PyTThostFtdcCombinationTypeType["THOST_FTDC_COMBT_STD"] = THOST_FTDC_COMBT_STD;
 	PyTThostFtdcCombinationTypeType["THOST_FTDC_COMBT_STG"] = THOST_FTDC_COMBT_STG;
 	PyTThostFtdcCombinationTypeType["THOST_FTDC_COMBT_PRT"] = THOST_FTDC_COMBT_PRT;
-	PyTThostFtdcCombinationTypeType["THOST_FTDC_COMBT_CLD"] = THOST_FTDC_COMBT_CLD;
+	PyTThostFtdcCombinationTypeType["THOST_FTDC_COMBT_CAS"] = THOST_FTDC_COMBT_CAS;
 	PyTThostFtdcCombinationTypeType["THOST_FTDC_COMBT_OPL"] = THOST_FTDC_COMBT_OPL;
 	PyTThostFtdcCombinationTypeType["THOST_FTDC_COMBT_BFO"] = THOST_FTDC_COMBT_BFO;
+	PyTThostFtdcCombinationTypeType["THOST_FTDC_COMBT_BLS"] = THOST_FTDC_COMBT_BLS;
+	PyTThostFtdcCombinationTypeType["THOST_FTDC_COMBT_BES"] = THOST_FTDC_COMBT_BES;
 	m.attr("TThostFtdcCombinationTypeType") = PyTThostFtdcCombinationTypeType;
 	m.attr("THOST_FTDC_COMBT_Future") = THOST_FTDC_COMBT_Future;
 	m.attr("THOST_FTDC_COMBT_BUL") = THOST_FTDC_COMBT_BUL;
@@ -3149,9 +3152,11 @@ void init_data_types(py::module_& m) {
 	m.attr("THOST_FTDC_COMBT_STD") = THOST_FTDC_COMBT_STD;
 	m.attr("THOST_FTDC_COMBT_STG") = THOST_FTDC_COMBT_STG;
 	m.attr("THOST_FTDC_COMBT_PRT") = THOST_FTDC_COMBT_PRT;
-	m.attr("THOST_FTDC_COMBT_CLD") = THOST_FTDC_COMBT_CLD;
+	m.attr("THOST_FTDC_COMBT_CAS") = THOST_FTDC_COMBT_CAS;
 	m.attr("THOST_FTDC_COMBT_OPL") = THOST_FTDC_COMBT_OPL;
 	m.attr("THOST_FTDC_COMBT_BFO") = THOST_FTDC_COMBT_BFO;
+	m.attr("THOST_FTDC_COMBT_BLS") = THOST_FTDC_COMBT_BLS;
+	m.attr("THOST_FTDC_COMBT_BES") = THOST_FTDC_COMBT_BES;
 
 	py::dict PyTThostFtdcDceCombinationTypeType;
 	PyTThostFtdcDceCombinationTypeType["THOST_FTDC_DCECOMBT_SPL"] = THOST_FTDC_DCECOMBT_SPL;
@@ -3385,5 +3390,32 @@ void init_data_types(py::module_& m) {
 	m.attr("TThostFtdcMatchTypeType") = PyTThostFtdcMatchTypeType;
 	m.attr("THOST_FTDC_OTC_MT_DV01") = THOST_FTDC_OTC_MT_DV01;
 	m.attr("THOST_FTDC_OTC_MT_ParValue") = THOST_FTDC_OTC_MT_ParValue;
+
+	py::dict PyTThostFtdcAuthTypeType;
+	PyTThostFtdcAuthTypeType["THOST_FTDC_AU_WHITE"] = THOST_FTDC_AU_WHITE;
+	PyTThostFtdcAuthTypeType["THOST_FTDC_AU_BLACK"] = THOST_FTDC_AU_BLACK;
+	m.attr("TThostFtdcAuthTypeType") = PyTThostFtdcAuthTypeType;
+	m.attr("THOST_FTDC_AU_WHITE") = THOST_FTDC_AU_WHITE;
+	m.attr("THOST_FTDC_AU_BLACK") = THOST_FTDC_AU_BLACK;
+
+	py::dict PyTThostFtdcClassTypeType;
+	PyTThostFtdcClassTypeType["THOST_FTDC_INS_ALL"] = THOST_FTDC_INS_ALL;
+	PyTThostFtdcClassTypeType["THOST_FTDC_INS_FUTURE"] = THOST_FTDC_INS_FUTURE;
+	PyTThostFtdcClassTypeType["THOST_FTDC_INS_OPTION"] = THOST_FTDC_INS_OPTION;
+	PyTThostFtdcClassTypeType["THOST_FTDC_INS_COMB"] = THOST_FTDC_INS_COMB;
+	m.attr("TThostFtdcClassTypeType") = PyTThostFtdcClassTypeType;
+	m.attr("THOST_FTDC_INS_ALL") = THOST_FTDC_INS_ALL;
+	m.attr("THOST_FTDC_INS_FUTURE") = THOST_FTDC_INS_FUTURE;
+	m.attr("THOST_FTDC_INS_OPTION") = THOST_FTDC_INS_OPTION;
+	m.attr("THOST_FTDC_INS_COMB") = THOST_FTDC_INS_COMB;
+
+	py::dict PyTThostFtdcTradingTypeType;
+	PyTThostFtdcTradingTypeType["THOST_FTDC_TD_ALL"] = THOST_FTDC_TD_ALL;
+	PyTThostFtdcTradingTypeType["THOST_FTDC_TD_TRADE"] = THOST_FTDC_TD_TRADE;
+	PyTThostFtdcTradingTypeType["THOST_FTDC_TD_UNTRADE"] = THOST_FTDC_TD_UNTRADE;
+	m.attr("TThostFtdcTradingTypeType") = PyTThostFtdcTradingTypeType;
+	m.attr("THOST_FTDC_TD_ALL") = THOST_FTDC_TD_ALL;
+	m.attr("THOST_FTDC_TD_TRADE") = THOST_FTDC_TD_TRADE;
+	m.attr("THOST_FTDC_TD_UNTRADE") = THOST_FTDC_TD_UNTRADE;
 
 }
