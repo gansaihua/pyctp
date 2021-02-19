@@ -20,10 +20,10 @@ add_library(${PROJECT_NAME} SHARED ${SRC_FILES})
 
 set_target_properties(${PROJECT_NAME} PROPERTIES SUFFIX ".pyd")
 
-target_include_directories(${PROJECT_NAME} PUBLIC "${CMAKE_SOURCE_DIR}/include")
+target_include_directories(${PROJECT_NAME} PUBLIC "${CMAKE_SOURCE_DIR}/ctp")
 target_link_libraries(${PROJECT_NAME} 
-	PUBLIC Python::Python
-	PUBLIC pybind11::pybind11
-	PUBLIC "${CMAKE_SOURCE_DIR}/lib/ctp/thostmduserapi_se.lib"
-	PUBLIC "${CMAKE_SOURCE_DIR}/lib/ctp/thosttraderapi_se.lib"
+	PRIVATE Python::Python
+	PRIVATE pybind11::pybind11
+	PUBLIC "${CMAKE_SOURCE_DIR}/ctp/thostmduserapi_se.lib"
+	PUBLIC "${CMAKE_SOURCE_DIR}/ctp/thosttraderapi_se.lib"
 )

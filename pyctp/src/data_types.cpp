@@ -1,10 +1,15 @@
-﻿#include <pybind11/pybind11.h>
-#include "ctp/ThostFtdcUserApiDataType.h"
+﻿#include "ThostFtdcUserApiDataType.h"
+#include <pybind11/pybind11.h>
 
 namespace py = pybind11;
 
 void init_data_types(py::module_& m) {
-
+	py::enum_<THOST_TE_RESUME_TYPE>(m, "THOST_TE_RESUME_TYPE")
+		.value("THOST_TERT_RESTART", THOST_TE_RESUME_TYPE::THOST_TERT_RESTART)
+		.value("THOST_TERT_RESUME", THOST_TE_RESUME_TYPE::THOST_TERT_RESUME)
+		.value("THOST_TERT_QUICK", THOST_TE_RESUME_TYPE::THOST_TERT_QUICK)
+		.value("THOST_TERT_NONE", THOST_TE_RESUME_TYPE::THOST_TERT_NONE)
+		.export_values();
 
 	py::dict PyTThostFtdcExchangePropertyType;
 	PyTThostFtdcExchangePropertyType["THOST_FTDC_EXP_Normal"] = THOST_FTDC_EXP_Normal;
