@@ -1,6 +1,4 @@
-﻿#include "encoding.h"
-
-#include <pybind11/pybind11.h>
+﻿#include <pybind11/pybind11.h>
 
 namespace py = pybind11;
 
@@ -13,8 +11,8 @@ void init_td_api(py::module_&);
 void init_td_spi(py::module_&);
 
 PYBIND11_MODULE(pyctp, m) {
-    init_structs(m);
     init_data_types(m);
+    init_structs(m);
     init_md_api(m);
     init_md_spi(m);
     init_td_api(m);

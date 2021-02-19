@@ -8,7 +8,7 @@ class PyThostFtdcTraderSpi : public CThostFtdcTraderSpi {
 public:
     using CThostFtdcTraderSpi::CThostFtdcTraderSpi;
 
-    void OnFrontConnected() override { PYBIND11_OVERRIDE(void, CThostFtdcTraderSpi, OnFrontConnected); }
+    void OnFrontConnected() override { PYBIND11_OVERRIDE(void, CThostFtdcTraderSpi, OnFrontConnected, ); }
     void OnFrontDisconnected(int nReason) override { PYBIND11_OVERRIDE(void, CThostFtdcTraderSpi, OnFrontDisconnected, nReason); }
     void OnHeartBeatWarning(int nTimeLapse) override { PYBIND11_OVERRIDE(void, CThostFtdcTraderSpi, OnHeartBeatWarning, nTimeLapse); }
     void OnRspAuthenticate(CThostFtdcRspAuthenticateField* pRspAuthenticateField, CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast) override { PYBIND11_OVERRIDE(void, CThostFtdcTraderSpi, OnRspAuthenticate, pRspAuthenticateField, pRspInfo, nRequestID, bIsLast); }
