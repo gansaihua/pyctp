@@ -4,12 +4,11 @@
 
 namespace py = pybind11;
 
-
 class PyCMduserHandler : public CMduserHandler {
 public:
 	using CMduserHandler::CMduserHandler;
 
-	void OnFrontConnected() override { PYBIND11_OVERRIDE(void, CMduserHandler, OnFrontConnected, ); }
+	void OnFrontConnected() override { PYBIND11_OVERRIDE(void, CMduserHandler, OnFrontConnected); }
 	void OnFrontDisconnected(int nReason) override { PYBIND11_OVERRIDE(void, CMduserHandler, OnFrontDisconnected, nReason); }
 	void OnHeartBeatWarning(int nTimeLapse) override { PYBIND11_OVERRIDE(void, CMduserHandler, OnHeartBeatWarning, nTimeLapse); }
 	void OnRspUserLogin(CThostFtdcRspUserLoginField* pRspUserLogin, CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast) override { PYBIND11_OVERRIDE(void, CMduserHandler, OnRspUserLogin, pRspUserLogin, pRspInfo, nRequestID, bIsLast); }

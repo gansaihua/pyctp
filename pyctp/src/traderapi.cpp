@@ -8,7 +8,7 @@ class PyCTraderHandler : public CTraderHandler {
 public:
 	using CTraderHandler::CTraderHandler;
 
-	void OnFrontConnected() override { PYBIND11_OVERRIDE(void, CTraderHandler, OnFrontConnected, ); }
+	void OnFrontConnected() override { PYBIND11_OVERRIDE(void, CTraderHandler, OnFrontConnected); }
 	void OnFrontDisconnected(int nReason) override { PYBIND11_OVERRIDE(void, CTraderHandler, OnFrontDisconnected, nReason); }
 	void OnHeartBeatWarning(int nTimeLapse) override { PYBIND11_OVERRIDE(void, CTraderHandler, OnHeartBeatWarning, nTimeLapse); }
 	void OnRspAuthenticate(CThostFtdcRspAuthenticateField* pRspAuthenticateField, CThostFtdcRspInfoField* pRspInfo, int nRequestID, bool bIsLast) override { PYBIND11_OVERRIDE(void, CTraderHandler, OnRspAuthenticate, pRspAuthenticateField, pRspInfo, nRequestID, bIsLast); }

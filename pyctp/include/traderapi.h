@@ -8,6 +8,10 @@ private:
 	CThostFtdcTraderApi* m_api;
 
 public:
+	~CTraderHandler() {
+		Release();
+	}
+
 	void connect(char* frontAddr, const char* pszFlowPath = "") {
 		m_api = CThostFtdcTraderApi::CreateFtdcTraderApi(pszFlowPath);
 		m_api->RegisterSpi(this);
@@ -24,7 +28,6 @@ public:
 
 	void Release() {
 		if (m_api) {
-			m_api->RegisterSpi(nullptr);
 			m_api->Release();
 			m_api = nullptr;
 		}
