@@ -5,12 +5,12 @@ FrontAddr = "tcp://180.168.146.187:10100"
 BROKERID = "9999"
 USERID = ""
 PASSWORD = ""
-EXCHANGEID = "CFFEX"
-INSTRUMENTID = "T2103"
-PRICE = 97.5
+EXCHANGEID = "SHFE"
+INSTRUMENTID = "cu2103"
+PRICE = 66270
 VOLUME = 1
-DIRECTION = pyctp.THOST_FTDC_D_Sell
-# DIRECTION=pyctp.THOST_FTDC_D_Buy
+DIRECTION = pyctp.THOST_FTDC_D_Buy
+# DIRECTION = pyctp.THOST_FTDC_D_Sell
 OFFSET = "0"
 # OFFSET="1"
 
@@ -109,4 +109,4 @@ if __name__ == '__main__':
     api.SubscribePublicTopic(pyctp.THOST_TERT_QUICK)
     api.RegisterFront(FrontAddr)
     api.Init()
-    time.sleep(6)
+    time.sleep(36)

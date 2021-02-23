@@ -49,5 +49,5 @@ class DataTypeGenerator(object):
 
 if __name__ == "__main__":
     generator = DataTypeGenerator(
-        '../pyctp/include/ctp/ThostFtdcUserApiDataType.h', "_def_dtypes.txt")
+        '../pyctp/ctp/ThostFtdcUserApiDataType.h', "_def_dtypes.txt")
     generator.run()

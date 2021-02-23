@@ -12,15 +12,15 @@ class MdSpi(pyctp.CThostFtdcMdSpi):
     def OnFrontConnected(self):
         print("OnFrontConnected")
         print(api.GetTradingDay())
-        loginfield = pyctp.CThostFtdcReqUserLoginField()
-        self.api.ReqUserLogin(loginfield, 0)
+        t = pyctp.CThostFtdcReqUserLoginField()
+        self.api.ReqUserLogin(t, 0)
 
     def OnRspUserLogin(self, pRspUserLogin, pRspInfo, nRequestID, bIsLast):
         print("OnRspUserLogin")
         print(f"SessionID={pRspUserLogin.SessionID}")
         print(f"ErrorID={pRspInfo.ErrorID},ErrorMsg={pRspInfo.ErrorMsg}")
 
-        instruments = ["au2103", "IC2103", "i2103", "T2103"]
+        instruments = ["au2104", "IC2104", "i2104", "T2104"]
         self.api.SubscribeMarketData(instruments, len(instruments))
 
     def OnRspSubMarketData(self, pSpecificInstrument: 'CThostFtdcSpecificInstrumentField', pRspInfo, nRequestID, bIsLast):
@@ -66,3 +66,4 @@ if __name__ == '__main__':
     api.RegisterSpi(spi)
     api.Init()
     time.sleep(3)
+    api.Join()

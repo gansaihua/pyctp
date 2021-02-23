@@ -193,8 +193,8 @@ class ClassMethodGenerator(object):
 
 
 if __name__ == "__main__":
-    generator = ClassMethodGenerator('../pyctp/include/ctp/ThostFtdcTraderApi.h')
+    generator = ClassMethodGenerator('../pyctp/ctp/ThostFtdcTraderApi.h')
     generator.run()
 
-    generator = ClassMethodGenerator('../pyctp/include/ctp/ThostFtdcMdApi.h')
+    generator = ClassMethodGenerator('../pyctp/ctp/ThostFtdcMdApi.h')
     generator.run()
