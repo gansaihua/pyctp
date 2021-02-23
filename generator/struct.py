@@ -2,8 +2,8 @@ import re
 
 
 class StructGenerator(object):
-    f_in1 = '../pyctp/include/ctp/ThostFtdcUserApiDataType.h'
-    f_in2 = '../pyctp/include/ctp/ThostFtdcUserApiStruct.h'
+    f_in1 = '../pyctp/ctp/ThostFtdcUserApiDataType.h'
+    f_in2 = '../pyctp/ctp/ThostFtdcUserApiStruct.h'
     f_out = '_def_structs.txt'
 
     def __init__(self):
@@ -59,6 +59,10 @@ py::class_<{self.name}>(m, "{self.name}")
             elif words[0].startswith('TThost'):
                 dtype = self.dtype_maps[words[0]]
                 field = words[1][:-1]  # skip the ';'
+
+                m = re.match(r'^reserve\d+$', field)
+                if m:  # skip the reserve1 alike field
+                    continue
 
                 m = re.match(r'^char\[(\d+)]$', dtype)
                 if m:
